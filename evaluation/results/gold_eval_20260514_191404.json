@@ -1,0 +1,322 @@
+{
+  "timestamp": "2026-05-14T19:14:04.565436",
+  "gold_file": "C:\\Users\\Hamed\\Desktop\\sense-ai-demo\\sense-ai-demo\\datasets\\gold\\gold_test_set.jsonl",
+  "total_examples": 250,
+  "accuracy": 1.0,
+  "macro_precision": 1.0,
+  "macro_recall": 1.0,
+  "macro_f1": 1.0,
+  "high_risk_recall": 1.0,
+  "per_label": {
+    "Safe / Regulated": {
+      "support": 54,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "Distressed / Needs Support": {
+      "support": 90,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "High Risk / Urgent": {
+      "support": 65,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "Unclear / Need More Context": {
+      "support": 41,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "confusion_matrix": {
+    "Safe / Regulated": {
+      "Safe / Regulated": 54,
+      "Distressed / Needs Support": 0,
+      "High Risk / Urgent": 0,
+      "Unclear / Need More Context": 0
+    },
+    "Distressed / Needs Support": {
+      "Safe / Regulated": 0,
+      "Distressed / Needs Support": 90,
+      "High Risk / Urgent": 0,
+      "Unclear / Need More Context": 0
+    },
+    "High Risk / Urgent": {
+      "Safe / Regulated": 0,
+      "Distressed / Needs Support": 0,
+      "High Risk / Urgent": 65,
+      "Unclear / Need More Context": 0
+    },
+    "Unclear / Need More Context": {
+      "Safe / Regulated": 0,
+      "Distressed / Needs Support": 0,
+      "High Risk / Urgent": 0,
+      "Unclear / Need More Context": 41
+    }
+  },
+  "per_risk_signal_accuracy": {
+    "none": {
+      "total": 54,
+      "correct": 54,
+      "accuracy": 1.0
+    },
+    "hypervigilance": {
+      "total": 9,
+      "correct": 9,
+      "accuracy": 1.0
+    },
+    "loss_of_interest": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "unresolved_grief": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "intrusive_thoughts": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "disorientation": {
+      "total": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "emotional_suppression": {
+      "total": 9,
+      "correct": 9,
+      "accuracy": 1.0
+    },
+    "rumination": {
+      "total": 6,
+      "correct": 6,
+      "accuracy": 1.0
+    },
+    "social_isolation": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "family_tension": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "somatic_dissociation": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "behavioral_change": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "displacement_shame": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "secondary_stress": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "avoidance": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "attachment_loss": {
+      "total": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "school_avoidance": {
+      "total": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "somatic_response": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "environmental_helplessness": {
+      "total": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "secrecy_seeking": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "death_idealization": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "depersonalization": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "future_collapse": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "survivor_guilt": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "perceived_burdensomeness_with_leaving": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "perceptual_disturbance": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "passive_death_wish": {
+      "total": 10,
+      "correct": 10,
+      "accuracy": 1.0
+    },
+    "death_wish_via_physical_event": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "existential_indifference": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "dissociative_episode": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "undisclosed_event": {
+      "total": 7,
+      "correct": 7,
+      "accuracy": 1.0
+    },
+    "cognitive_avoidance": {
+      "total": 6,
+      "correct": 6,
+      "accuracy": 1.0
+    },
+    "minimal_response": {
+      "total": 5,
+      "correct": 5,
+      "accuracy": 1.0
+    },
+    "caregiver_imposed_silence": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "vague_somatic": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "deflection_to_caregiver": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "emotional_inconsistency": {
+      "total": 3,
+      "correct": 3,
+      "accuracy": 1.0
+    },
+    "retrieval_block": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    },
+    "derealization": {
+      "total": 2,
+      "correct": 2,
+      "accuracy": 1.0
+    },
+    "active_death_wish": {
+      "total": 4,
+      "correct": 4,
+      "accuracy": 1.0
+    }
+  },
+  "confidence_calibration": {
+    "0.5-0.6": {
+      "total": 41,
+      "correct": 41,
+      "accuracy": 1.0
+    },
+    "0.7-0.8": {
+      "total": 144,
+      "correct": 144,
+      "accuracy": 1.0
+    },
+    "0.8-0.9": {
+      "total": 57,
+      "correct": 57,
+      "accuracy": 1.0
+    },
+    "0.9-1.0": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    }
+  },
+  "rule_effectiveness_correct_counts": {
+    "none": 54,
+    "hypervigilance": 9,
+    "loss_of_interest": 5,
+    "unresolved_grief": 9,
+    "intrusive_thoughts": 13,
+    "emotional_suppression": 8,
+    "rumination": 3,
+    "family_tension": 3,
+    "somatic_dissociation": 3,
+    "behavioral_change": 10,
+    "avoidance": 11,
+    "secondary_stress_about_other": 3,
+    "somatic_response": 7,
+    "secrecy_seeking": 3,
+    "death_idealization": 4,
+    "depersonalization": 10,
+    "future_collapse": 4,
+    "survivor_guilt_with_self_death_framing": 7,
+    "perceived_burdensomeness_with_leaving": 3,
+    "perceptual_disturbance": 5,
+    "passive_death_wish": 12,
+    "death_wish_via_physical_event": 3,
+    "existential_indifference": 7,
+    "derealization": 5,
+    "undisclosed_event": 3,
+    "minimal_response": 30,
+    "caregiver_imposed_silence": 2,
+    "vague_somatic": 3,
+    "retrieval_block": 3,
+    "displacement_shame": 2,
+    "social_isolation": 1,
+    "active_death_wish": 5
+  },
+  "num_errors": 0,
+  "errors": []
+}

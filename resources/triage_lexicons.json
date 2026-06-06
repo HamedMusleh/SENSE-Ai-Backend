@@ -1,0 +1,737 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "schema": "SENSE rule-based triage lexicons",
+    "language": "Palestinian Arabic (primary), Modern Standard Arabic (fallback)",
+    "authority": "Aligned with resources/annotation_guide.md §8.2 risk_signal vocabulary",
+    "notes": [
+      "Keywords are matched after Arabic preprocessing (diacritics removed, alef normalized).",
+      "Each pattern is a substring/word-boundary match — NOT a regex by default.",
+      "Order within a category does not imply priority; priority is enforced in the classifier.",
+      "Patterns marked with leading 'EXACT:' must match the full token, not substring.",
+      "Patterns marked with leading 'PHRASE:' must match as a contiguous phrase."
+    ]
+  },
+
+  "high_risk": {
+    "passive_death_wish": {
+      "description": "Wishes for sleep-without-waking, disappearance, non-existence — without explicit 'I want to die'.",
+      "patterns": [
+        "PHRASE:بدي انام وما اصحى",
+        "PHRASE:بدي انام وما افيق",
+        "PHRASE:لو نمت وما صحيت",
+        "PHRASE:لو نمت وما فقت",
+        "PHRASE:نمت وما اصحى",
+        "PHRASE:ريت ما اصحى",
+        "PHRASE:يا ريت ما اصحى",
+        "PHRASE:لو ما كنت موجود",
+        "PHRASE:لو ما كنت هون",
+        "PHRASE:احسن لو ما كنت",
+        "PHRASE:احسن لو ما كان في",
+        "PHRASE:نفسي اختفي",
+        "PHRASE:بدي اختفي",
+        "PHRASE:نفسي تنتهي",
+        "PHRASE:تنتهي هاي الحياة",
+        "PHRASE:ما بدي اكون موجود",
+        "PHRASE:مش لازم اكون موجود",
+        "PHRASE:ما حدا رح يلاحظ",
+        "PHRASE:ما حدا يفيقني",
+        "PHRASE:ينهي كل اشي",
+        "PHRASE:اوقف اكون موجود",
+        "PHRASE:غيري يعيش بدالي",
+        "PHRASE:كيف ممكن اوصلها",
+        "PHRASE:وقع علي حجر كبير",
+        "PHRASE:ما حسيت باشي بعدها",
+        "PHRASE:وما بنزل"
+      ],
+      "weight": 0.90
+    },
+
+    "active_death_wish": {
+      "description": "Explicit, direct death wish for self.",
+      "patterns": [
+        "PHRASE:بدي اموت",
+        "PHRASE:نفسي اموت",
+        "PHRASE:ريت اموت",
+        "PHRASE:يا ريتني اموت",
+        "PHRASE:بتمنى اموت",
+        "PHRASE:احسن اموت",
+        "PHRASE:بدي اخلص من حالي",
+        "PHRASE:بدي اخلص حالي",
+        "PHRASE:بشد رقبتي",
+        "PHRASE:احط ايدي على رقبتي",
+        "PHRASE:اضربها بالحيط",
+        "PHRASE:بحط اصابعي بالشمعه",
+        "PHRASE:اتخلص من جسمي",
+        "PHRASE:جسمي يضعف ويخلص",
+        "PHRASE:اتخلص منو",
+        "PHRASE:بضربها بالحيط",
+        "PHRASE:وما بوجعني"
+      ],
+      "weight": 0.95
+    },
+
+    "death_idealization": {
+      "description": "Framing the dead as better off or to be envied.",
+      "patterns": [
+        "PHRASE:اللي ماتوا احسن",
+        "PHRASE:اللي ماتوا ارتاحوا",
+        "PHRASE:الي ماتوا احسن",
+        "PHRASE:الي ماتوا ارتاحوا",
+        "PHRASE:الميتين احسن",
+        "PHRASE:الميتين ارتاحوا",
+        "PHRASE:هم ارتاحوا",
+        "PHRASE:ارتاحوا اللي راحوا",
+        "PHRASE:ارتاحوا الي راحوا",
+        "PHRASE:محظوظين اللي ماتوا",
+        "PHRASE:محظوظين الي ماتوا",
+        "PHRASE:الموت بيرتاح",
+        "PHRASE:فكرة الموت",
+        "PHRASE:الموت مش مخيف"
+      ],
+      "weight": 0.90
+    },
+
+    "perceived_burdensomeness_with_leaving": {
+      "description": "Self framed as a burden combined with leaving/disappearing relieving others.",
+      "patterns": [
+        "PHRASE:احسن لما اروح",
+        "PHRASE:رح يكون احسن لما اروح",
+        "PHRASE:امي رح ترتاح",
+        "PHRASE:اهلي رح يرتاحوا",
+        "PHRASE:بدون ما يكون في",
+        "PHRASE:انا حمل عليهم",
+        "PHRASE:انا تقل عليهم",
+        "PHRASE:بضايقهم وانا موجود",
+        "PHRASE:امي رح تكون مرتاحة",
+        "PHRASE:لو ما كان عندها ولاد"
+      ],
+      "weight": 0.88,
+      "requires_co_signal": "leaving_self_reference",
+      "co_signal_note": "Burden language alone (e.g. 'I bother my mom') is Distressed; only High Risk when paired with leaving/disappearing/death framing for self."
+    },
+
+    "existential_indifference": {
+      "description": "Existence vs non-existence framed as equivalent or meaningless.",
+      "patterns": [
+        "PHRASE:ما في فرق اذا كنت هون",
+        "PHRASE:ما في فرق بين اذا كنت هون",
+        "PHRASE:ما في فرق اذا كنت موجود",
+        "PHRASE:نفس الاشي اذا كنت",
+        "PHRASE:ما بفرق اذا انا هون",
+        "PHRASE:وجودي بلا معنى",
+        "PHRASE:ما الي قيمة",
+        "PHRASE:ليش انا لساتي هون",
+        "PHRASE:ما استحقو",
+        "PHRASE:مش اهل للحب",
+        "PHRASE:ما عاد فيني فرق",
+        "PHRASE:صوت قلبي",
+        "PHRASE:عشان اعرف لما يوقف"
+      ],
+      "weight": 0.88
+    },
+
+    "future_collapse": {
+      "description": "Total loss of future orientation, especially with finality markers ('خلص').",
+      "patterns": [
+        "PHRASE:ما في اشي استناه",
+        "PHRASE:ما في اشي بستناه",
+        "PHRASE:خلص ما في اشي",
+        "PHRASE:خلصت كل اشي",
+        "PHRASE:ما في امل",
+        "PHRASE:راح كل اشي خلص",
+        "PHRASE:ما في مستقبل",
+        "PHRASE:ما بقدر اكمل",
+        "PHRASE:خلصت حياتي",
+        "PHRASE:خلصت معي",
+        "PHRASE:ما بدي اشي",
+        "PHRASE:كنت بدي اصير",
+        "PHRASE:هلأ ما بدي اشي",
+        "PHRASE:هلا ما بدي اشي",
+        "PHRASE:هسا ما بدي اشي"
+      ],
+      "weight": 0.85
+    },
+
+    "survivor_guilt_with_self_death_framing": {
+      "description": "Guilt about another's death/harm combined with wish self had died instead, or self as deserving the fate.",
+      "patterns": [
+        "PHRASE:كان لازم اكون انا بدالو",
+        "PHRASE:كان لازم اكون انا بدالها",
+        "PHRASE:يا ريتني انا بدالو",
+        "PHRASE:يا ريت انا اللي مت",
+        "PHRASE:انا اللي خليتو يصير",
+        "PHRASE:انا السبب",
+        "PHRASE:بسببي مات",
+        "PHRASE:بسببي صار اللي صار",
+        "PHRASE:كان لازم انا",
+        "PHRASE:بداله",
+        "PHRASE:بدالو",
+        "PHRASE:ليش هو وانا لا",
+        "PHRASE:انا اللي طلبت",
+        "PHRASE:انا اللي خليت اخوي",
+        "PHRASE:لو ما طلبت منو ما كان صار",
+        "PHRASE:هو اللي كان عليه"
+      ],
+      "weight": 0.88,
+      "co_signal_note": "Plain 'I am the cause' without death context is Distressed (guilt); only High Risk with death/harm framing."
+    },
+
+    "death_wish_via_physical_event": {
+      "description": "Wishes for heart/breathing/body to fail.",
+      "patterns": [
+        "PHRASE:تمنيت ما يرجع يشتغل",
+        "PHRASE:قلبي وقف وتمنيت",
+        "PHRASE:تمنيت ما اتنفس",
+        "PHRASE:تمنيت اتوقف عن التنفس",
+        "PHRASE:يا ريت قلبي يوقف",
+        "PHRASE:يا ريت ما اتنفس"
+      ],
+      "weight": 0.90
+    },
+
+    "depersonalization": {
+      "description": "Disownership of self/body, watching self from outside.",
+      "patterns": [
+        "PHRASE:جسمي مش جسمي",
+        "PHRASE:هاد مش انا",
+        "PHRASE:مش حاسس بحالي",
+        "PHRASE:ما بحس بحالي",
+        "PHRASE:شايف حالي من برا",
+        "PHRASE:بشوف حالي من برا",
+        "PHRASE:كاني مش انا",
+        "PHRASE:زي مش انا",
+        "PHRASE:روحي طلعت من جسمي",
+        "PHRASE:بشوف نفسي",
+        "PHRASE:مش وجهي",
+        "PHRASE:مش حاسس بجسمي",
+        "PHRASE:زي ما اكون مش هون",
+        "PHRASE:ولا حتى اني موجود",
+        "PHRASE:ما بحس بيدي",
+        "PHRASE:حدا تاني داخلي",
+        "PHRASE:صرت رمادي",
+        "PHRASE:جسمي صار مش حاسس",
+        "PHRASE:شخص تاني بالقصة",
+        "PHRASE:ما في لون فيي"
+      ],
+      "weight": 0.85
+    },
+
+    "derealization": {
+      "description": "World/reality feels unreal, stopped, or detached.",
+      "patterns": [
+        "PHRASE:العالم وقف",
+        "PHRASE:الدنيا وقفت",
+        "PHRASE:كل اشي زي حلم",
+        "PHRASE:زي مش حقيقي",
+        "PHRASE:كل اشي مش حقيقي",
+        "PHRASE:الدنيا مش حقيقية",
+        "PHRASE:الناس خيالات",
+        "PHRASE:مش حقيقيين",
+        "PHRASE:مش هو",
+        "PHRASE:الناس عم تختفي",
+        "PHRASE:الناس اللي حواليي عم تختفي"
+      ],
+      "weight": 0.85
+    },
+
+    "perceptual_disturbance": {
+      "description": "Persistent sensory disturbance not from physical illness — color loss, sound absence, time distortion.",
+      "patterns": [
+        "PHRASE:ما بشوف الوان",
+        "PHRASE:كل اشي رمادي",
+        "PHRASE:الدنيا كلها رمادي",
+        "PHRASE:ما بسمع اشي",
+        "PHRASE:الصوت بعيد",
+        "PHRASE:الوقت وقف",
+        "PHRASE:الزمن وقف",
+        "PHRASE:الجدران بتتحرك",
+        "PHRASE:صوت ابوي بيوصلني بطيئ",
+        "PHRASE:ما في صوت لما احكي",
+        "PHRASE:زي مش حصلت معي"
+      ],
+      "weight": 0.80
+    }
+  },
+
+  "distressed": {
+    "hypervigilance": {
+      "description": "Startle responses, scanning for danger, uncontrollable reactions to stimuli.",
+      "patterns": [
+        "PHRASE:كل ما اسمع صوت",
+        "PHRASE:كل صوت بخوفني",
+        "PHRASE:كل صوت بزعجني",
+        "PHRASE:بنتفض",
+        "PHRASE:بصير ارجف",
+        "PHRASE:قلبي بدق بسرعة",
+        "PHRASE:بركض عند امي",
+        "PHRASE:مش قادر اوقف حالي",
+        "بنطّ",
+        "PHRASE:بحس حدا بمشي ورايا",
+        "PHRASE:حدا بمشي ورايا",
+        "PHRASE:بسأل امي كل شوي",
+        "PHRASE:بخاف يصير فيها اشي",
+        "PHRASE:مش رح ترجع",
+        "PHRASE:بزيد خوفي",
+        "PHRASE:الناس الكبار اللي ما بعرفهم"
+      ],
+      "weight": 0.65
+    },
+
+    "intrusive_thoughts": {
+      "description": "Recurrent unwanted thoughts, flashbacks, mental images.",
+      "patterns": [
+        "PHRASE:بضل افكر",
+        "PHRASE:ما بقدر اطلع من راسي",
+        "PHRASE:بضل بشوف الصورة",
+        "PHRASE:كوابيس",
+        "PHRASE:احلام مزعجة",
+        "PHRASE:بحلم بـ",
+        "PHRASE:بصحى من كوابيس",
+        "PHRASE:الافكار بتيجي لحالها",
+        "PHRASE:ما بقدر اركز",
+        "PHRASE:ما بقدر افكر",
+        "PHRASE:راسي مليان",
+        "PHRASE:نفس الحلم كل ليلة",
+        "PHRASE:ما بقدر اوقف",
+        "PHRASE:ما عاد يمشي معي",
+        "PHRASE:كل شوي بنسى",
+        "PHRASE:ما اعرف وين انا",
+        "PHRASE:ما بقدر اتذكر",
+        "PHRASE:بصحى متعبة"
+      ],
+      "weight": 0.65
+    },
+
+    "unresolved_grief": {
+      "description": "Grief that does not resolve, persistent longing for lost person.",
+      "patterns": [
+        "PHRASE:اشتقتلها كتير",
+        "PHRASE:اشتقتلو كتير",
+        "PHRASE:بفتقدها",
+        "PHRASE:بفتقدو",
+        "PHRASE:نفسي اشوفها",
+        "PHRASE:نفسي اشوفو",
+        "PHRASE:قلبي وجعني عليها",
+        "PHRASE:قلبي وجعني عليه",
+        "PHRASE:كل يوم بفكر فيها",
+        "PHRASE:كل يوم بفكر فيه",
+        "PHRASE:ما ودعتها",
+        "PHRASE:ما حدا عندي هون",
+        "PHRASE:اشتقت",
+        "PHRASE:مين راح",
+        "PHRASE:استاذي كان بعرفني",
+        "PHRASE:ما رجع من المدرسة",
+        "PHRASE:صاحبي اللي ما رجع",
+        "PHRASE:صرت اكره الجمعة"
+      ],
+      "weight": 0.60
+    },
+
+    "avoidance": {
+      "description": "Avoidance of places, people, topics, memories.",
+      "patterns": [
+        "PHRASE:ما بدي اروح",
+        "PHRASE:ما بطيق اروح",
+        "PHRASE:ما بدي افكر",
+        "PHRASE:ما بدي اتذكر",
+        "PHRASE:ما بدي اشوف",
+        "PHRASE:بهرب من",
+        "PHRASE:بتجنب",
+        "PHRASE:ما بدي اطلع",
+        "PHRASE:بروح اتخبى",
+        "PHRASE:بختفي تحت السرير",
+        "PHRASE:ما بقدر اتفرج",
+        "PHRASE:وين انا ساكن",
+        "PHRASE:بنام بسرير امي",
+        "PHRASE:ما بدي اغيرو",
+        "PHRASE:ما بحب اشوف",
+        "PHRASE:ما بدي البس",
+        "PHRASE:بحب اقعد لحالي",
+        "PHRASE:مش حابه اكون فايقه"
+      ],
+      "weight": 0.55
+    },
+
+    "somatic_response": {
+      "description": "Bodily distress tied to emotional content (not vague — has location/quality).",
+      "patterns": [
+        "PHRASE:بطني بوجعني من",
+        "PHRASE:راسي بوجعني من",
+        "PHRASE:قلبي بوجعني",
+        "PHRASE:معدتي بتوجعني",
+        "PHRASE:ما بقدر اوكل من",
+        "PHRASE:صدري بضيق",
+        "PHRASE:بحس بضيقة",
+        "PHRASE:بتوجع معدتي",
+        "PHRASE:الم ببطني",
+        "PHRASE:صداع",
+        "PHRASE:نفس قصير",
+        "PHRASE:حجر على صدري",
+        "PHRASE:شعري يقع"
+      ],
+      "weight": 0.55
+    },
+
+    "somatic_dissociation": {
+      "description": "Sensory blunting or body-level numbing without self-disownership.",
+      "patterns": [
+        "PHRASE:ما حسيت بطعمه",
+        "PHRASE:ما في طعم",
+        "PHRASE:ما عاد بصير في طعم"
+      ],
+      "weight": 0.55
+    },
+
+    "secrecy_seeking": {
+      "description": "Child asks for secrecy before disclosure, suggesting hidden distress.",
+      "patterns": [
+        "PHRASE:بحكيلك بس وعدني",
+        "PHRASE:وعدني ما تحكي",
+        "PHRASE:حتى امي"
+      ],
+      "weight": 0.55
+    },
+
+    "family_tension": {
+      "description": "Child observes caregiver collapse or marked family emotional change.",
+      "patterns": [
+        "PHRASE:ابوي صار يبكي",
+        "PHRASE:ابوي بصرخ",
+        "PHRASE:ما شفته يعمل هيك قبل"
+      ],
+      "weight": 0.55
+    },
+
+    "emotional_suppression": {
+      "description": "Suppressed grief or numbing of emotional response (NOT depersonalization of self).",
+      "patterns": [
+        "PHRASE:ما بكيت",
+        "PHRASE:ما قدرت ابكي",
+        "PHRASE:ما بحس باشي",
+        "PHRASE:ما بحس بحزن",
+        "PHRASE:ما بحس بفرح",
+        "PHRASE:قلبي ميت",
+        "PHRASE:ما حدا بحكي",
+        "PHRASE:انا كمان ما بحكي",
+        "PHRASE:رح ابكي",
+        "PHRASE:بطلع معي اسود"
+      ],
+      "weight": 0.55,
+      "co_signal_note": "If combined with body-disownership (depersonalization patterns), escalate to High Risk per §5 Pair D."
+    },
+
+    "rumination": {
+      "description": "Repetitive thinking, can't stop the loop.",
+      "patterns": [
+        "PHRASE:ما بقدر انام بفكر",
+        "PHRASE:بضل افكر كتير",
+        "PHRASE:عقلي ما بوقف",
+        "PHRASE:بفكر طول الليل",
+        "PHRASE:ما بقدر اوقف التفكير",
+        "PHRASE:الليل كان طويل"
+      ],
+      "weight": 0.55
+    },
+
+    "school_avoidance": {
+      "description": "Refusal or fear of school as functional impairment.",
+      "patterns": [
+        "PHRASE:ما بدي اروح ع المدرسة",
+        "PHRASE:ما بدي اروح عالمدرسة",
+        "PHRASE:بكره المدرسة",
+        "PHRASE:بخاف من المدرسة",
+        "PHRASE:ما بدي اطلع من البيت"
+      ],
+      "weight": 0.55
+    },
+
+    "loss_of_interest": {
+      "description": "Loss of pleasure in previously enjoyed activities (anhedonia, child-level).",
+      "patterns": [
+        "PHRASE:ما عاد بحب اللعب",
+        "PHRASE:ما بحب اشي",
+        "PHRASE:ما في اشي بفرحني",
+        "PHRASE:كل اشي ممل",
+        "PHRASE:ما عاد في اشي حلو",
+        "PHRASE:بطلت احب",
+        "PHRASE:ما عاد بحب",
+        "PHRASE:ما عاد بدي",
+        "PHRASE:تعبان كل الوقت"
+      ],
+      "weight": 0.60
+    },
+
+    "social_isolation": {
+      "description": "Withdrawal from peers/family (NOT dissociative — body and reality intact).",
+      "patterns": [
+        "PHRASE:ما بدي اشوف حدا",
+        "PHRASE:ما بدي العب مع",
+        "PHRASE:بضل لحالي",
+        "PHRASE:بقعد لحالي",
+        "PHRASE:ما بدي احكي مع حدا",
+        "PHRASE:ما حدا عندي هون",
+        "PHRASE:انا مش زيهم"
+      ],
+      "weight": 0.50
+    },
+
+    "displacement_shame": {
+      "description": "Shame, social paralysis, or pity-aversion tied to displacement/loss context.",
+      "patterns": [
+        "PHRASE:ما عرفت كيف ارد",
+        "PHRASE:وين ابوي",
+        "PHRASE:الناس عم تتفرج علينا بشفقه",
+        "PHRASE:ما بحبها"
+      ],
+      "weight": 0.55
+    },
+
+    "secondary_stress_about_other": {
+      "description": "Distress about another's suffering (sibling, parent) — helplessness, not self-death framing.",
+      "patterns": [
+        "PHRASE:بعيط كل الليل",
+        "PHRASE:بتعيط كل الليل",
+        "PHRASE:ما عرفت كيف اساعدو",
+        "PHRASE:ما عرفت كيف اساعدها",
+        "PHRASE:ما عرفت كيف اساعده",
+        "PHRASE:امي بتعيط",
+        "PHRASE:بابا حزين",
+        "PHRASE:اخوي خايف",
+        "PHRASE:اختي خايفة",
+        "PHRASE:ما بعرف شو اقولها"
+      ],
+      "weight": 0.50
+    },
+
+    "environmental_helplessness": {
+      "description": "Realistic external-threat fear without death wish for self.",
+      "patterns": [
+        "PHRASE:بخاف يصير اشي",
+        "PHRASE:بخاف نموت",
+        "PHRASE:بخاف ينقصفنا",
+        "PHRASE:بخاف يصير لنا اشي",
+        "PHRASE:بخاف من القصف"
+      ],
+      "weight": 0.50,
+      "co_signal_note": "External-threat fear is Distressed per §5 Pair E — not High Risk. Death wish runs in opposite direction (wanting death, not fearing it)."
+    },
+
+    "behavioral_change": {
+      "description": "Observable withdrawal or functional change from usual child routines.",
+      "patterns": [
+        "PHRASE:بضل قاعد",
+        "PHRASE:بطلع من الشباك",
+        "PHRASE:ابص ع الحيط",
+        "PHRASE:صوتي بختفي",
+        "PHRASE:ما رجعت المدرسة",
+        "PHRASE:بطلت العب",
+        "PHRASE:ببطل اعمل اشي",
+        "PHRASE:ما بفكر باشي محدد",
+        "PHRASE:بخاف من حالي",
+        "PHRASE:بفلت"
+      ],
+      "weight": 0.55
+    }
+  },
+
+  "unclear": {
+    "minimal_response": {
+      "description": "Single-word or non-disclosing responses with no emotional valence.",
+      "patterns": [
+        "EXACT:تمام",
+        "EXACT:اوكي",
+        "EXACT:ماشي",
+        "EXACT:عادي",
+        "EXACT:مش عارف",
+        "EXACT:ما بعرف",
+        "EXACT:لا",
+        "EXACT:اه",
+        "EXACT:نعم"
+      ],
+      "weight": 0.40,
+      "co_signal_note": "Apply only if utterance length ≤ ~3 tokens after preprocessing."
+    },
+
+    "undisclosed_event": {
+      "description": "Child acknowledges something happened but refuses to share.",
+      "patterns": [
+        "PHRASE:صار اشي بس ما بدي احكي",
+        "PHRASE:صار اشي ما بدي احكي عنو",
+        "PHRASE:ما بدي احكي",
+        "PHRASE:ما بدي احكي عنو",
+        "PHRASE:ما بدي احكي عن هاد"
+      ],
+      "weight": 0.50
+    },
+
+    "caregiver_imposed_silence": {
+      "description": "Caregiver explicitly told the child not to talk about something.",
+      "patterns": [
+        "PHRASE:امي قالتلي ما احكي",
+        "PHRASE:بابا قالي ما احكي",
+        "PHRASE:قالولي ما احكي",
+        "PHRASE:ممنوع احكي"
+      ],
+      "weight": 0.50
+    },
+
+    "vague_somatic": {
+      "description": "Bodily complaint without description or location.",
+      "patterns": [
+        "PHRASE:بحس باشي هون",
+        "PHRASE:بحس بحاجة",
+        "PHRASE:في اشي بحسو",
+        "PHRASE:مش مرتاح",
+        "PHRASE:ما بقدر اوصف",
+        "PHRASE:مش زي قبل"
+      ],
+      "weight": 0.40,
+      "co_signal_note": "Distinguish from somatic_response (Distressed), which has location/cause."
+    },
+
+    "retrieval_block": {
+      "description": "Cognitive block on memory under questioning — may itself be dissociative; flag for review.",
+      "patterns": [
+        "PHRASE:بنسى كل اشي",
+        "PHRASE:ما بتذكر",
+        "PHRASE:لما تسالني بنسى",
+        "PHRASE:ما اذكر اشي"
+      ],
+      "weight": 0.45,
+      "co_signal_note": "Annotate Unclear but flag in review_notes — per §4.4."
+    },
+
+    "deflection_to_caregiver": {
+      "description": "Child deflects to a third party without revealing own state.",
+      "patterns": [
+        "PHRASE:اسالي امي",
+        "PHRASE:اسال بابا",
+        "PHRASE:امي بتعرف اكثر",
+        "PHRASE:بابا بيعرف"
+      ],
+      "weight": 0.40
+    }
+  },
+
+  "safe": {
+    "positive_affect": {
+      "description": "Joy, pride, comfort, contentment.",
+      "patterns": [
+        "PHRASE:انبسطت",
+        "PHRASE:فرحت",
+        "PHRASE:كنت مبسوط",
+        "PHRASE:كنت فرحان",
+        "PHRASE:حبيت",
+        "PHRASE:ضحكنا",
+        "PHRASE:حلو كتير",
+        "PHRASE:كتير حلو",
+        "PHRASE:ضحكت",
+        "PHRASE:مبسوط",
+        "PHRASE:حلو",
+        "PHRASE:حلوه",
+        "PHRASE:انا قوي",
+        "PHRASE:بحب الشتا",
+        "PHRASE:بحب ريحه الخبز",
+        "PHRASE:بحب اعد النجوم"
+      ],
+      "weight": 0.60
+    },
+
+    "future_orientation": {
+      "description": "Plans, anticipation, hopes.",
+      "patterns": [
+        "PHRASE:بكرا رح",
+        "PHRASE:بكرة رح",
+        "PHRASE:لما اكبر",
+        "PHRASE:يوم الجمعة رح",
+        "PHRASE:رح نطلع",
+        "PHRASE:رح نروح",
+        "PHRASE:بدي اصير",
+        "PHRASE:نفسي اصير",
+        "PHRASE:بدي اتعلم",
+        "PHRASE:بدي اكمل دراستي",
+        "PHRASE:بدي اكمل المدرسة",
+        "PHRASE:بدي اكمل رسمتي",
+        "PHRASE:بدي ارسم"
+      ],
+      "weight": 0.55
+    },
+
+    "daily_life_engagement": {
+      "description": "Food, family, play, school, friendships — engagement with normal life.",
+      "patterns": [
+        "PHRASE:طبخت امي",
+        "PHRASE:امي طبخت",
+        "PHRASE:اكلت مع",
+        "PHRASE:لعبت مع",
+        "PHRASE:صاحبي",
+        "PHRASE:صاحبتي",
+        "PHRASE:بالمدرسة اليوم",
+        "PHRASE:في الصف",
+        "PHRASE:لعبوا معي",
+        "PHRASE:صرنا اصحاب",
+        "PHRASE:تعلمت لعبه جديده",
+        "PHRASE:اكلت",
+        "PHRASE:جوعان",
+        "PHRASE:الغدا",
+        "PHRASE:رتيب الخيمه",
+        "PHRASE:الواجبات",
+        "PHRASE:بحفظ سور",
+        "PHRASE:امي رح نطبخ",
+        "PHRASE:امي قالت رح نطبخ",
+        "PHRASE:بربطو لحالي",
+        "PHRASE:اصوات الحيوانات",
+        "PHRASE:بساعد اخوتي",
+        "PHRASE:يكتبوا اسماءهم"
+      ],
+      "weight": 0.55
+    },
+
+    "emotional_resolution": {
+      "description": "A difficulty mentioned and processed/resolved within the utterance.",
+      "patterns": [
+        "PHRASE:بس بعدين بنام",
+        "PHRASE:بس هلا خلص",
+        "PHRASE:بس هسا خلص",
+        "PHRASE:تصالحنا",
+        "PHRASE:بس بعدين انبسطت",
+        "PHRASE:بس امي طمنتني",
+        "PHRASE:بس امي قالتلي",
+        "PHRASE:امي حضنتني",
+        "PHRASE:هديت",
+        "PHRASE:امي قالت مو لازم اخاف",
+        "PHRASE:انا بصدقها",
+        "PHRASE:انا بصدقو",
+        "PHRASE:قلتلها تمام",
+        "PHRASE:رجعت نمت بسرعة"
+      ],
+      "weight": 0.60
+    }
+  },
+
+  "hedges": {
+    "_note": "Hedges DO NOT down-grade High Risk labels per Principle 1 (safety over accuracy). They are recorded in review_notes only.",
+    "patterns": [
+      "PHRASE:بس مش جدياً",
+      "PHRASE:بس مش جدي",
+      "PHRASE:مازحت",
+      "PHRASE:عم بمزح",
+      "PHRASE:بس بمزح",
+      "PHRASE:لا مش هيك",
+      "PHRASE:انا بس قلت هيك",
+      "PHRASE:ما قصدت"
+    ]
+  },
+
+  "retraction": {
+    "_note": "Retraction of a High Risk statement does NOT change the label per §6.3. Recorded in review_notes only.",
+    "patterns": [
+      "PHRASE:لا مش هيك",
+      "PHRASE:مش قصدي",
+      "PHRASE:ما قصدت هيك",
+      "PHRASE:كنت بمزح",
+      "PHRASE:نسيت شو قلت"
+    ]
+  }
+}

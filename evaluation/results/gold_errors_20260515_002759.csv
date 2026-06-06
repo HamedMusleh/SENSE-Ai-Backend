@@ -1,0 +1,45 @@
+﻿id,text,true_label,pred_label,true_risk_signal,pred_risk_signal,confidence,needs_review,review_notes
+unseen_003,بحب أرسم مناظر طبيعية، الأسبوع الجاي رح أعمل لوحة جديدة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Hobby engagement + future planning. Tests creative future orientation.
+unseen_004,تعلمت كلمة جديدة بالانجليزي اليوم، 'butterfly' يعني فراشة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Code-switching + learning achievement. Tests Arabic-English mix.
+unseen_005,خلصت واجباتي بسرعة وقعدت ألعب على الجوال,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,"Normal daily routine, no lexicon-matching keywords."
+unseen_006,تيتا حكتلي قصة قبل النوم، كنت حابب اسمعها كتير,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Bedtime routine + grandparent bond. Note: 'تيتا' instead of 'جدّة'.
+unseen_007,صحبتي رنا جابت معها كتاب جديد وقرأناه سوا بالفسحة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Peer engagement + reading. No keyword match expected.
+unseen_008,كنت زعلانة شوي من أختي بس بعدين صالحناها على الشوكولاتة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,"Emotional resolution arc, female speaker variant."
+unseen_009,بابا وعدني لما يخلص شغله يلعب معي تنس طاولة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Anticipation + parental connection.
+unseen_010,بقدر أعد لعشرة بالانجليزي هلأ، حفظت الأرقام كلها,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Achievement + pride. No direct lexicon match.
+unseen_013,بحب القطط كتير، عندنا قطة اسمها مشمش بتيجي تنام جنبي,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Pet attachment + positive affect.
+unseen_014,رحت اليوم مع خالتي على السوق وجابتلي تيشيرت أحمر,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Outing + gift from relative.
+unseen_015,خايف شوي من الامتحان بكرا بس راجعت كتير,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Functional fear + coping. Tests Safe boundary against Distressed.
+unseen_017,بدي أكبر بسرعة عشان أصير دكتورة أساعد المرضى,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Future aspiration + prosocial motivation.
+unseen_018,عيد ميلادي قرّب وماما رح تعمل كيكة الفراولة اللي بحبها,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Birthday anticipation + parental warmth.
+unseen_020,افتكرت اليوم ضحكة جدي وحسيت بطمأنينة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Comforting memory (no death framing). Boundary case — could be confused with grief.
+unseen_022,نمت كويس بالليل وصحيت نشيطة على رائحة القهوة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Restful sleep — explicit contrast to insomnia. Tests sleep boundary.
+unseen_023,اشتقت لجدتي بس أمي حكتلي إنه رح نزورها يوم الخميس,Safe / Regulated,Distressed / Needs Support,none,unresolved_grief,0.7,False,"Mild longing with resolution. Tests grief boundary — alive grandmother, not deceased."
+unseen_024,في المدرسة بحب حصة الفن أكتر من باقي الحصص,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,School preference + interest.
+unseen_025,بصراحة الحياة هون أفضل من قبل، صار عندي أصحاب جداد,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Adjustment to displacement + social rebuilding. Tests positive adaptation.
+unseen_027,ابن خالتي علمني العب شطرنج وغلبته أول مرة اليوم,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Achievement + family bonding.
+unseen_028,بفكر أعمل عيد ميلاد مفاجأة لأمي الشهر الجاي,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Prosocial planning + future orientation.
+unseen_029,في كتاب جديد عندي اسمه قصص الأنبياء، بقرا منه كل ليلة,Safe / Regulated,Unclear / Need More Context,none,minimal_response,0.5,True,Reading routine + cultural-religious comfort.
+unseen_032,بكره أطلع من البيت، بحس إنه أحسن أقعد لحالي بالغرفة,Distressed / Needs Support,Unclear / Need More Context,social_isolation,minimal_response,0.5,True,Withdrawal without dissociative features. Body+reality intact.
+unseen_033,كل مرة بشوف طيارة بحس قلبي بيدق بسرعة وما بقدر أهدا,Distressed / Needs Support,Unclear / Need More Context,hypervigilance,minimal_response,0.5,True,Hypervigilance trigger-specific. Different phrasing than 'كل ما اسمع صوت'.
+unseen_035,بطلت أحس بنفس الفرحة لما العب، صار كله ممل,Distressed / Needs Support,Unclear / Need More Context,loss_of_interest,minimal_response,0.5,True,Anhedonia + functional impairment in play.
+unseen_036,كلما أحاول أنام، الذكريات بترجع وبضل صاحي لساعات,Distressed / Needs Support,Unclear / Need More Context,intrusive_thoughts,minimal_response,0.5,True,Intrusive thoughts + sleep disturbance. No death framing.
+unseen_038,بحس حالي وحيد حتى لما أكون مع ناس كتار,Distressed / Needs Support,Unclear / Need More Context,social_isolation,minimal_response,0.5,True,Internal isolation despite external presence. No body disownership.
+unseen_039,أبوي صار يصرخ كتير من ساعة ما رجعنا، مش متعود عليه هيك,Distressed / Needs Support,Unclear / Need More Context,secondary_stress_about_other,minimal_response,0.5,True,Distress about parent's changed behavior. Secondary stress.
+unseen_041,ما بحس بطعم الأكل من زمان، حتى اللي كنت بحبه,Distressed / Needs Support,Unclear / Need More Context,emotional_suppression,minimal_response,0.5,True,Sensory blunting around food. Borderline — no self-disownership.
+unseen_043,صرت أنسى أعمل واجباتي وأنا اللي كنت دايماً منظم,Distressed / Needs Support,Unclear / Need More Context,behavioral_change,minimal_response,0.5,True,Functional decline / behavioral change.
+unseen_044,إخوتي الصغار صاروا يخافوا من كل شي، ما عرفت كيف أهديهم,Distressed / Needs Support,Unclear / Need More Context,secondary_stress_about_other,minimal_response,0.5,True,"Helplessness about siblings. Same signal, different content."
+unseen_045,بحس إني ضايع، ما بعرف شو لازم أعمل من الصبح للمسا,Distressed / Needs Support,Unclear / Need More Context,disorientation,minimal_response,0.5,True,Functional disorientation without dissociation. Body+self intact.
+unseen_046,صرت أعيط بالليل لما حدا ما يكون يشوفني,Distressed / Needs Support,Unclear / Need More Context,emotional_suppression,minimal_response,0.5,True,"Hidden grief, secretive crying. Not High Risk."
+unseen_048,بضل أحلم بنفس الكابوس، بشوف فيه الانفجار من جديد,Distressed / Needs Support,Unclear / Need More Context,intrusive_thoughts,minimal_response,0.5,True,Recurrent traumatic nightmare. Intrusive but not dissociative.
+unseen_049,حسيت بخجل كبير لما عرف الجيران إنا صرنا بالخيمة,Distressed / Needs Support,Unclear / Need More Context,displacement_shame,minimal_response,0.5,True,"Displacement shame — circumstantial, not absolute."
+unseen_050,كنت لازم أمسك إيد أختي الصغيرة وأنا فلتها وقت الهربة,Distressed / Needs Support,Unclear / Need More Context,survivor_guilt,minimal_response,0.5,True,Survivor-style guilt WITHOUT self-death framing. Distressed not HR.
+unseen_051,بدي أنام طويل وما حدا يقدر يصحيني للأبد,High Risk / Urgent,Unclear / Need More Context,passive_death_wish,minimal_response,0.5,True,"Passive death wish — 'sleep forever, no one wake me'. Different phrasing."
+unseen_054,ليش أنا اللي بقيت؟ المفروض كنت مكان أخوي,High Risk / Urgent,Unclear / Need More Context,survivor_guilt_with_self_death_framing,minimal_response,0.5,True,Survivor guilt WITH self-death framing. Different from unseen_050.
+unseen_055,حسيت كأني مش بجسمي، كأني واقف بعيد وبشوف حالي,High Risk / Urgent,Unclear / Need More Context,depersonalization,minimal_response,0.5,True,Depersonalization — body disownership + watching from outside.
+unseen_056,كل الناس حواليي بتتحرك بس أنا متجمد ومش حسهم,High Risk / Urgent,Unclear / Need More Context,derealization,minimal_response,0.5,True,Derealization — reality feels distant/unreal.
+unseen_057,الألوان كلها صارت باهتة، حتى السما ما عاد فيها زرقة,High Risk / Urgent,Unclear / Need More Context,perceptual_disturbance,minimal_response,0.5,True,Color perception loss — perceptual disturbance.
+unseen_058,ما في فايدة، كل اللي بصير بصير، خلصت أنا من الموضوع,High Risk / Urgent,Unclear / Need More Context,future_collapse,minimal_response,0.5,True,Future collapse + finality. 'خلصت' marker.
+unseen_059,صلّيت إنه قلبي يوقف بالليل وما يرجع يشتغل,High Risk / Urgent,Unclear / Need More Context,death_wish_via_physical_event,minimal_response,0.5,True,Death wish via physical event — heart stopping. Religious framing.
+unseen_060,اللي راحوا بحرب غزة ارتاحوا، إحنا اللي بقينا بنعاني,High Risk / Urgent,Unclear / Need More Context,death_idealization,minimal_response,0.5,True,Death idealization — the dead are better off.
+unseen_062,وجودي بهالعالم بلا معنى، نفس الإشي لو موجود أو لأ,High Risk / Urgent,Unclear / Need More Context,existential_indifference,minimal_response,0.5,True,Existential indifference — no meaning + existence/non-existence equivalent.

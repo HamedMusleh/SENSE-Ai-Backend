@@ -1,0 +1,165 @@
+{
+  "_meta": {
+    "version": "0.1-draft",
+    "status": "PENDING_PSYCHOLOGIST_REVIEW",
+    "authority": "Aligned with resources/safety_rules.md and resources/annotation_guide.md",
+    "warning": "These responses are an initial draft. NO licensed Palestinian child psychologist has reviewed them yet. Do not deploy to real children without expert sign-off. Each response should be reviewed for cultural sensitivity, developmental appropriateness, and trauma-informed care principles.",
+    "design_principles": [
+      "Simple Palestinian Arabic (per safety_rules.md 'Child Reply Rules')",
+      "Warm and gentle, short replies",
+      "No clinical terms (no PTSD/depression/anxiety/trauma)",
+      "No diagnosis, no medical advice",
+      "No promise of confidentiality (per safety_rules.md 'Forbidden')",
+      "No direct trauma questions",
+      "At most ONE safe indirect follow-up question — usually a presence check, never trauma probing",
+      "Never mention risk labels to the child",
+      "Focus on: presence, grounding, normalizing emotion, gentle invitation to be with a trusted adult"
+    ],
+    "selection_rule": "Pick the response variant matching the most specific risk_signal first. If no exact match, fall back to 'generic_high_risk'. Rotate among variants of the same signal to avoid repetition across turns.",
+    "review_checklist_for_psychologist": [
+      "Is the dialect appropriate for children aged 6–14 in West Bank / Gaza contexts?",
+      "Does any phrase risk reinforcing self-harm ideation?",
+      "Is the grounding language developmentally appropriate?",
+      "Should any response prompt caregiver involvement more explicitly?",
+      "Are there culturally important phrasings missing (e.g. religious comfort)?",
+      "Should the follow-up question be removed entirely for any signal?"
+    ]
+  },
+
+  "active_death_wish": {
+    "description": "Explicit 'I want to die' / 'I want to end myself'.",
+    "responses": [
+      {
+        "text": "سمعتك. هاد إشي تقيل كتير تحكيه. أنا هون معك هلأ. مين قريب منك بالبيت تقدر تكون جنبه؟",
+        "follow_up_type": "presence_check"
+      },
+      {
+        "text": "شكراً إنك حكيتلي. حاسس إنك تعبان كتير. مهم تكون مع حدا بتحبه هلأ — أمك، أبوك، أو حدا كبير قريب منك.",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "passive_death_wish": {
+    "description": "Wishing for sleep-without-waking, disappearance, non-existence.",
+    "responses": [
+      {
+        "text": "حاسس فيك. لما الواحد بحس هيك يعني تعبه صار كبير. أنا معك. في حدا كبير جنبك هلأ تقدر تحكيه؟",
+        "follow_up_type": "presence_check"
+      },
+      {
+        "text": "هاد حس صعب وأنا فاهم إنه ثقيل. مش لازم تحمله لحالك. مين بالبيت بتحس معه أمان؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "death_idealization": {
+    "description": "Framing the dead as better off or to be envied.",
+    "responses": [
+      {
+        "text": "بحس إنك حامل حزن كبير. اللي راحوا غاليين عليك. أنا هون. خبرني، مين بيواسيك هلأ لما تحس هيك؟",
+        "follow_up_type": "support_inquiry"
+      }
+    ]
+  },
+
+  "perceived_burdensomeness_with_leaving": {
+    "description": "Self as burden + wishing to leave so others find relief.",
+    "responses": [
+      {
+        "text": "بدي قلك إشي مهم: إنت مش حمل على حدا. وجودك بيفرق. أمك بتحبك مش بس بتتحمّلك. تقدر تروح تكون جنبها هلأ؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "existential_indifference": {
+    "description": "Existence vs non-existence framed as equivalent.",
+    "responses": [
+      {
+        "text": "سمعتك. لما الواحد بحس هيك، يعني في إشي جواه تعبان كتير. أنا معك هلأ. مين كبير قريب منك تقدر تقعد جنبه؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "future_collapse": {
+    "description": "Total loss of future orientation, finality markers.",
+    "responses": [
+      {
+        "text": "حاسس فيك. لما كل إشي بيحس مسكّر، هاد حس صعب كتير. خليني أكون معك شوي. في حدا بتحب تكون جنبه هلأ؟",
+        "follow_up_type": "presence_check"
+      }
+    ]
+  },
+
+  "survivor_guilt_with_self_death_framing": {
+    "description": "Guilt about another's harm + wish self had taken their place.",
+    "responses": [
+      {
+        "text": "اللي صار مش غلطك. أنا عارف إنه صعب لما الواحد بحس بهيك. مش لازم تحمله لحالك. مين بالبيت تقدر تحكيه؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "death_wish_via_physical_event": {
+    "description": "Wishing heart/breathing to fail.",
+    "responses": [
+      {
+        "text": "سمعتك. جسمك بيحكي إشي مهم لما تحس هيك. أنا معك هلأ. خبرني، مين قريب منك بقدر يقعد جنبك؟",
+        "follow_up_type": "presence_check"
+      }
+    ]
+  },
+
+  "depersonalization": {
+    "description": "Body disownership, watching self from outside.",
+    "responses": [
+      {
+        "text": "اللي حسيت فيه بصير مع ناس كتير لما يكونوا تعبانين كتير. أنا هون. جرّب تحس بإيدك ع رجلك. شو حاسس هلأ؟",
+        "follow_up_type": "grounding"
+      },
+      {
+        "text": "حاسس فيك. هاد حس غريب وصعب. خليك مع حدا كبير بتحبه هلأ. تقدر تروح عنده؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "derealization": {
+    "description": "World/reality feels unreal or stopped.",
+    "responses": [
+      {
+        "text": "اللي حاسس فيه بصير لما الواحد يكون تعبان كتير. أنا معك. جرّب تشوف حواليك وقلي شو 3 أشيا بتشوفهم.",
+        "follow_up_type": "grounding"
+      }
+    ]
+  },
+
+  "perceptual_disturbance": {
+    "description": "Sound absence, color loss, time distortion.",
+    "responses": [
+      {
+        "text": "سمعتك. جسمك بيقلك إنه محتاج راحة. أنا هون معك. في حدا كبير جنبك تقدر تحكيه شو حاسس فيه؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "generic_high_risk": {
+    "description": "Fallback when no specific signal matches — used if classifier returns a High Risk label but signal is unknown.",
+    "responses": [
+      {
+        "text": "سمعتك. أنا هون معك. اللي بتحس فيه مهم. تقدر تكون مع حدا كبير بتحبه هلأ؟",
+        "follow_up_type": "trusted_adult_redirect"
+      }
+    ]
+  },
+
+  "_fallback_on_error": {
+    "description": "Used only if the JSON file fails to load or signal lookup throws. Must always be present.",
+    "text": "أنا هون معك. اللي بتحس فيه مهم. خليك مع حدا كبير بتحبه هلأ."
+  }
+}

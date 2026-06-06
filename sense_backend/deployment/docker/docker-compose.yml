@@ -1,0 +1,17 @@
+services:
+  sense-backend:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+    image: sense-backend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      SENSE_HOST: 0.0.0.0
+      SENSE_PORT: "8000"
+      SENSE_PIPELINE_MODE: hybrid
+      SENSE_CORS_ORIGINS: "*"
+      # OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ../../backend/uploads:/app/backend/uploads
+    restart: unless-stopped

@@ -1,0 +1,250 @@
+{"id": "gold_001", "text": "اليوم أمي طبخت مقلوبة... أكلت كتير", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_002", "text": "رحنا على عمي أمبارح، أولاده كبار بس لعبوا معي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_003", "text": "المدرسة هون غير... المعلمة مش زي معلمتي، بس هي كمان حلوة", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_004", "text": "خايف شوي من الظلام لما الكهربا بتروح، بس بعدين بنام", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_005", "text": "سألت أمي إمتى نرجع... قالت ما تعرف. قلتلها تمام", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_006", "text": "أنا بحب الشتا لأنو بقعد جوا وما حدا بقولي اطلع", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_007", "text": "بابا قاللي بكرا رح يجيب لي دفتر تلوين", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_008", "text": "زعلت من أخوي كتير اليوم، عيطت، بس هسا خلص تصالحنا", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_009", "text": "في ولد جديد بالخيمة اسمه كريم، صرنا أصحاب", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_010", "text": "تعبت من المشي الكتير بس أنا قوي مش هيك؟", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_011", "text": "شو رح نوكل الغدا؟ أنا جوعان", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_012", "text": "أمي قالت مو لازم أخاف لأنو هي دايمًا معي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_013", "text": "كل ما أسمع صوت عالي بركض عند أمي... مش قادر أوقف حالي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_014", "text": "بطلت احب الرسم... قبل كنت بحبو", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_015", "text": "جدتي ماتت وأنا ما كنت معها... ما ودعتها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_016", "text": "ما بقدر أركز بالدراسة... الأفكار بتيجي لحالها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_017", "text": "صحيت الصبح وما أعرف وين أنا... بعدين تذكرت", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_018", "text": "أنا ما بكيت لما شفت بيتنا... بس قلبي وجعني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_019", "text": "في الليل بفكر كتير وما بقدر أنام... بفكر بأشياء", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_020", "text": "صاحبتي انتقلت على مكان ثاني... ما حدا عندي هون", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_021", "text": "أبوي بصرخ كتير هسا... مش زي قبل", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_022", "text": "حطيت الأكل بتمي وما حسيت بطعمه", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_023", "text": "بطلت العب كتير... بضل قاعد وبطلع من الشباك", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_024", "text": "سألوني بالمدرسة وين أنا ساكن هسا... ما أجبت", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_025", "text": "أخوي الصغير بعيط كل الليل وأنا ما قدرت أنام وما عرفت كيف أساعده", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_026", "text": "ما بحب لما يجوا ناس ما بعرفهم على البيت... بروح اتخبى بغرفتي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_027", "text": "بدي أرجع على مدرستي القديمة... أستاذي كان بعرفني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_028", "text": "بحس إنو الكل خايف بس ما حدا بحكي... أنا كمان ما بحكي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_029", "text": "غلطت بالإجابة قدام الصف وكلهم ضحكوا... ما رجعت المدرسة من يومها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_030", "text": "لما بشوف صور بيتنا القديم على التلفون بتوجع معدتي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_031", "text": "الكهربا ما بتيجي... ببطل أعمل إشي وبضل قاعد", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_032", "text": "بحكيلك بس وعدني ما تحكي لحدا... حتى أمي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_033", "text": "بحس إنو اللي ماتوا أحسن منا... هم ارتاحوا", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_034", "text": "حاسس إنو جسمي مش جسمي... زي ما أنا شايف حالي من برا", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_035", "text": "ما في إشي استناه ... خلص", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_036", "text": "أنا اللي خليت أخوي يروح معي... لو ما طلبت منو ما كان صار إشي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_037", "text": "رح يكون أحسن لما أروح... أمي رح ترتاح", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_038", "text": "ما بشوف ألوان صح من زمان... كل إشي زي رمادي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_039", "text": "لو نمت وما صحيت كان أحسن", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_040", "text": "مرة حسيت إنو قلبي وقف... وتمنيت ما يرجع يشتغل", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_041", "text": "بحس إنو ما في فرق بين إذا كنت هون أو لأ", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_042", "text": "كنت واقف وفجأة ما سمعت إشي... حسيت إنو العالم وقف وأنا مش فيه", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_043", "text": "صار إشي بس ما بدي أحكي عنو هون", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_044", "text": "مش عارف... سؤالك صعب", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_045", "text": "تمام", "gold_label": "Unclear / Need More Context", "predicted_label": "Safe / Regulated"}
+{"id": "gold_046", "text": "أمي قالتلي ما أحكي عن هاد الموضوع", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_047", "text": "بحس بإشي هون", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_048", "text": "أنا تمام بس أمي مش تمام... هيك", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_049", "text": "مرات بعيط ومرات لأ... مش فاهم ليش", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_050", "text": "لما تسألني هيك بنسى كل إشي كنت بدي أقولو", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_001", "text": "اليوم أمي طبخت مقلوبة... أكلت كتير", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_002", "text": "رحنا على عمي أمبارح، أولاده كبار بس لعبوا معي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_003", "text": "المدرسة هون غير... المعلمة مش زي معلمتي، بس هي كمان حلوة", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_004", "text": "خايف شوي من الظلام لما الكهربا بتروح، بس بعدين بنام", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_005", "text": "سألت أمي إمتى نرجع... قالت ما تعرف. قلتلها تمام", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_006", "text": "أنا بحب الشتا لأنو بقعد جوا وما حدا بقولي اطلع", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_007", "text": "بابا قاللي بكرا رح يجيب لي دفتر تلوين", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_008", "text": "زعلت من أخوي كتير اليوم، عيطت، بس هسا خلص تصالحنا", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_009", "text": "في ولد جديد بالخيمة اسمه كريم، صرنا أصحاب", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_010", "text": "تعبت من المشي الكتير بس أنا قوي مش هيك؟", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_011", "text": "شو رح نوكل الغدا؟ أنا جوعان", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_012", "text": "أمي قالت مو لازم أخاف لأنو هي دايمًا معي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_013", "text": "كل ما أسمع صوت عالي بركض عند أمي... مش قادر أوقف حالي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_014", "text": "بطلت احب الرسم... قبل كنت بحبو", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_015", "text": "جدتي ماتت وأنا ما كنت معها... ما ودعتها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_016", "text": "ما بقدر أركز بالدراسة... الأفكار بتيجي لحالها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_017", "text": "صحيت الصبح وما أعرف وين أنا... بعدين تذكرت", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_018", "text": "أنا ما بكيت لما شفت بيتنا... بس قلبي وجعني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_019", "text": "في الليل بفكر كتير وما بقدر أنام... بفكر بأشياء", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_020", "text": "صاحبتي انتقلت على مكان ثاني... ما حدا عندي هون", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_021", "text": "أبوي بصرخ كتير هسا... مش زي قبل", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_022", "text": "حطيت الأكل بتمي وما حسيت بطعمه", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_023", "text": "بطلت العب كتير... بضل قاعد وبطلع من الشباك", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_024", "text": "سألوني بالمدرسة وين أنا ساكن هسا... ما أجبت", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_025", "text": "أخوي الصغير بعيط كل الليل وأنا ما قدرت أنام وما عرفت كيف أساعده", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_026", "text": "ما بحب لما يجوا ناس ما بعرفهم على البيت... بروح اتخبى بغرفتي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_027", "text": "بدي أرجع على مدرستي القديمة... أستاذي كان بعرفني", "gold_label": "Distressed / Needs Support", "predicted_label": "Safe / Regulated"}
+{"id": "gold_028", "text": "بحس إنو الكل خايف بس ما حدا بحكي... أنا كمان ما بحكي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_029", "text": "غلطت بالإجابة قدام الصف وكلهم ضحكوا... ما رجعت المدرسة من يومها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_030", "text": "لما بشوف صور بيتنا القديم على التلفون بتوجع معدتي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_031", "text": "الكهربا ما بتيجي... ببطل أعمل إشي وبضل قاعد", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_032", "text": "بحكيلك بس وعدني ما تحكي لحدا... حتى أمي", "gold_label": "Distressed / Needs Support", "predicted_label": "2. Distressed / Needs Support"}
+{"id": "gold_033", "text": "بحس إنو اللي ماتوا أحسن منا... هم ارتاحوا", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_034", "text": "حاسس إنو جسمي مش جسمي... زي ما أنا شايف حالي من برا", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_035", "text": "ما في إشي استناه ... خلص", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_036", "text": "أنا اللي خليت أخوي يروح معي... لو ما طلبت منو ما كان صار إشي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_037", "text": "رح يكون أحسن لما أروح... أمي رح ترتاح", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_038", "text": "ما بشوف ألوان صح من زمان... كل إشي زي رمادي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_039", "text": "لو نمت وما صحيت كان أحسن", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_040", "text": "مرة حسيت إنو قلبي وقف... وتمنيت ما يرجع يشتغل", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_041", "text": "بحس إنو ما في فرق بين إذا كنت هون أو لأ", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_042", "text": "كنت واقف وفجأة ما سمعت إشي... حسيت إنو العالم وقف وأنا مش فيه", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_043", "text": "صار إشي بس ما بدي أحكي عنو هون", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_044", "text": "مش عارف... سؤالك صعب", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_045", "text": "تمام", "gold_label": "Unclear / Need More Context", "predicted_label": "Safe / Regulated"}
+{"id": "gold_046", "text": "أمي قالتلي ما أحكي عن هاد الموضوع", "gold_label": "Unclear / Need More Context", "predicted_label": "2. Distressed / Needs Support"}
+{"id": "gold_047", "text": "بحس بإشي هون", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_048", "text": "أنا تمام بس أمي مش تمام... هيك", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_049", "text": "مرات بعيط ومرات لأ... مش فاهم ليش", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_050", "text": "لما تسألني هيك بنسى كل إشي كنت بدي أقولو", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_051", "text": "البارح خلصت الواجبات كلها وأمي قالتلي شاطر", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_052", "text": "اشتقتلها كتير... بس أمي قالتلي إنها بتشوفنا من فوق", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_053", "text": "بحب أساعد أمي بترتيب الخيمة... بحس حالي كبير", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_054", "text": "صحيت من المنام مفزوع بس رجعت نمت بسرعة", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_055", "text": "أبوي قاللي إنو الحرب رح تخلص... وأنا بصدقو", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_056", "text": "بحفظ سور قصيرة من القرآن مع جدتي قبل النوم", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_057", "text": "ما عجبني الأكل اليوم بس أكلت لأني جوعان", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_058", "text": "كنت زعلانة من صاحبتي بس بكرا رح أحكي معها", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_059", "text": "بحب ريحة الخبز لما أمي تخبز... بتفكرني ببيتنا", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_060", "text": "في يوم بدي أصير دكتور وأداوي الناس", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_061", "text": "تعلمت لعبة جديدة من ابن جيراننا اليوم", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_062", "text": "صار في صوت قوي وانخضيت بس أمي حضنتني وهديت", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_063", "text": "ضحكت اليوم لما أخوي وقع وهو بحاول يلعب", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_064", "text": "بحب لما تيجي خالتي تزورنا... بتجيب معها حلو", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_065", "text": "ما بعرف أحكي إنجليزي بس بدي أتعلم", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_066", "text": "لما أكبر بدي أرجع على بيتنا وأرجع أرتبه", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_067", "text": "كنت خايف من الكلب بأول بس هلأ صرنا أصحاب", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_068", "text": "بساعد إخوتي الصغار يكتبوا أسماءهم", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_069", "text": "اليوم الجو حلو وقعدنا برا الخيمة شوي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_070", "text": "أمي قالت رح نطبخ لما الكهربا تيجي... منستنى", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_071", "text": "مرات بفكر بصاحبي اللي ما لحقت أودعو... بس بتذكر اللعبة اللي كنا نلعبها وبضحك", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_072", "text": "تعبت اليوم بس بدي أكمل رسمتي قبل ما أنام", "gold_label": "Safe / Regulated", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_073", "text": "بحب أعد النجوم من الشباك... بس مش كل الأيام بيبانوا", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_074", "text": "أمي بتقولي أنا قوي... وأنا بصدقها", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_075", "text": "بدي أتعلم أعمل طيارة من ورق... بس ما طلعت معي لساتي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_076", "text": "أبوي علمني كيف أربط حذائي... كل يوم بربطو لحالي", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_077", "text": "بضحك لما إخوتي يقلدوا أصوات الحيوانات", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_078", "text": "ما بعرف ليش بس اليوم حسيت حالي مبسوط", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_079", "text": "بدي أكتب رسالة لصاحبي اللي بعيد عنا", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_080", "text": "أمبارح حلمت إني بطير... كان حلم حلو", "gold_label": "Safe / Regulated", "predicted_label": "Safe / Regulated"}
+{"id": "gold_081", "text": "بقعد ساعات أبص ع الحيط... ما بفكر بإشي محدد", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_082", "text": "كل ما أمشي بالشارع بحس إنو حدا بمشي ورايا", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_083", "text": "بطلت أحب أحكي مع أمي... ما بعرف ليش", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_084", "text": "بنسى أشياء كانت بتصير... زي مش حصلت معي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_085", "text": "بحس إنو راسي مليان... ما بقدر أفكر بإشي تاني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_086", "text": "أختي الصغيرة بتسألني عن بابا... وأنا ما بعرف شو أقولها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_087", "text": "ما بقدر أتفرج على الأخبار... بس بسمعها من أهلي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_088", "text": "بحلم نفس الحلم كل ليلة... عن اليوم اللي صار", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_089", "text": "كل ما حدا يحضنني بفلت... مش زي قبل", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_090", "text": "كنت بحب الموسيقى... هلأ كل صوت بزعجني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_091", "text": "بضل أعد كم مرة سمعت الصوت اليوم... ما بقدر أوقف", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_092", "text": "صار شعري يقع كتير... أمي قالت من القلق", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_093", "text": "بحس إني تعبان كل الوقت بس ما عملت إشي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_094", "text": "ما بدي أحكي مع حدا اليوم... ولا حتى أمي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_095", "text": "كل ما أشوف طيارة بالسما بختفي تحت السرير", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_096", "text": "بكتب باسم بنت مش اسمي... زي ما أكون شخص تاني بالقصة", "gold_label": "Distressed / Needs Support", "predicted_label": "Safe / Regulated"}
+{"id": "gold_097", "text": "بسأل أمي كل شوي إذا هي تمام... بخاف يصير فيها إشي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_098", "text": "بحس إنو الحفظ ما عاد يمشي معي بالمدرسة", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_099", "text": "بصير يجيني ألم ببطني كل ما يقولوا رح نروح زيارة", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_100", "text": "ما بقدر أوقف عن البكي... حتى وأنا ما بعرف ليش بعيط", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_101", "text": "صرت أخاف لما أنام لحالي... بنام بسرير أمي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_102", "text": "بضل أفكر كيف كنت لازم أعمل غير شغلة... بس ما عرفت", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_103", "text": "ما بحب أشوف صوري القديمة... ساعة لما كنت مبسوط", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_104", "text": "كل ما أحكي قصة عن قبل بحس حالي رح أبكي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_105", "text": "صرت أنسى ليش دخلت الغرفة... كل شوي بنسى", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_106", "text": "ما بدي ألبس الفستان اللي بحبو... بفكرني بعيد ميلادي اللي ما صار", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_107", "text": "أبوي صار يبكي قدامنا... ما شفته يعمل هيك قبل", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_108", "text": "بحس إنو قلبي بدق بسرعة لما أسمع الباب بنفتح", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_109", "text": "ما عاد بصير في طعم لأي إشي بوكلو", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_110", "text": "بحب أقعد لحالي بمكان ضليل... بحس بأمان أكتر", "gold_label": "Distressed / Needs Support", "predicted_label": "Safe / Regulated"}
+{"id": "gold_111", "text": "صرت أخاف من الناس الكبار اللي ما بعرفهم... حتى لو لابسين عادي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_112", "text": "بفكر كتير بصاحبي اللي ما رجع من المدرسة يومها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_113", "text": "بصير يجيني صداع كل ما حدا يحكي عن اللي صار", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_114", "text": "ما بقدر أحكي قدام الناس... صوتي بختفي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_115", "text": "بحلم إنو في حدا بدور علي وأنا مختبي... وبصحى متعبة", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_116", "text": "ما عاد بدي ألبس ألوان حلوة... بحس إنو مش وقتها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_117", "text": "بضل أعد على إصابعي عشان أتذكر مين راح", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_118", "text": "بصير يطلع صوتي عالي وأنا ما بقصد... بخاف من حالي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_119", "text": "ما عرفت كيف أرد عليها لما سألتني وين أبوي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_120", "text": "بحس إنو الناس عم تتفرج علينا بشفقة... ما بحبها", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_121", "text": "صار يجيني نفس قصير لما أتذكر اليوم اللي طلعنا فيه", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_122", "text": "كل ما أمي تطلع من الخيمة بحس إنها مش رح ترجع", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_123", "text": "بدي أرسم بس كل اللي بطلع معي أسود", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_124", "text": "صرت أحب الفجر... بحس إنو الليل كان طويل بزيادة", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_125", "text": "كل ما حدا يحكيلي تعب ما تخاف بزيد خوفي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_126", "text": "بدي أنام طول النهار... بس مش لإنو تعبانة... بس مش حابة أكون فايقة", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_127", "text": "صرت أكره الجمعة... كانت يوم بنروح فيه على ستي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_128", "text": "ما بقدر أتذكر شو لبست أمبارح... وبس البارح يعني", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_129", "text": "بحس إنو في حجر على صدري لما أكون لحالي", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_130", "text": "كل ما أشوف ولاد بيلعبوا بحس إنو أنا مش زيهم", "gold_label": "Distressed / Needs Support", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_131", "text": "بدي أختفي... بس أختفي خالص", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_132", "text": "حاسة إنو لو ما طلعت الصبح ما حدا رح يلاحظ", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_133", "text": "بحس إنو روحي طلعت من جسمي وأنا واقفة بشوف نفسي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_134", "text": "ما بحس بيدي... بضربها بالحيط وما بوجعني", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_135", "text": "كان لازم أنا اللي بدالها... هي ما عملت إشي وأنا اللي طلبت نروح", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_136", "text": "ما بقدر أكمل... خلصت", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_137", "text": "بشوف الناس بتمشي بس زي ما يكونوا خيالات... مش حقيقيين", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_138", "text": "نفسي تنتهي هاي الحياة وخلص", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_139", "text": "لو وقع علي حجر كبير وما حسيت بإشي بعدها كان أحسن", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_140", "text": "بضل أحط إيدي على رقبتي وأشد شوي... بحس إنو بقدر أوقف هاد التفكير", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_141", "text": "ما بشوف أبوي بنفس الطريقة من بعد ما صار اللي صار... مش هو", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_142", "text": "كل شي صار ببطء... زي إنو الوقت وقف بس أنا داخلو", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_143", "text": "أمي رح تكون مرتاحة لو ما كان عندها ولاد بهالظروف", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_144", "text": "بحط أصابعي بالشمعة وأشوف كم بقدر أتحمل", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_145", "text": "بحس إنو بدي أنام لفترة طويلة... شهر مثلا... ما حدا يفيقني", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_146", "text": "ما عاد فيني فرق... كل يوم زي اللي قبلو وزي اللي بعدو", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_147", "text": "كنت لازم أكون أنا اللي بالسيارة بدالو... أنا اللي طلبت نطلع", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_148", "text": "بحس إنو ما في صوت لما أحكي... كأنو حلقي مش بشتغل", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_149", "text": "بشوف الجدران بتتحرك مع إنو ساكنة", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_150", "text": "حلوة فكرة الموت لأنو الواحد بيرتاح من كل إشي", "gold_label": "High Risk / Urgent", "predicted_label": "3. High Risk / Urgent"}
+{"id": "gold_151", "text": "كل اللي بحبهم راحوا... ليش أنا لساتي هون", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_152", "text": "ما بشوف نفسي بالمرايا متل قبل... زي ما تكون مش وجهي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_153", "text": "بضل أتمنى يصير حدث طبيعي ينهي كل إشي", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_154", "text": "أنا اللي ما حماني الله... يعني مش لازم أكون موجود", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_155", "text": "صرت أحس إنو في حدا تاني داخلي بحكي بدالي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_156", "text": "ما بحب جسمي... بدي أتخلص منو", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_157", "text": "بضل بحلم إني بطير من فوق وما بنزل", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_158", "text": "بطلت أحس بالحر ولا البرد... جسمي صار مش حاسس", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_159", "text": "كنت بدي أصير دكتور بس هلأ ما بدي إشي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_160", "text": "بفكر بالسما كل ما أكون لحالي... كيف ممكن أوصلها", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_161", "text": "ما عاد بأكل بقصد... عشان جسمي يضعف ويخلص", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_162", "text": "بحلم بصاحبي اللي راح وبصحى بقول ليش هو وأنا لأ", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_163", "text": "صرت أكره صوت قلبي وهو بدق... بذكرني إني لساتي عايش", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_164", "text": "أمبارح ضليت ساعتين قاعد ما بحس بإشي ولا بفكر بإشي... زي ما أكون مش هون", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_165", "text": "بحس إنو الناس اللي حواليي عم تختفي وأنا لحالي بهالعالم", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_166", "text": "بدي أوقف أنا اللي بكون موجود... عشان غيري يعيش بدالي", "gold_label": "High Risk / Urgent", "predicted_label": "High Risk / Urgent"}
+{"id": "gold_167", "text": "صرت ألبس نفس الجاكيت من اللي صار... ما بدي أغيرو لأنو هو اللي كان عليه يوماتها", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_168", "text": "ما عاد بحس بأي إشي... ولا حزن ولا فرح ولا حتى إني موجود", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_169", "text": "كل ما يصير شي حلو بفكر إنو ما أستحقو", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_170", "text": "بحس إنو الموت مش مخيف زي ما الكل بيقول", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_171", "text": "صرت أعد كم مرة قلبي بدق بالدقيقة... عشان أعرف لما يوقف", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_172", "text": "حسيت إني صرت رمادي... ما في لون فيي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_173", "text": "ما بدي حدا يحبني... أنا مش أهل للحب", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_174", "text": "صار صوت أبوي بيوصلني بطيئ... زي ما يكون من بعيد بس هو قدامي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_175", "text": "أنا السبب... كل اللي صار بسببي", "gold_label": "High Risk / Urgent", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_176", "text": "لأ", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_177", "text": "مش هيك بالظبط... بس مش بعيد", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_178", "text": "بفكر بأشياء بس مش رح أقولها", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_179", "text": "ما حدا بيفهمني هون... وأنا ما رح أحاول", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_180", "text": "ما بدي أحكي عن أمي... ولا عن إشي", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_181", "text": "ساعات بحس بإشي وساعات لأ", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_182", "text": "أهلي بيقولوا أنا تمام... بس مش متأكد", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_183", "text": "في إشي بدي أسألك عنو بس مش هلأ", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_184", "text": "بحس... ما بعرف كيف أوصف", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_185", "text": "ما بتذكر شو سألتني هلأ", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_186", "text": "أنا مش هيك ولا هيك", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_187", "text": "خليني هلأ... بكرا منحكي", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_188", "text": "في يوم رح أحكيلك القصة كلها", "gold_label": "Unclear / Need More Context", "predicted_label": "Safe / Regulated"}
+{"id": "gold_189", "text": "ما بقدر أوصف... بس مش زي قبل", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_190", "text": "بدي أرجع البيت ... بس مش هاد البيت", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_191", "text": "هاد سؤال صعب... ما بعرف", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_192", "text": "خايف أحكي وحدا يسمع", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_193", "text": "بحس بإشي بقلبي... مش وجع... إشي تاني", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_194", "text": "بدي أنام", "gold_label": "Unclear / Need More Context", "predicted_label": "Safe / Regulated"}
+{"id": "gold_195", "text": "ما بدي أكمل هاد الكلام", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_196", "text": "أمي بتقول كل إشي تمام بس...", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_197", "text": "ما حدا قال إنو ممنوع... بس أنا بحس إنو ممنوع", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_198", "text": "كنت رح أقول إشي... نسيت", "gold_label": "Unclear / Need More Context", "predicted_label": "Unclear / Need More Context"}
+{"id": "gold_199", "text": "لما بكون لحالي بصير في إشي... بس لما حدا معي بختفي", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}
+{"id": "gold_200", "text": "بدي أعرف إذا اللي بحس فيه طبيعي", "gold_label": "Unclear / Need More Context", "predicted_label": "Distressed / Needs Support"}

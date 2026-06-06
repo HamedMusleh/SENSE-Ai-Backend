@@ -1,0 +1,21 @@
+﻿# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets
+.env
+*.key
+
+# Models / large files
+*.bin
+*.pt
+*.onnx
+
+# Backend uploads
+backend/uploads/
+
+# OS
+.DS_Store
+Thumbs.db
