@@ -1,0 +1,43 @@
+name: sense_app
+description: SENSE — AI-powered emotional screening for children. Child-friendly mobile interface.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Networking ---
+  http: ^1.2.0                    # REST API calls to backend
+  web_socket_channel: ^2.4.0     # WebSocket real-time communication
+
+  # --- Audio ---
+  record: ^6.1.2                 # Microphone recording
+  audioplayers: ^6.0.0           # TTS audio playback
+
+  # --- State & Utils ---
+  provider: ^6.1.0               # State management
+  uuid: ^4.3.0                   # Session ID generation (client-side tracking)
+  path_provider: ^2.1.0          # Local file paths for audio temp files
+  permission_handler: ^11.3.0    # Microphone permission
+  mime: ^1.0.5                   # Audio MIME type detection
+
+  # --- UI ---
+  google_fonts: ^6.1.0           # Child-friendly typography
+  lottie: ^3.1.0                 # Animated illustrations
+  flutter_animate: ^4.5.0        # Smooth UI animations
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/audio/

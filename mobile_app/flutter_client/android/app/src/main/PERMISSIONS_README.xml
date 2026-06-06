@@ -1,0 +1,25 @@
+<!-- Add these permissions to your actual AndroidManifest.xml -->
+<!-- Location: android/app/src/main/AndroidManifest.xml -->
+<!--
+  Required permissions for SENSE app:
+  Add these INSIDE the <manifest> tag, BEFORE <application>:
+-->
+
+<!--
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+-->
+
+<!--
+  Also, for HTTP (non-HTTPS) connections to local backend during development,
+  add this attribute to the <application> tag:
+
+  android:usesCleartextTraffic="true"
+
+  Example:
+  <application
+      android:usesCleartextTraffic="true"
+      ... >
+-->
