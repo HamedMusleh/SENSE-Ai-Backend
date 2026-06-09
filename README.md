@@ -31,6 +31,8 @@ human specialist prioritise their attention.
 
 A three-tier system communicating in a strictly layered fashion:
 
+![SENSE System Architecture](media/SENSE-Architecture.png)
+
 ```
 Mobile App (Flutter)
    │  records audio, sends via HTTP
