@@ -62,12 +62,13 @@ class Orchestrator:
             )
 
             return UploadAudioResponse(
-                session_id=session_id,
-                turn=turn.turn,
-                transcribed_text=transcribed,
-                reply_text=reply,
-                audio_response=None,
-            )    
+              session_id=session_id,
+              turn=turn.turn,
+              transcribed_text=transcribed,
+              reply_text=reply,
+              audio_response=result.get("audio_response") or None,
+)
+              
     
     def analyze_session(self, session_id: str) -> AnalyzeResponse:
         logger.info("Running final analysis for session %s", session_id)

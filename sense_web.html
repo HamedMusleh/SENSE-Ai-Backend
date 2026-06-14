@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENSE — تيتا</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg:        #F5F0FF;
+    --surface:   #FFFFFF;
+    --primary:   #6B4EFF;
+    --primary-l: #EDE8FF;
+    --teta:      #F3EEFF;
+    --teta-b:    #D4C6FF;
+    --child:     #E8F5E9;
+    --child-b:   #C8E6C9;
+    --error:     #FF5252;
+    --error-l:   #FFEBEB;
+    --text:      #1A1A2E;
+    --muted:     #888;
+    --radius:    18px;
+    --shadow:    0 4px 24px rgba(107,78,255,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── Header ── */
+  header {
+    width: 100%;
+    max-width: 680px;
+    padding: 18px 20px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1.5px solid var(--teta-b);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: var(--shadow);
+  }
+
+  .avatar {
+    width: 44px; height: 44px;
+    background: var(--primary-l);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  .header-info h1 {
+    font-size: 18px; font-weight: 700; color: var(--primary);
+  }
+  .header-info p {
+    font-size: 12px; color: var(--muted); margin-top: 1px;
+  }
+
+  #status-dot {
+    margin-right: auto;
+    margin-left: 0;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    background: var(--bg);
+    border-radius: 20px;
+    padding: 4px 10px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background .3s;
+  }
+  .dot.connected   { background: #4CAF50; }
+  .dot.connecting  { background: #FF9800; animation: pulse 1s infinite; }
+  .dot.error       { background: var(--error); }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: .4; }
+  }
+
+  /* ── Chat area ── */
+  #chat {
+    width: 100%; max-width: 680px;
+    flex: 1;
+    padding: 20px 16px 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+  }
+
+  .bubble {
+    max-width: 82%;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    line-height: 1.7;
+    word-break: break-word;
+    animation: fadeUp .25s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .bubble.teta {
+    background: var(--teta);
+    border: 1.5px solid var(--teta-b);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+
+  .bubble.child {
+    background: var(--child);
+    border: 1.5px solid var(--child-b);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    color: #2E7D32;
+  }
+
+  .bubble.loading {
+    background: var(--teta);
+    border: 1.5px solid var(--teta-b);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    font-size: 22px;
+    letter-spacing: 4px;
+  }
+
+  .bubble-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    padding: 0 4px;
+  }
+  .bubble-label.right { text-align: right; }
+
+  /* ── Error banner ── */
+  #error-banner {
+    display: none;
+    width: 100%; max-width: 680px;
+    background: var(--error-l);
+    border-top: 2px solid var(--error);
+    color: var(--error);
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 16px;
+  }
+
+  /* ── Controls bar ── */
+  #controls {
+    position: fixed;
+    bottom: 0;
+    width: 100%; max-width: 680px;
+    background: var(--surface);
+    border-top: 1.5px solid var(--teta-b);
+    padding: 16px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 -4px 20px rgba(107,78,255,.08);
+  }
+
+  #hint {
+    font-size: 13px;
+    color: var(--muted);
+    height: 18px;
+    transition: color .2s;
+  }
+  #hint.recording { color: var(--error); font-weight: 500; }
+
+  .btn-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Mic button */
+  #mic-btn {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(107,78,255,.35);
+    transition: transform .15s, background .2s, box-shadow .2s;
+    user-select: none;
+  }
+  #mic-btn:hover:not(:disabled) { transform: scale(1.06); }
+  #mic-btn:active:not(:disabled) { transform: scale(.96); }
+  #mic-btn.recording {
+    background: var(--error);
+    box-shadow: 0 6px 24px rgba(255,82,82,.40);
+    animation: ripple 1.2s infinite;
+  }
+  #mic-btn:disabled {
+    background: #ccc;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  @keyframes ripple {
+    0%  { box-shadow: 0 0 0 0 rgba(255,82,82,.4); }
+    70% { box-shadow: 0 0 0 16px rgba(255,82,82,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(255,82,82,0); }
+  }
+
+  /* End session button */
+  #end-btn {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--error);
+    background: transparent;
+    color: var(--error);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  #end-btn:hover { background: var(--error-l); }
+  #end-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* Spinner */
+  .spinner {
+    width: 28px; height: 28px;
+    border: 3px solid var(--primary-l);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Analysis dialog ── */
+  #analysis-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  #analysis-overlay.show { display: flex; }
+
+  #analysis-card {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 28px 24px;
+    width: min(90vw, 480px);
+    box-shadow: 0 12px 48px rgba(0,0,0,.18);
+    text-align: center;
+    animation: fadeUp .3s ease;
+  }
+
+  #analysis-card h2 {
+    font-size: 20px; color: var(--primary); margin-bottom: 12px;
+  }
+
+  .risk-badge {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+  .risk-Green  { background: #E8F5E9; color: #2E7D32; }
+  .risk-Yellow { background: #FFFDE7; color: #F57F17; }
+  .risk-Red    { background: #FFEBEE; color: #C62828; }
+  .risk-Unknown{ background: #F3E5F5; color: #6A1B9A; }
+
+  #analysis-summary {
+    font-size: 14px; color: #555; line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  #analysis-close {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 32px;
+    font-size: 15px;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  #analysis-close:hover { opacity: .9; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="avatar">👵🏽</div>
+  <div class="header-info">
+    <h1>تيتا</h1>
+    <p>SENSE — نظام الدعم العاطفي</p>
+  </div>
+  <div id="status-dot">
+    <div class="dot connecting" id="dot"></div>
+    <span id="status-text">جاري الاتصال...</span>
+  </div>
+</header>
+
+<!-- Error banner -->
+<div id="error-banner"></div>
+
+<!-- Chat -->
+<div id="chat"></div>
+
+<!-- Controls -->
+<div id="controls">
+  <div id="hint">اضغط على الميكروفون للتحدث</div>
+  <div class="btn-row">
+    <button id="end-btn" title="إنهاء الجلسة" disabled>⏹</button>
+    <button id="mic-btn" disabled>🎤</button>
+    <div style="width:44px"></div>
+  </div>
+</div>
+
+<!-- Analysis dialog -->
+<div id="analysis-overlay">
+  <div id="analysis-card">
+    <h2>✅ تم التحليل</h2>
+    <div class="risk-badge" id="risk-badge"></div>
+    <p id="analysis-summary"></p>
+    <button id="analysis-close">تمام</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════
+const BASE_URL = 'http://127.0.0.1:8000';   // Change to LAN IP for other devices
+
+// ══════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════
+let sessionId   = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecording = false;
+let isSending   = false;
+
+// ══════════════════════════════════════════════════════
+//  DOM REFS
+// ══════════════════════════════════════════════════════
+const chat        = document.getElementById('chat');
+const micBtn      = document.getElementById('mic-btn');
+const endBtn      = document.getElementById('end-btn');
+const hint        = document.getElementById('hint');
+const dot         = document.getElementById('dot');
+const statusText  = document.getElementById('status-text');
+const errorBanner = document.getElementById('error-banner');
+const overlay     = document.getElementById('analysis-overlay');
+
+// ══════════════════════════════════════════════════════
+//  STARTUP
+// ══════════════════════════════════════════════════════
+window.addEventListener('load', async () => {
+  await checkHealth();
+});
+
+document.getElementById('analysis-close').addEventListener('click', () => {
+  overlay.classList.remove('show');
+  location.reload();
+});
+
+// ══════════════════════════════════════════════════════
+//  HEALTH + SESSION
+// ══════════════════════════════════════════════════════
+async function checkHealth() {
+  setStatus('connecting');
+  try {
+    const res = await fetch(`${BASE_URL}/api/health`, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      setStatus('connected');
+      await startSession();
+    } else {
+      setStatus('error');
+    }
+  } catch {
+    setStatus('error');
+    showError('تعذّر الاتصال بالسيرفر. تأكد إنه شغّال.');
+  }
+}
+
+async function startSession() {
+  try {
+    const res  = await fetch(`${BASE_URL}/api/session/start`, { method: 'POST' });
+    const data = await res.json();
+    sessionId  = data.session_id;
+
+    addBubble('teta', 'مرحبا حبيبي! 🌸 أنا تيتا، كيفك اليوم؟ بدّي أسمع منك شو بتحس.');
+    micBtn.disabled = false;
+    endBtn.disabled = false;
+  } catch(e) {
+    showError('فشل بدء الجلسة: ' + e.message);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  MIC BUTTON
+// ══════════════════════════════════════════════════════
+micBtn.addEventListener('click', async () => {
+  if (isSending) return;
+
+  if (!isRecording) {
+    await startRecording();
+  } else {
+    await stopAndSend();
+  }
+});
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioChunks  = [];
+
+    // Pick the best supported format
+    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+      ? 'audio/webm;codecs=opus'
+      : MediaRecorder.isTypeSupported('audio/webm')
+        ? 'audio/webm'
+        : 'audio/mp4';
+
+    mediaRecorder = new MediaRecorder(stream, { mimeType });
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.start(100);
+
+    isRecording = true;
+    micBtn.classList.add('recording');
+    micBtn.textContent = '⏹';
+    hint.textContent   = '🔴 عم بسجّل... اضغط مرة ثانية لما تخلص';
+    hint.classList.add('recording');
+
+  } catch(e) {
+    showError('تعذّر الوصول للميكروفون: ' + e.message);
+  }
+}
+
+async function stopAndSend() {
+  if (!mediaRecorder) return;
+
+  mediaRecorder.stop();
+  mediaRecorder.stream.getTracks().forEach(t => t.stop());
+
+  await new Promise(r => mediaRecorder.addEventListener('stop', r, { once: true }));
+
+  isRecording = false;
+  isSending   = true;
+
+  micBtn.classList.remove('recording');
+  micBtn.disabled    = true;
+  endBtn.disabled    = true;
+  micBtn.innerHTML   = '<div class="spinner"></div>';
+  hint.textContent   = '⏳ تيتا عم تفكّر...';
+  hint.classList.remove('recording');
+
+  // Loading bubble
+  const loadId = addBubble('loading', '● ● ●');
+
+  try {
+    const blob     = new Blob(audioChunks, { type: mediaRecorder.mimeType });
+    const formData = new FormData();
+    formData.append('session_id',  sessionId);
+    formData.append('audio_file',  blob, 'recording.webm');
+
+    const res  = await fetch(`${BASE_URL}/api/upload_audio`, {
+      method: 'POST',
+      body:   formData,
+      signal: AbortSignal.timeout(180000),   // 3 minutes (CPU is slow)
+    });
+
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+    const data = await res.json();
+
+    // Remove loading bubble
+    removeBubble(loadId);
+
+    // Show child text
+    if (data.transcribed_text) {
+      addBubble('child', data.transcribed_text);
+    }
+
+    // Show Teta reply
+    if (data.reply_text) {
+      addBubble('teta', data.reply_text);
+    }
+
+    // ── Play audio if present ──
+    if (data.audio_response) {
+      playBase64Audio(data.audio_response);
+    }
+
+  } catch(e) {
+    removeBubble(loadId);
+    showError('مشكلة بالإرسال: ' + e.message);
+  } finally {
+    isSending       = false;
+    micBtn.disabled = false;
+    endBtn.disabled = false;
+    micBtn.textContent = '🎤';
+    hint.textContent   = 'اضغط على الميكروفون للتحدث';
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  AUDIO PLAYBACK (base64 → play)
+// ══════════════════════════════════════════════════════
+function playBase64Audio(base64) {
+  try {
+    const audio = new Audio(`data:audio/mp3;base64,${base64}`);
+    audio.play().catch(e => console.warn('Audio play failed:', e));
+  } catch(e) {
+    console.warn('Audio init failed:', e);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  END SESSION
+// ══════════════════════════════════════════════════════
+endBtn.addEventListener('click', async () => {
+  if (!sessionId || isSending) return;
+
+  const ok = confirm('خلصنا الحكي؟ رح نعمل ملخّص للجلسة.');
+  if (!ok) return;
+
+  micBtn.disabled = true;
+  endBtn.disabled = true;
+  hint.textContent = '⏳ عم نعمل التحليل...';
+
+  try {
+    const formData = new FormData();
+    formData.append('session_id', sessionId);
+
+    const res  = await fetch(`${BASE_URL}/api/analyze`, {
+      method: 'POST',
+      body:   formData,
+      signal: AbortSignal.timeout(120000),
+    });
+
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+    const data = await res.json();
+    showAnalysis(data);
+
+  } catch(e) {
+    showError('فشل التحليل: ' + e.message);
+    micBtn.disabled = false;
+    endBtn.disabled = false;
+  } finally {
+    hint.textContent = 'اضغط على الميكروفون للتحدث';
+  }
+});
+
+// ══════════════════════════════════════════════════════
+//  ANALYSIS DIALOG
+// ══════════════════════════════════════════════════════
+function showAnalysis(data) {
+  const risk  = data.final_risk_level || 'Unknown';
+  const labels = { Green: 'آمن ✅', Yellow: 'يحتاج دعم ⚠️', Red: 'عالي الخطورة 🔴', Unknown: 'غير محدد' };
+
+  document.getElementById('risk-badge').textContent = labels[risk] || risk;
+  document.getElementById('risk-badge').className   = `risk-badge risk-${risk}`;
+  document.getElementById('analysis-summary').textContent =
+    data.overall_summary || 'تم إغلاق الجلسة.';
+
+  overlay.classList.add('show');
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+let bubbleCounter = 0;
+
+function addBubble(type, text) {
+  const id    = 'b' + (++bubbleCounter);
+  const wrap  = document.createElement('div');
+
+  if (type === 'teta') {
+    const lbl = document.createElement('div');
+    lbl.className   = 'bubble-label right';
+    lbl.textContent = '👵🏽 تيتا';
+    wrap.appendChild(lbl);
+  } else if (type === 'child') {
+    const lbl = document.createElement('div');
+    lbl.className   = 'bubble-label';
+    lbl.textContent = '🧒 الطفل';
+    wrap.appendChild(lbl);
+  }
+
+  const bubble = document.createElement('div');
+  bubble.id          = id;
+  bubble.className   = `bubble ${type}`;
+  bubble.textContent = text;
+  wrap.appendChild(bubble);
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
+  return id;
+}
+
+function removeBubble(id) {
+  const el = document.getElementById(id);
+  if (el && el.parentNode) el.parentNode.remove();
+}
+
+function setStatus(state) {
+  dot.className = 'dot ' + state;
+  statusText.textContent = {
+    connecting: 'جاري الاتصال...',
+    connected:  'متصل بالسيرفر',
+    error:      'غير متصل',
+  }[state] || state;
+}
+
+function showError(msg) {
+  errorBanner.textContent = msg;
+  errorBanner.style.display = 'block';
+  setTimeout(() => { errorBanner.style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>

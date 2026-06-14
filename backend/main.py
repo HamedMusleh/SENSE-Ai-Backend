@@ -56,6 +56,14 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
+#===================================
+from fastapi.staticfiles import StaticFiles
+import os
+
+# Serve the web demo page
+_web_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+app.mount("/web", StaticFiles(directory=_web_dir, html=True), name="web")
+#===================================
 
 
 @app.websocket("/ws")
