@@ -29,3 +29,9 @@ mobile_app/flutter_client/android/.gradle/
 mobile_app/flutter_client/android/local.properties
 mobile_app/flutter_client/.idea/
 *.iml
+
+# TTS test files
+test_*.mp3
+teta_tts_*.mp3
+backend/uploads/
+*.webm

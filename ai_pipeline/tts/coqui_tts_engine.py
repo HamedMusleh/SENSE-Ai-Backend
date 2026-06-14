@@ -1,9 +1,9 @@
 ﻿import re
 import asyncio, concurrent.futures, os, tempfile, logging
 logger = logging.getLogger(__name__)
-TETA_VOICE = "ar-JO-SanaNeural"
-TETA_RATE  = "+0%"
-TETA_PITCH = "+0Hz"
+TETA_VOICE = "ar-SA-ZariyahNeural"
+TETA_RATE  = "-10%"
+TETA_PITCH = "-2Hz"
 
 async def _synthesize_async(text, output_path):
     import edge_tts
@@ -18,7 +18,9 @@ def synthesize_teta_voice(text, output_path=None):
     if not text or not text.strip():
         return ""
     import re
-    text = re.sub(r'[^\u0600-\u06FF\s\.\،\؟\!a-zA-Z0-9]', '', text)
+    text = re.sub(r'[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U0001F1E0-\U0001F1FF]', '', text)
+    text = re.sub(r'[^\u0600-\u06FF\s\.\،\؟\!\?a-zA-Z0-9]', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
     text = text.strip()
       
     if output_path is None:
