@@ -1,229 +1,88 @@
 # SENSE — Speech Emotion and Neural Support Engine
 
-> An AI-assisted emotional **screening and triage** system for Arabic-speaking
-> children (ages 6–14) in crisis environments, with a focus on the
-> **Palestinian dialect**.
+**AI-powered emotional triage for Arabic-speaking children (ages 6–14) in crisis and post-conflict environments**, with deliberate focus on the Palestinian dialect.
 
-SENSE listens to a child speaking in their own dialect, estimates the emotional
-state and risk level of what they express, replies with warmth through a
-grandmother persona (**"Teta"**), and produces a structured report to help a
-human specialist prioritise their attention.
+> ⚠️ **SENSE performs triage, not diagnosis or therapy.** It classifies conversational turns into risk tiers so that human specialists can prioritize follow-up. It never replaces clinical judgment.
 
-> ⚠️ **Important:** SENSE is **not** a diagnostic or clinical tool. It performs
-> emotional triage and supportive presence only, and is designed to **assist**
-> human specialists — never to replace them.
+Graduation project — Birzeit University, ENCS5200 (Section 13)
+Supervisor: Dr. Wasel Ghnanem
+Team: Hamed Musleh (AI/Pipeline Lead) · Bara Mohsen (Backend) · Ahmad Zuhd (Mobile/Web)
 
 ---
 
-## Project Context
+## What SENSE does
 
-| | |
-|---|---|
-| **University** | Birzeit University |
-| **Faculty** | Faculty of Engineering and Technology |
-| **Department** | Electrical and Computer Engineering Department |
-| **Course** | ENCS5200 — Introduction to Graduation Project |
-| **Stage** | Pre-Alpha — Integrated Working Prototype |
+A child speaks to **Teta** — a warm Palestinian-grandmother AI persona — through a mobile or web client. Each turn is:
 
----
+1. **Transcribed** (`gpt-4o-transcribe`, dialect-tuned prompt)
+2. **Triaged** into one of four tiers (rule-based analyzer, ~0.01s):
+   - 🟢 **Safe / Regulated**
+   - 🟡 **Distressed / Needs Support**
+   - 🔴 **High Risk / Urgent**
+   - ⚪ **Unclear / Need More Context**
+3. **Answered** by Teta (`gpt-5` via Responses API + file_search RAG) — *except* High Risk turns,
+   which **bypass the LLM entirely** and receive only pre-vetted hard-coded responses
+4. **Spoken back** (`gpt-4o-mini-tts`, voice `coral`, 1.12× speed)
+
+Measured end-to-end latency: **~13.75s/turn** (STT 3.5s · Triage 0.01s · LLM 7s · TTS 3s).
 
 ## System Architecture
 
 A three-tier system communicating in a strictly layered fashion:
 
 ![SENSE System Architecture](media/SENSE-Architecture.png)
+## Safety invariants (non-negotiable)
+
+- **Zero dangerous downgrades**: any Red-labeled turn makes the whole session Red.
+- **High Risk bypasses the LLM**: responses are pre-vetted and hard-coded.
+- **Teta never claims to be human**, never uses therapeutic techniques (including breathing
+  exercises), and refuses out-of-scope topics without naming them.
+- **All clinical data artifacts require expert specialist review** (`needs_expert_review` flag).
+
+## Repository layout
 
 ```
-Mobile App (Flutter)
-   │  records audio, sends via HTTP
-   ▼
-Backend (FastAPI)  ──►  AI Pipeline
-                          │
-                          ├─ Whisper STT (Palestinian dialect)
-                          ├─ Arabic text preprocessing
-                          ├─ Audio emotion (XLSR + prosody)
-                          ├─ Triage classifier (4 labels)
-                          ├─ Multimodal weighting (safe fusion)
-                          ├─ Teta reply (LLM + RAG) OR
-                          │  hard-coded response (High Risk)
-                          └─ Session analysis (specialist report)
-   ◄── returns reply
-Mobile App displays Teta's reply
+backend/            FastAPI server (routes, orchestrator, session manager, WebSocket)
+  services/ai_adapter.py   ← single bridge to the AI pipeline (real/mock/hybrid)
+ai_pipeline/        STT → triage → Teta reply → TTS
+prompts/            Six authoritative prompt files (see docs/04_prompt_system.md)
+resources/          RAG knowledge base (safety_rules.md, annotation_guide.md, ...)
+datasets/           Gold test set + evaluation data
+evaluation/         Metrics, confusion matrix, error analysis, leakage checks
+sense_web.html      Browser client (MediaRecorder fallback for the Android emulator)
+docs/               Project documentation
 ```
 
-**Flow:** `Mobile → Backend → AI Pipeline → Backend → Mobile`
+## Documentation index
 
----
-
-## Repository Structure
-
-```
-sense-ai-demo/
-├── ai_pipeline/          # The complete intelligence layer
-│   ├── stt/              #   Whisper speech-to-text
-│   ├── audio_emotion/    #   XLSR + prosodic emotion + weighting
-│   ├── triage/           #   Rule-based triage classifier
-│   ├── tts/              #   Text-to-speech (placeholder, future)
-│   └── integration_api.py#   Stable public interface to the pipeline
-├── backend/              # FastAPI server (API, orchestration, adapter)
-├── datasets/             # Annotation guide + evaluation sets
-├── evaluation/           # Triage classifier evaluation
-├── prompts/              # Teta persona strategy prompts
-├── resources/            # Triage lexicons, safety responses
-├── tests/                # Unit and integration tests
-├── mobile_app/
-│   └── flutter_client/   # Flutter mobile application
-└── requirements.txt
-```
-
----
-
-## Key Features
-
-- **Dialect-aware transcription** — locally hosted Whisper model primed for
-  Palestinian Arabic (runs locally for privacy).
-- **Four-category triage** — Safe / Regulated, Distressed / Needs Support,
-  High Risk / Urgent, Unclear / Need More Context.
-- **Multimodal fusion** — combines a textual triage decision with an acoustic
-  emotional signal under a binding safety policy.
-- **Safety-first design** — High Risk cases **never** reach the language model;
-  they are served by vetted, pre-written responses.
-- **Teta persona** — warm, authentic Palestinian grandmother voice.
-- **Specialist report** — risk trajectory, peak risk, per-turn summary, and a
-  recommendation at the end of each session.
-
----
-
-## Tech Stack
-
-| Layer | Technologies |
+| Doc | Contents |
 |---|---|
-| AI Pipeline | Python, Whisper, XLSR (wav2vec2), librosa, Transformers, GPT-class LLM + RAG |
-| Backend | FastAPI, Uvicorn, Pydantic |
-| Mobile | Flutter, Dart, Provider |
+| docs/01_architecture.md | System design, pipeline stages, data flow, design decisions |
+| docs/02_setup.md | Installation, env vars, running locally & with Docker |
+| docs/03_api_reference.md | 5 REST endpoints + WebSocket, request/response examples |
+| docs/04_prompt_system.md | The six prompts, ownership rules, cross-prompt consistency |
+| docs/05_evaluation.md | Gold set, metrics, leakage checks, reproducing results |
+| docs/06_developer_guide.md | Adapter pattern, pipeline modes, contribution workflow |
 
----
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.11+
-- Flutter 3.35+
-- An Android emulator or a physical Android device
-
-### 1. Backend + AI Pipeline
+## Quick start
 
 ```bash
-cd sense-ai-demo
-
-# Create and activate a virtual environment
-python -m venv .venv
-# Windows:
-.venv\Scripts\Activate
-# Linux/macOS:
-source .venv/bin/activate
-
-# Install dependencies
+git clone https://github.com/HamedMusleh/SENSE-Ai-Backend
+cd SENSE-Ai-Backend
 pip install -r requirements.txt
-
-# Configure your environment (see .env.example) — add your LLM API key
-
-# Run the server (real pipeline mode)
-# Windows (PowerShell):
-$env:SENSE_PIPELINE_MODE="real"
-uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+export OPENAI_API_KEY=sk-...        # PowerShell: $env:OPENAI_API_KEY="sk-..."
+uvicorn backend.main:app --reload
+# API docs: http://127.0.0.1:8000/docs
+# Web client: open sense_web.html in a browser
 ```
 
-Wait until the log shows `Whisper ready` and `Application startup complete`.
-The API is then available at `http://127.0.0.1:8000` and interactive docs at
-`http://127.0.0.1:8000/docs`.
+## Known limitations (documented, not defects)
 
-### 2. Mobile App
-
-```bash
-cd mobile_app/flutter_client
-
-flutter pub get
-
-# Launch an emulator, then:
-flutter run
-```
-
-> **Note on the emulator microphone:** the Android emulator's virtual
-> microphone may produce silent recordings (a known emulator limitation). The
-> complete flow can be validated using the bundled test audio button, and live
-> microphone capture works on physical devices.
-
----
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/health` | Health check |
-| `POST` | `/api/session/start` | Start a new conversation session |
-| `POST` | `/api/upload_audio` | Upload an audio turn, get Teta's reply |
-| `POST` | `/api/analyze` | End the session, get the specialist report |
-
----
-
-## Evaluation
-
-The triage classifier was evaluated on two datasets:
-
-| Dataset | Size | Result |
-|---|---|---|
-| Gold test set | 250 | 100% (sanity check — same source as the rules) |
-| Unseen validation | 75 | ~41% overall accuracy |
-| — High Risk precision | — | **100%** |
-| — Dangerous downgrades | — | **0** (no High Risk ever misclassified as Safe) |
-
-The system is intentionally **conservative**: it escalates under doubt rather
-than downgrading, which is the most important property for a safety-critical
-triage tool.
-
----
-
-## Known Limitations
-
-- **Audio emotion signal is weak.** XLSR is a speech-recognition model, not an
-  emotion model, and single-speaker acted speech yields overlapping samples.
-  This is documented honestly; the fix is a fine-tuned emotion model trained on
-  genuine multi-speaker child data (future work).
-- **Inference is CPU-bound and slow.** Without a GPU, a single turn can take
-  tens of seconds. GPU deployment is a future improvement.
-- **High-risk responses await clinical review** by a licensed specialist.
-
----
-
-## Future Work
-
-- Fine-tuned Arabic child emotion model (real multi-speaker data + ethics approval).
-- Machine-learning triage model (using the unseen set as a held-out benchmark).
-- Dialect-aware text-to-speech so Teta can reply with an audible voice.
-- GPU deployment to reduce per-turn latency.
-- Formal psychologist review of high-risk responses and strategy prompts.
-
----
-
-## Team
-
-| Role | Responsibility |
-|---|---|
-| **AI / Pipeline Lead** | Whisper STT, audio emotion, triage classifier, weighting, Teta persona, RAG, session analysis, integration interface, datasets & evaluation |
-| **Backend Engineer** | FastAPI server, API endpoints, orchestration, adapter, schemas, risk mapping |
-| **Mobile Engineer** | Flutter app, UI, microphone recording, audio upload, HTTP layer, Android configuration |
-
----
-
-## License & Ethics
-
-This project handles sensitive data relating to children and mental health.
-The repository is **private** and intended for academic evaluation only. Any
-collection of real child data must follow appropriate ethical approval and
-parental consent, under specialist supervision.
-
----
-
-*SENSE — built to listen, designed to keep children safe.*
+- **No Arabic child emotion speech dataset exists globally** — the audio emotion module
+  (XLSR/wav2vec2) is disabled and retained as a placeholder (`{"source":"disabled_for_demo"}`).
+  This is a research gap.
+- **Android emulator microphone records silence** — platform limitation; use `sense_web.html`
+  or a physical device.
+- **Unseen-set overall accuracy is 41% by design**: the classifier escalates conservatively.
+  The headline safety metric is **100% High Risk precision with zero dangerous downgrades**,
+  not overall accuracy.
