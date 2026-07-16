@@ -1,6 +1,5 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-import pyaudio
 import wave
 import threading
 import tempfile
@@ -8,6 +7,8 @@ import os
 import re
 import arabic_reshaper
 from bidi.algorithm import get_display
+import pytest
+pyaudio = pytest.importorskip("pyaudio")
 
 # =========================
 # OpenAI Setup

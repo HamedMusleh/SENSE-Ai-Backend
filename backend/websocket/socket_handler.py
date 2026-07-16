@@ -30,6 +30,7 @@ layered on top without changing the orchestrator.
 from __future__ import annotations
 
 from fastapi import WebSocket, WebSocketDisconnect
+from starlette.concurrency import run_in_threadpool
 
 from backend.services.session_manager import get_session_manager
 from backend.services.orchestrator import get_orchestrator
@@ -79,9 +80,13 @@ async def websocket_endpoint(ws: WebSocket):
                 elif mtype == "text":
                     session_id = msg["session_id"]
                     text = msg["text"]
-                    # Reuse orchestrator's reply path directly for text turns
+                    # Reuse orchestrator's reply path directly for text turns.
+                    # run_in_threadpool: the adapter call is synchronous and may
+                    # take seconds in real mode -> don't block the event loop.
                     history = sessions.history_as_dicts(session_id)
-                    reply = orch.adapter.generate_reply(text, history)
+                    reply = await run_in_threadpool(
+                        orch.adapter.generate_reply, text, history
+                    )
                     turn = sessions.add_turn(session_id, text, reply)
                     payload = UploadAudioResponse(
                         session_id=session_id,
@@ -93,7 +98,9 @@ async def websocket_endpoint(ws: WebSocket):
                     await ws.send_json({"type": "reply", **payload.model_dump()})
 
                 elif mtype == "analyze":
-                    result = orch.analyze_session(msg["session_id"])
+                    result = await run_in_threadpool(
+                        orch.analyze_session, msg["session_id"]
+                    )
                     await ws.send_json({"type": "analysis", **result.model_dump()})
 
                 elif mtype == "close":
@@ -120,4 +127,14 @@ async def websocket_endpoint(ws: WebSocket):
         manager.disconnect(ws)
     except Exception as exc:  # noqa: BLE001
         logger.exception("WS fatal error: %s", exc)
+        try:
+            await ws.send_json(
+                {
+                    "type": "error",
+                    "error": "internal_error",
+                    "message": "Unexpected server error",
+                }
+            )
+        except Exception:  # noqa: BLE001
+            pass
         manager.disconnect(ws)
