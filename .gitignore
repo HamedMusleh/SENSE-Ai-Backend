@@ -35,3 +35,16 @@ test_*.mp3
 teta_tts_*.mp3
 backend/uploads/
 *.webm
+
+# --- restructure additions ---
+.pytest_cache/
+backend/uploads/*
+!backend/uploads/.gitkeep
+mobile_app/flutter_client/build/
+mobile_app/flutter_client/.dart_tool/
+mobile_app/flutter_client/.idea/
+mobile_app/flutter_client/android/.gradle/
+mobile_app/flutter_client/android/.kotlin/
+mobile_app/flutter_client/android/local.properties
+*.iml
+.env

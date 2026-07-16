@@ -48,8 +48,9 @@ class AIPipelineAdapter:
     Unified interface to the AI pipeline.
 
     Public methods (the contract the orchestrator relies on):
-        process_turn(audio_path, history)  -> dict   (full turn)
-        analyze_session(history)           -> dict
+        process_turn(audio_path, history)   -> dict   (full audio turn)
+        generate_reply(text, history)       -> str    (text-only turn, WS)
+        analyze_session(history)            -> dict
     """
 
     def __init__(self, mode: str | None = None):
@@ -98,6 +99,37 @@ class AIPipelineAdapter:
         except Exception as exc:  # noqa: BLE001
             raise PipelineError("Pipeline turn failed", detail=str(exc)) from exc
 
+    def generate_reply(self, text: str, history: list[dict]) -> str:
+        """
+        Run ONE text-only turn (no STT / no audio). Used by the WebSocket
+        text protocol. Returns the reply string only.
+        """
+        if self._api is None:
+            return self._mock_reply(text, history)
+
+        try:
+            # Preferred: a dedicated text entrypoint in the pipeline API.
+            if hasattr(self._api, "process_text_turn"):
+                result = self._api.process_text_turn(text, history)
+                if isinstance(result, dict):
+                    return result.get("reply_text", "")
+                return str(result)
+
+            # Fallback: a raw generate_reply if the pipeline exposes one.
+            if hasattr(self._api, "generate_reply"):
+                return str(self._api.generate_reply(text, history))
+
+            # Pipeline has no text path yet -> explicit, visible error.
+            raise PipelineError(
+                "Pipeline text turn failed",
+                detail="integration_api has no text entrypoint "
+                       "(expected process_text_turn or generate_reply)",
+            )
+        except PipelineError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise PipelineError("Pipeline text turn failed", detail=str(exc)) from exc
+
     def analyze_session(self, history: list[dict]) -> dict:
         if self._api is None:
             return self._mock_analysis(history)
@@ -124,6 +156,11 @@ class AIPipelineAdapter:
     # ------------------------------------------------------------------ #
     # Mock implementations (used when AI pipeline is not available)
     # ------------------------------------------------------------------ #
+    @staticmethod
+    def _mock_reply(text: str, history: list[dict]) -> str:
+        logger.info("[MOCK] generate_reply(%r)", text[:40])
+        return "أنا سامعتك يا حبيبي 🌸 احكيلي أكثر، أنا هون معك."
+
     @staticmethod
     def _mock_turn(audio_path: str, history: list[dict]) -> dict:
         logger.info("[MOCK] process_turn(%s)", audio_path)

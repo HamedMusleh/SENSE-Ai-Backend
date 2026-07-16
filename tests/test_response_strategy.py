@@ -168,9 +168,13 @@ class TestSafeStrategy:
     def test_safe_prompt_does_not_project_distress(self):
         triage = {"predicted_label": LABEL_SAFE, "risk_signal": "none"}
         s = build_strategy(triage)
-        # The Safe strategy prompt should warn against projecting distress.
-        assert "project distress" in s.strategy_prompt.lower() or \
-               "do not project" in s.strategy_prompt.lower()
+        # The Safe strategy must guard against projecting distress onto a
+        # regulated child. The current prompt phrases this as "do not
+        # over-comfort" + "do not mention trauma/war/fear unless the child
+        # brought it up" (see prompts/strategy_safe.txt, CORE GOAL + rule 9).
+        p = s.strategy_prompt.lower()
+        assert "over-comfort" in p
+        assert "unless the child brought it up" in p
 
 
 # ===========================================================================

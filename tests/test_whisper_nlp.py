@@ -1,4 +1,4 @@
-import pyaudio
+
 import wave
 import threading
 import tempfile
@@ -7,7 +7,8 @@ import re
 import whisper
 import arabic_reshaper
 from bidi.algorithm import get_display
-
+import pytest
+pyaudio = pytest.importorskip("pyaudio")
 # =========================
 # Arabic Terminal Fix
 # =========================
