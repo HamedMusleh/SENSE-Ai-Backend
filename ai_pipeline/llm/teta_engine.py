@@ -14,7 +14,7 @@ Flow (per the orchestrator design):
     │ if strategy.use_llm is False:   │
     │   return strategy.hard_coded     │  ← LLM is NEVER called for High Risk
     │ else:                            │
-    │   call GPT-4.1-mini with         │
+    │   call GPT-5 with with         │
     │   strategy_prompt injected       │
     └─────────────────────────────────┘
 
@@ -119,7 +119,7 @@ def _call_teta_llm(
     conversation_history: list[dict],
     strategy: Strategy,
 ) -> str:
-    """Call GPT-4.1-mini with the base system prompt + the strategy prompt.
+    """Call GPT-5 with the base system prompt + the strategy prompt.
 
     The strategy prompt is appended to the system prompt, NOT to the user
     message, so it's clearly framed as authoritative instruction rather than
@@ -149,7 +149,7 @@ def _call_teta_llm(
     )
 
     response = client.responses.create(
-        model="gpt-4.1-mini",
+        model="gpt-5",
         tools=[
             {
                 "type": "file_search",

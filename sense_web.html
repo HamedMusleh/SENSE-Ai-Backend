@@ -22,6 +22,12 @@
     --muted:     #888;
     --radius:    18px;
     --shadow:    0 4px 24px rgba(107,78,255,0.10);
+    --skin:      #E8B98A;
+    --scarf:     #C97B96;
+    --scarf-d:   #A85C78;
+    --cheek:     #E08A8A;
+    --brow:      #6B4A3A;
+    --mouth-d:   #8B3A3A;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,12 +58,98 @@
     box-shadow: var(--shadow);
   }
 
-  .avatar {
-    width: 44px; height: 44px;
-    background: var(--primary-l);
-    border-radius: 50%;
+  .avatar-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;   /* pushes the whole avatar block to the left edge */
+  }
+
+  .avatar-wrap {
+    position: relative;
+    width: 92px; height: 92px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .avatar-face {
+    width: 92px; height: 92px;
+    position: relative;
+    z-index: 2;
+    display: block;
+  }
+
+  /* Pulsing ring shown while Teta is speaking */
+  .speaking-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2.5px solid var(--primary);
+    opacity: 0;
+    z-index: 1;
+    transform: scale(1);
+  }
+  .avatar-wrap.speaking .speaking-ring {
+    opacity: .55;
+    animation: ring-pulse 1.1s ease-out infinite;
+  }
+  @keyframes ring-pulse {
+    0%   { transform: scale(.92); opacity: .6; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* Idle gentle bob so Teta feels alive even when silent */
+  .avatar-wrap.idle .avatar-face {
+    animation: idle-bob 3.6s ease-in-out infinite;
+  }
+  @keyframes idle-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-2px) rotate(-1.5deg); }
+  }
+
+  /* Eyes: quick natural blink while idle */
+  .eye {
+    transition: transform .09s ease;
+    transform-origin: center;
+  }
+  .eye.blink {
+    transform: scaleY(.12);
+  }
+
+  /* Eyebrows: subtle lift while speaking — a livelier, engaged expression */
+  .brows {
+    transition: transform .15s ease-out;
+    transform-origin: center;
+  }
+  .avatar-wrap.speaking .brows {
+    transform: translateY(-1.6px);
+  }
+
+  /* Mouth: crossfade between closed smile and open/talking shape */
+  #mouthSmile, #mouthOpen {
+    transition: opacity .09s linear;
+  }
+  #mouthOpen { opacity: 0; }
+
+  /* Voice wave bars — react to live audio amplitude while speaking */
+  .voice-wave {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 40px;
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .voice-wave.active {
+    opacity: 1;
+  }
+  .voice-wave .bar {
+    width: 4px;
+    min-height: 4px;
+    border-radius: 3px;
+    background: var(--primary);
+    transform-origin: center;
+    transition: height .07s linear;
   }
 
   .header-info h1 {
@@ -68,8 +160,6 @@
   }
 
   #status-dot {
-    margin-right: auto;
-    margin-left: 0;
     display: flex; align-items: center; gap: 6px;
     font-size: 12px; color: var(--muted);
     background: var(--bg);
@@ -308,7 +398,6 @@
 
 <!-- Header -->
 <header>
-  <div class="avatar">👵🏽</div>
   <div class="header-info">
     <h1>تيتا</h1>
     <p>SENSE — نظام الدعم العاطفي</p>
@@ -316,6 +405,47 @@
   <div id="status-dot">
     <div class="dot connecting" id="dot"></div>
     <span id="status-text">جاري الاتصال...</span>
+  </div>
+  <div class="avatar-block">
+    <div class="voice-wave" id="voice-wave">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="avatar-wrap idle" id="avatar-wrap">
+      <div class="speaking-ring"></div>
+      <svg class="avatar-face" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="تيتا">
+        <!-- headscarf / hood -->
+        <path d="M15,72 C15,28 38,8 60,8 C82,8 105,28 105,72 L105,100 C105,113 88,119 60,119 C32,119 15,113 15,100 Z" fill="var(--scarf)"/>
+        <!-- face -->
+        <circle cx="60" cy="62" r="34" fill="var(--skin)"/>
+        <!-- scarf fold accent near forehead -->
+        <path d="M30,38 Q60,18 90,38" stroke="var(--scarf-d)" stroke-width="3" fill="none" opacity=".45" stroke-linecap="round"/>
+        <!-- cheeks -->
+        <circle cx="40" cy="78" r="7" fill="var(--cheek)" opacity=".5"/>
+        <circle cx="80" cy="78" r="7" fill="var(--cheek)" opacity=".5"/>
+        <!-- eyes (grouped so they can blink via scaleY) -->
+        <g class="eye" id="eyeL"><ellipse cx="46" cy="58" rx="4.2" ry="5.2" fill="#2b2b2b"/></g>
+        <g class="eye" id="eyeR"><ellipse cx="74" cy="58" rx="4.2" ry="5.2" fill="#2b2b2b"/></g>
+        <!-- glasses -->
+        <g opacity=".85">
+          <circle cx="46" cy="58" r="10" fill="none" stroke="#7a6a5a" stroke-width="2"/>
+          <circle cx="74" cy="58" r="10" fill="none" stroke="#7a6a5a" stroke-width="2"/>
+          <line x1="56" y1="58" x2="64" y2="58" stroke="#7a6a5a" stroke-width="2"/>
+        </g>
+        <!-- eyebrows (lift slightly while speaking) -->
+        <g class="brows">
+          <path d="M38,46 q8,-7 18,-2" stroke="var(--brow)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M64,44 q8,-5 18,2" stroke="var(--brow)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </g>
+        <!-- mouth: closed smile (idle state) -->
+        <path id="mouthSmile" d="M44,82 Q60,94 76,82" stroke="var(--mouth-d)" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+        <!-- mouth: open shape, animated by live audio amplitude while speaking -->
+        <ellipse id="mouthOpen" cx="60" cy="85" rx="10" ry="3" fill="var(--mouth-d)"/>
+      </svg>
+    </div>
   </div>
 </header>
 
@@ -350,7 +480,7 @@
 //  CONFIG
 // ══════════════════════════════════════════════════════
 const BASE_URL = 'http://127.0.0.1:8000';   // Change to LAN IP for other devices
-
+//const BASE_URL = ' https://impolite-unfitting-dandelion.ngrok-free.dev';   // Change to LAN IP for other devices
 // ══════════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════════
@@ -371,6 +501,13 @@ const dot         = document.getElementById('dot');
 const statusText  = document.getElementById('status-text');
 const errorBanner = document.getElementById('error-banner');
 const overlay     = document.getElementById('analysis-overlay');
+const avatarWrap  = document.getElementById('avatar-wrap');
+const voiceWave   = document.getElementById('voice-wave');
+const waveBars    = voiceWave.querySelectorAll('.bar');
+const mouthSmile  = document.getElementById('mouthSmile');
+const mouthOpen   = document.getElementById('mouthOpen');
+const eyeL        = document.getElementById('eyeL');
+const eyeR        = document.getElementById('eyeR');
 
 // ══════════════════════════════════════════════════════
 //  STARTUP
@@ -421,6 +558,10 @@ async function startSession() {
 //  MIC BUTTON
 // ══════════════════════════════════════════════════════
 micBtn.addEventListener('click', async () => {
+  // MUST run synchronously inside the tap, before any await, so iOS
+  // unlocks audio playback for Teta's reply later in the turn.
+  unlockAudioOnGesture();
+
   if (isSending) return;
 
   if (!isRecording) {
@@ -525,14 +666,173 @@ async function stopAndSend() {
 }
 
 // ══════════════════════════════════════════════════════
-//  AUDIO PLAYBACK (base64 → play)
+//  AUDIO PLAYBACK + TALKING ANIMATION
+//  Uses Web Audio API to read live amplitude from Teta's
+//  voice and drive the mouth (open/close), eyebrows, and the
+//  voice-wave bars in real time, so the avatar visibly talks
+//  while she speaks and returns to a calm idle face in silence.
 // ══════════════════════════════════════════════════════
+let audioCtx        = null;
+let analyser        = null;
+let visualizerRAF   = null;
+let isSpeakingNow   = false;
+let blinkTimer       = null;
+
+// One persistent <audio> element, reused for every reply.
+// iOS/Safari only allows playback on an element that was "unlocked"
+// by a real user gesture, so we keep and reuse a single element.
+const ttaAudio       = new Audio();
+ttaAudio.playsInline = true;
+let audioUnlocked    = false;
+let mediaSourceNode  = null;   // created once; re-creating per element is illegal
+
+// Called synchronously from the mic-button tap to satisfy iOS autoplay rules.
+function unlockAudioOnGesture() {
+  try {
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') ctx.resume();
+  } catch (e) { /* ignore */ }
+
+  if (audioUnlocked) return;
+  // Play a tiny silent clip on the real element to unlock it for later use.
+  ttaAudio.src = 'data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA';
+  const p = ttaAudio.play();
+  if (p && p.then) {
+    p.then(() => { ttaAudio.pause(); ttaAudio.currentTime = 0; audioUnlocked = true; })
+     .catch(() => { audioUnlocked = true; });
+  } else {
+    audioUnlocked = true;
+  }
+}
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new Ctx();
+  }
+  return audioCtx;
+}
+
+function setSpeaking(isSpeaking) {
+  isSpeakingNow = isSpeaking;
+  avatarWrap.classList.toggle('speaking', isSpeaking);
+  avatarWrap.classList.toggle('idle', !isSpeaking);
+  voiceWave.classList.toggle('active', isSpeaking);
+  if (!isSpeaking) {
+    resetWaveBars();
+    resetMouth();
+  }
+}
+
+function resetWaveBars() {
+  waveBars.forEach(bar => { bar.style.height = '4px'; });
+}
+
+function resetMouth() {
+  mouthOpen.style.opacity = '0';
+  mouthSmile.style.opacity = '1';
+  mouthOpen.setAttribute('ry', '3');
+  mouthOpen.setAttribute('rx', '10');
+}
+
+// ── Idle blinking — keeps the face feeling alive between turns ──
+function scheduleBlink() {
+  const delay = 2800 + Math.random() * 2400;   // every ~2.8–5.2s, natural rhythm
+  blinkTimer = setTimeout(() => {
+    if (!isSpeakingNow) {
+      eyeL.classList.add('blink');
+      eyeR.classList.add('blink');
+      setTimeout(() => {
+        eyeL.classList.remove('blink');
+        eyeR.classList.remove('blink');
+      }, 130);
+    }
+    scheduleBlink();
+  }, delay);
+}
+scheduleBlink();
+
+function startVisualizer(audioEl) {
+  try {
+    const ctx = getAudioContext();
+    if (ctx.state === 'suspended') ctx.resume();
+
+    // createMediaElementSource may be called only ONCE per element, ever.
+    // Reuse the node on later turns instead of recreating it (iOS-safe).
+    if (!mediaSourceNode) {
+      mediaSourceNode = ctx.createMediaElementSource(audioEl);
+      analyser = ctx.createAnalyser();
+      analyser.fftSize = 64;
+      mediaSourceNode.connect(analyser);
+      analyser.connect(ctx.destination);
+    }
+
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    const tick = () => {
+      analyser.getByteFrequencyData(data);
+      // Average amplitude across the frequency bins
+      const avg = data.reduce((a, b) => a + b, 0) / data.length;
+      const level = Math.min(1, avg / 90);   // normalize 0..1
+
+      // ── Voice wave bars (slightly different weight per bar) ──
+      waveBars.forEach((bar, i) => {
+        const weight = 0.55 + (i % 3) * 0.22;
+        const h = Math.max(4, Math.round(level * 32 * weight));
+        bar.style.height = h + 'px';
+      });
+
+      // ── Mouth: open ellipse grows with volume, smile fades out ──
+      const mouthLevel = Math.min(1, level * 1.4);
+      mouthOpen.setAttribute('ry', (2.5 + mouthLevel * 11).toFixed(1));
+      mouthOpen.setAttribute('rx', (9 + mouthLevel * 4).toFixed(1));
+      mouthOpen.style.opacity   = Math.min(1, mouthLevel * 3.2).toFixed(2);
+      mouthSmile.style.opacity  = (1 - Math.min(1, mouthLevel * 3.2)).toFixed(2);
+
+      visualizerRAF = requestAnimationFrame(tick);
+    };
+    tick();
+  } catch (e) {
+    // Web Audio API not available/blocked — animation is purely cosmetic,
+    // so we fail silently; the speaking ring + smile still show she's "on".
+    console.warn('Visualizer unavailable:', e);
+  }
+}
+
+function stopVisualizer() {
+  if (visualizerRAF) {
+    cancelAnimationFrame(visualizerRAF);
+    visualizerRAF = null;
+  }
+  resetMouth();
+  resetWaveBars();
+}
+
 function playBase64Audio(base64) {
   try {
-    const audio = new Audio(`data:audio/mp3;base64,${base64}`);
-    audio.play().catch(e => console.warn('Audio play failed:', e));
+    // Reuse the same element that was unlocked by the mic-button tap.
+    ttaAudio.pause();
+    ttaAudio.currentTime = 0;
+    ttaAudio.src = `data:audio/mp3;base64,${base64}`;
+
+    ttaAudio.onplay  = () => setSpeaking(true);
+    ttaAudio.onended = () => { setSpeaking(false); stopVisualizer(); };
+    ttaAudio.onpause = () => { setSpeaking(false); stopVisualizer(); };
+    ttaAudio.onerror = () => { setSpeaking(false); stopVisualizer(); };
+
+    const p = ttaAudio.play();
+    if (p && p.then) {
+      p.then(() => startVisualizer(ttaAudio))
+       .catch(e => {
+         console.warn('Audio play failed:', e);
+         showError('تعذّر تشغيل الصوت: ' + (e && e.message ? e.message : e));
+       });
+    } else {
+      startVisualizer(ttaAudio);
+    }
   } catch(e) {
     console.warn('Audio init failed:', e);
+    showError('خطأ بالصوت: ' + (e && e.message ? e.message : e));
   }
 }
 

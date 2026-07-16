@@ -1,0 +1,264 @@
+{
+  "created_at": "2026-07-15T01:07:07.863276",
+  "models": {
+    "openai": "gpt-4o-transcribe",
+    "cohere": "cohere-transcribe-03-2026"
+  },
+  "language": "ar",
+  "summary": {
+    "OpenAI": {
+      "successful_files": 10,
+      "average_latency_seconds": 1.474,
+      "average_wer": null,
+      "average_cer": null
+    },
+    "Cohere": {
+      "successful_files": 10,
+      "average_latency_seconds": 0.5747,
+      "average_wer": null,
+      "average_cer": null
+    }
+  },
+  "results": [
+    {
+      "file": "child_voice.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 2.06,
+      "reference": null,
+      "transcript": "مرحبا، أنا اسمي أحمد.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "child_voice.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.5807,
+      "reference": null,
+      "transcript": "مرحباً. أنا إسمي أحمد.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "child_voice_16k.wav",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.5118,
+      "reference": null,
+      "transcript": "مرحباً. أنا إسمي أحمد.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "child_voice_16k.wav",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.3239,
+      "reference": null,
+      "transcript": "مرحبا، أنا اسمي أحمد.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "distressed_emotion.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.9224,
+      "reference": null,
+      "transcript": "بس عملتها هيف، عندي القصف كل ليلة.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "distressed_emotion.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.6566,
+      "reference": null,
+      "transcript": "انبسها من الكوابيس عن القصف كل ليله",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "distressed_test.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.5225,
+      "reference": null,
+      "transcript": "بصها من الكوابيس عن القصف كل ليلة.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "distressed_test.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 0.747,
+      "reference": null,
+      "transcript": "بس ها من فابيز عن القصف كله ليه؟",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "high_risk_emotion.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.5641,
+      "reference": null,
+      "transcript": "ديشويش طيبب كتير.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "high_risk_emotion.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.8071,
+      "reference": null,
+      "transcript": "بديش عايش تعبت كتير نفسي اموت",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "high_risk_test.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.4777,
+      "reference": null,
+      "transcript": "بديش عايش تعبت كثير نفسي اموت",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "high_risk_test.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.1351,
+      "reference": null,
+      "transcript": "በእንዲሻንይሽ ታይበት ክትዬር ምስረሙት።",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "safe_emotion.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.478,
+      "reference": null,
+      "transcript": "اليوم لعبت مع أصحابي، كنت مبسوط كتير.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "safe_emotion.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.5325,
+      "reference": null,
+      "transcript": "اليوم لعبت مع اصحابي كنت مبسوط كتير",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "safe_test.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.4811,
+      "reference": null,
+      "transcript": "اليوم لعبت مع اصحابي وكنت مبسوط كثير",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "safe_test.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 0.7536,
+      "reference": null,
+      "transcript": "اليوم لعبت مع أصحابي وتمبسطت كتير.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "unclear_emotion.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 2.5247,
+      "reference": null,
+      "transcript": "مش عارف يعني ممكن.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "unclear_emotion.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.653,
+      "reference": null,
+      "transcript": "مش عارف يعني ممكن ... على حسب يعني ...",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "unclear_test.mp3",
+      "provider": "Cohere",
+      "model": "cohere-transcribe-03-2026",
+      "status": "ok",
+      "latency_seconds": 0.5242,
+      "reference": null,
+      "transcript": "تمام مش عارف يعني ممكن",
+      "wer": null,
+      "cer": null,
+      "error": null
+    },
+    {
+      "file": "unclear_test.mp3",
+      "provider": "OpenAI",
+      "model": "gpt-4o-transcribe",
+      "status": "ok",
+      "latency_seconds": 1.2313,
+      "reference": null,
+      "transcript": "تمام، مش عارف يعني ممكن.",
+      "wer": null,
+      "cer": null,
+      "error": null
+    }
+  ]
+}

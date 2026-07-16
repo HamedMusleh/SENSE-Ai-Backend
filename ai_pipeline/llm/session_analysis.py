@@ -134,7 +134,7 @@ def _collect_signals(child_turns: list[dict]) -> list[str]:
 # ---------------------------------------------------------------------------
 
 def _call_gpt_analysis(conversation_history: list[dict]) -> dict[str, Any]:
-    """Send conversation_history to GPT-4.1-mini for structured analysis."""
+    """Send conversation_history to GPT-5 for structured analysis."""
     system_prompt = load_prompt("prompts/final_analysis_prompt.txt")
 
     user_content = (
@@ -147,7 +147,7 @@ def _call_gpt_analysis(conversation_history: list[dict]) -> dict[str, Any]:
     )
 
     response = client.responses.create(
-        model="gpt-4.1-mini",
+        model="gpt-5",
         tools=[
             {
                 "type": "file_search",

@@ -1,0 +1,2571 @@
+﻿|-- ai_pipeline
+|   |-- audio_emotion
+|   |   |-- __init__.py
+|   |   |-- comparison_weights.py
+|   |   |-- emotion_service.py
+|   |   |-- wav2vec_emotion_engine.py
+|   |-- core
+|   |   |-- __init__.py
+|   |   |-- openai_client.py
+|   |-- llm
+|   |   |-- response_generation
+|   |   |-- __init__.py
+|   |   |-- prompt_loader.py
+|   |   |-- response_strategy.py
+|   |   |-- session_analysis.py
+|   |   |-- teta_engine.py
+|   |-- orchestrator
+|   |   |-- __init__.py
+|   |   |-- ai_orchestrator.py
+|   |-- rag
+|   |   |-- __init__.py
+|   |   |-- setup_vector_store.py
+|   |-- stt
+|   |   |-- __init__.py
+|   |   |-- audio_recorder.py
+|   |   |-- openai_audio_engine.py
+|   |   |-- preprocessing.py
+|   |   |-- transcriber.py
+|   |   |-- whisper_engine.py
+|   |-- triage
+|   |   |-- classifier
+|   |   |-- rules_engine
+|   |   |-- __init__.py
+|   |   |-- triage_classifier.py
+|   |-- tts
+|   |   |-- __init__.py
+|   |   |-- coqui_tts_engine.py
+|   |-- __init__.py
+|   |-- integration_api.py
+|   |-- quick_test.py
+|-- backend
+|   |-- api
+|   |   |-- __init__.py
+|   |   |-- routes.py
+|   |-- schemas
+|   |   |-- __init__.py
+|   |   |-- audio.py
+|   |   |-- common.py
+|   |   |-- session.py
+|   |-- services
+|   |   |-- __init__.py
+|   |   |-- ai_adapter.py
+|   |   |-- orchestrator.py
+|   |   |-- session_manager.py
+|   |-- uploads
+|   |   |-- .gitkeep
+|   |   |-- 067938bf-c6a4-4002-82d6-a3fc6300bc68_test_audio.mp3
+|   |   |-- 08d127e7-c6b9-4c1b-9425-98f8957354c3_recording.webm
+|   |   |-- 135ecf8c-7ac0-4bc2-9a01-60f04a8c71ab_safe_test.mp3
+|   |   |-- 2781340c-3ee0-4de9-b89b-70a97ca60b7e_recording.webm
+|   |   |-- 356aa6fc-620b-43ed-bf0e-e64b08233226_test_audio.mp3
+|   |   |-- 3f14f35f-395a-4043-8f5a-eaf985d97a61_recording.webm
+|   |   |-- 424268e0-e21c-4dfb-b660-23887c98a7f4_recording.webm
+|   |   |-- 6458e57d-8964-4c9b-9e28-6344ae488e55_Voice Memo 2.mp3
+|   |   |-- 78866f58-4442-44d9-9bb1-056202774d82_sense_recording_1780299256727.m4a
+|   |   |-- 78866f58-4442-44d9-9bb1-056202774d82_test_audio.mp3
+|   |   |-- 7cd82d80-de65-444b-a63a-dfa7bd5e6225_recording.webm
+|   |   |-- 9c0c504a-10c6-419a-aa9a-616993baa182_recording.webm
+|   |   |-- 9d70826d-4a59-4b25-a700-08785e7c2d06_recording.webm
+|   |   |-- c2b54ec2-cd84-44c8-9704-771f3fd57df3_distressed_test.mp3
+|   |   |-- c2b54ec2-cd84-44c8-9704-771f3fd57df3_unclear_emotion.mp3
+|   |   |-- d5394bd1-9f81-4fea-896d-4e4d515f066c_recording.webm
+|   |-- utils
+|   |   |-- __init__.py
+|   |   |-- config.py
+|   |   |-- errors.py
+|   |   |-- logger.py
+|   |-- websocket
+|   |   |-- __init__.py
+|   |   |-- socket_handler.py
+|   |-- __init__.py
+|   |-- main.py
+|   |-- README.md
+|   |-- requirements-backend.txt
+|-- deployment
+|   |-- cloud
+|   |-- docker
+|   |-- local
+|-- docs
+|   |-- api
+|   |   |-- api_contract.md
+|   |-- architecture
+|   |   |-- architecture.md
+|   |-- ethics
+|   |   |-- safety_notes.md
+|   |-- roadmap
+|   |   |-- pre_alpha_roadmap.md
+|-- evaluation
+|   |-- metrics
+|   |   |-- classification_metrics.py
+|   |-- predictions
+|   |   |-- gold_predictions_20260514_184321.jsonl
+|   |   |-- gold_predictions_20260514_184440.jsonl
+|   |   |-- gold_predictions_20260514_185340.jsonl
+|   |   |-- gold_predictions_20260514_185452.jsonl
+|   |   |-- gold_predictions_20260514_185537.jsonl
+|   |   |-- gold_predictions_20260514_185614.jsonl
+|   |   |-- gold_predictions_20260514_185645.jsonl
+|   |   |-- gold_predictions_20260514_190442.jsonl
+|   |   |-- gold_predictions_20260514_190608.jsonl
+|   |   |-- gold_predictions_20260514_190705.jsonl
+|   |   |-- gold_predictions_20260514_190729.jsonl
+|   |   |-- gold_predictions_20260514_191200.jsonl
+|   |   |-- gold_predictions_20260514_191330.jsonl
+|   |   |-- gold_predictions_20260514_191404.jsonl
+|   |   |-- gold_predictions_20260515_002759.jsonl
+|   |   |-- predictions.jsonl
+|   |-- results
+|   |   |-- gold_errors_20260515_002759.csv
+|   |   |-- gold_eval_20260514_191330.json
+|   |   |-- gold_eval_20260514_191404.json
+|   |   |-- known_limitations.md
+|   |-- README.md
+|   |-- run_gold_evaluation.py
+|-- media
+|   |-- SENSE-Architecture
+|   |-- SENSE-Architecture.png
+|-- mobile_app
+|   |-- flutter_client
+|   |   |-- .dart_tool
+|   |   |   |-- extension_discovery
+|   |   |   |   |-- vs_code.json
+|   |   |   |-- flutter_build
+|   |   |   |   |-- 6a5cfc3b3aea92164f9ea5be6bc3794a
+|   |   |   |   |   |-- .filecache
+|   |   |   |   |   |-- app.dill
+|   |   |   |   |   |-- dart_build.d
+|   |   |   |   |   |-- dart_build.stamp
+|   |   |   |   |   |-- dart_build_result.json
+|   |   |   |   |   |-- debug_android_application.stamp
+|   |   |   |   |   |-- flutter_assets.d
+|   |   |   |   |   |-- gen_dart_plugin_registrant.stamp
+|   |   |   |   |   |-- gen_localizations.stamp
+|   |   |   |   |   |-- install_code_assets.d
+|   |   |   |   |   |-- install_code_assets.stamp
+|   |   |   |   |   |-- kernel_snapshot_program.d
+|   |   |   |   |   |-- kernel_snapshot_program.stamp
+|   |   |   |   |   |-- native_assets.json
+|   |   |   |   |   |-- outputs.json
+|   |   |   |   |-- e7979ec73fcb3d28334081d3d5caaa5b
+|   |   |   |   |   |-- .filecache
+|   |   |   |   |   |-- app.dill
+|   |   |   |   |   |-- dart_build.d
+|   |   |   |   |   |-- dart_build.stamp
+|   |   |   |   |   |-- dart_build_result.json
+|   |   |   |   |   |-- debug_android_application.stamp
+|   |   |   |   |   |-- flutter_assets.d
+|   |   |   |   |   |-- gen_dart_plugin_registrant.stamp
+|   |   |   |   |   |-- gen_localizations.stamp
+|   |   |   |   |   |-- install_code_assets.d
+|   |   |   |   |   |-- install_code_assets.stamp
+|   |   |   |   |   |-- kernel_snapshot_program.d
+|   |   |   |   |   |-- kernel_snapshot_program.stamp
+|   |   |   |   |   |-- native_assets.json
+|   |   |   |   |   |-- outputs.json
+|   |   |   |   |-- dart_plugin_registrant.dart
+|   |   |   |-- package_config.json
+|   |   |   |-- package_graph.json
+|   |   |   |-- version
+|   |   |-- android
+|   |   |   |-- .gradle
+|   |   |   |   |-- 8.12
+|   |   |   |   |   |-- checksums
+|   |   |   |   |   |   |-- checksums.lock
+|   |   |   |   |   |   |-- md5-checksums.bin
+|   |   |   |   |   |   |-- sha1-checksums.bin
+|   |   |   |   |   |-- executionHistory
+|   |   |   |   |   |   |-- executionHistory.bin
+|   |   |   |   |   |   |-- executionHistory.lock
+|   |   |   |   |   |-- expanded
+|   |   |   |   |   |-- fileChanges
+|   |   |   |   |   |   |-- last-build.bin
+|   |   |   |   |   |-- fileHashes
+|   |   |   |   |   |   |-- fileHashes.bin
+|   |   |   |   |   |   |-- fileHashes.lock
+|   |   |   |   |   |   |-- resourceHashesCache.bin
+|   |   |   |   |   |-- vcsMetadata
+|   |   |   |   |   |-- gc.properties
+|   |   |   |   |-- buildOutputCleanup
+|   |   |   |   |   |-- buildOutputCleanup.lock
+|   |   |   |   |   |-- cache.properties
+|   |   |   |   |   |-- outputFiles.bin
+|   |   |   |   |-- nb-cache
+|   |   |   |   |   |-- android-1772034883
+|   |   |   |   |   |   |-- project-info.ser
+|   |   |   |   |   |-- android-725875249
+|   |   |   |   |   |   |-- project-info.ser
+|   |   |   |   |   |-- app-1751857674
+|   |   |   |   |   |   |-- project-info.ser
+|   |   |   |   |   |-- app-41225736
+|   |   |   |   |   |   |-- project-info.ser
+|   |   |   |   |   |-- trust
+|   |   |   |   |   |   |-- 28996CDED729931B0859C09A5E7C7D5B727BEEC466B64AD8A426BC37A8213045
+|   |   |   |   |   |   |-- D1306380E94ACB8A5D7A4CA03245FB6485BB0E26952D463D121AA00D6EDB1B00
+|   |   |   |   |   |-- subprojects.ser
+|   |   |   |   |-- noVersion
+|   |   |   |   |   |-- buildLogic.lock
+|   |   |   |   |-- vcs-1
+|   |   |   |   |   |-- gc.properties
+|   |   |   |   |-- file-system.probe
+|   |   |   |-- .kotlin
+|   |   |   |   |-- sessions
+|   |   |   |-- app
+|   |   |   |   |-- src
+|   |   |   |   |   |-- debug
+|   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |-- main
+|   |   |   |   |   |   |-- java
+|   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |-- GeneratedPluginRegistrant.java
+|   |   |   |   |   |   |-- kotlin
+|   |   |   |   |   |   |   |-- com
+|   |   |   |   |   |   |   |   |-- example
+|   |   |   |   |   |   |   |   |   |-- sense_app
+|   |   |   |   |   |   |   |   |   |   |-- MainActivity.kt
+|   |   |   |   |   |   |-- res
+|   |   |   |   |   |   |   |-- drawable
+|   |   |   |   |   |   |   |   |-- launch_background.xml
+|   |   |   |   |   |   |   |-- drawable-v21
+|   |   |   |   |   |   |   |   |-- launch_background.xml
+|   |   |   |   |   |   |   |-- mipmap-hdpi
+|   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |-- mipmap-mdpi
+|   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |-- mipmap-xhdpi
+|   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |-- mipmap-xxhdpi
+|   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |-- mipmap-xxxhdpi
+|   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |-- values
+|   |   |   |   |   |   |   |   |-- styles.xml
+|   |   |   |   |   |   |   |-- values-night
+|   |   |   |   |   |   |   |   |-- styles.xml
+|   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |   |-- PERMISSIONS_README.xml
+|   |   |   |   |   |-- profile
+|   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |-- build.gradle.kts
+|   |   |   |-- gradle
+|   |   |   |   |-- wrapper
+|   |   |   |   |   |-- gradle-wrapper.jar
+|   |   |   |   |   |-- gradle-wrapper.properties
+|   |   |   |-- .gitignore
+|   |   |   |-- build.gradle.kts
+|   |   |   |-- gradle.properties
+|   |   |   |-- gradlew
+|   |   |   |-- gradlew.bat
+|   |   |   |-- local.properties
+|   |   |   |-- sense_app_android.iml
+|   |   |   |-- settings.gradle.kts
+|   |   |-- assets
+|   |   |   |-- audio
+|   |   |   |   |-- distressed_test.mp3
+|   |   |   |   |-- high_risk_test.mp3
+|   |   |   |   |-- safe_test.mp3
+|   |   |   |   |-- test_audio.mp3
+|   |   |   |   |-- unclear_test.mp3
+|   |   |   |-- fonts
+|   |   |   |-- images
+|   |   |-- build
+|   |   |   |-- .cxx
+|   |   |   |   |-- debug
+|   |   |   |   |   |-- 04k5z316
+|   |   |   |   |   |   |-- arm64-v8a
+|   |   |   |   |   |   |   |-- .cmake
+|   |   |   |   |   |   |   |   |-- api
+|   |   |   |   |   |   |   |   |   |-- v1
+|   |   |   |   |   |   |   |   |   |   |-- query
+|   |   |   |   |   |   |   |   |   |   |   |-- client-agp
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cache-v2
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1
+|   |   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2
+|   |   |   |   |   |   |   |   |   |   |-- reply
+|   |   |   |   |   |   |   |   |   |   |   |-- cache-v2-138203fbbec5533ea96c.json
+|   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1-74399ba03029d7e6618d.json
+|   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2-46dfff22aac1f815b319.json
+|   |   |   |   |   |   |   |   |   |   |   |-- directory-.-debug-d0094a50bb2071803777.json
+|   |   |   |   |   |   |   |   |   |   |   |-- index-2026-05-31T16-02-36-0846.json
+|   |   |   |   |   |   |   |-- CMakeFiles
+|   |   |   |   |   |   |   |   |-- 3.22.1-g37088a8-dirty
+|   |   |   |   |   |   |   |   |   |-- CompilerIdC
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.c
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CompilerIdCXX
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.cpp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CMakeCCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeCXXCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_C.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeSystem.cmake
+|   |   |   |   |   |   |   |   |-- CMakeTmp
+|   |   |   |   |   |   |   |   |-- cmake.check_cache
+|   |   |   |   |   |   |   |   |-- rules.ninja
+|   |   |   |   |   |   |   |   |-- TargetDirectories.txt
+|   |   |   |   |   |   |   |-- additional_project_files.txt
+|   |   |   |   |   |   |   |-- android_gradle_build.json
+|   |   |   |   |   |   |   |-- android_gradle_build_mini.json
+|   |   |   |   |   |   |   |-- build.ninja
+|   |   |   |   |   |   |   |-- build_file_index.txt
+|   |   |   |   |   |   |   |-- cmake_install.cmake
+|   |   |   |   |   |   |   |-- CMakeCache.txt
+|   |   |   |   |   |   |   |-- configure_fingerprint.bin
+|   |   |   |   |   |   |   |-- metadata_generation_command.txt
+|   |   |   |   |   |   |   |-- prefab_config.json
+|   |   |   |   |   |   |   |-- symbol_folder_index.txt
+|   |   |   |   |   |   |-- armeabi-v7a
+|   |   |   |   |   |   |   |-- .cmake
+|   |   |   |   |   |   |   |   |-- api
+|   |   |   |   |   |   |   |   |   |-- v1
+|   |   |   |   |   |   |   |   |   |   |-- query
+|   |   |   |   |   |   |   |   |   |   |   |-- client-agp
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cache-v2
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1
+|   |   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2
+|   |   |   |   |   |   |   |   |   |   |-- reply
+|   |   |   |   |   |   |   |   |   |   |   |-- cache-v2-b411b252d0570c48b159.json
+|   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1-65c919735c8fe3e1777f.json
+|   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2-2efadd2510c9bec50afc.json
+|   |   |   |   |   |   |   |   |   |   |   |-- directory-.-debug-d0094a50bb2071803777.json
+|   |   |   |   |   |   |   |   |   |   |   |-- index-2026-05-31T16-03-15-0463.json
+|   |   |   |   |   |   |   |-- CMakeFiles
+|   |   |   |   |   |   |   |   |-- 3.22.1-g37088a8-dirty
+|   |   |   |   |   |   |   |   |   |-- CompilerIdC
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.c
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CompilerIdCXX
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.cpp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CMakeCCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeCXXCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_C.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeSystem.cmake
+|   |   |   |   |   |   |   |   |-- CMakeTmp
+|   |   |   |   |   |   |   |   |-- cmake.check_cache
+|   |   |   |   |   |   |   |   |-- rules.ninja
+|   |   |   |   |   |   |   |   |-- TargetDirectories.txt
+|   |   |   |   |   |   |   |-- additional_project_files.txt
+|   |   |   |   |   |   |   |-- android_gradle_build.json
+|   |   |   |   |   |   |   |-- android_gradle_build_mini.json
+|   |   |   |   |   |   |   |-- build.ninja
+|   |   |   |   |   |   |   |-- build_file_index.txt
+|   |   |   |   |   |   |   |-- cmake_install.cmake
+|   |   |   |   |   |   |   |-- CMakeCache.txt
+|   |   |   |   |   |   |   |-- configure_fingerprint.bin
+|   |   |   |   |   |   |   |-- metadata_generation_command.txt
+|   |   |   |   |   |   |   |-- prefab_config.json
+|   |   |   |   |   |   |   |-- symbol_folder_index.txt
+|   |   |   |   |   |   |-- x86_64
+|   |   |   |   |   |   |   |-- .cmake
+|   |   |   |   |   |   |   |   |-- api
+|   |   |   |   |   |   |   |   |   |-- v1
+|   |   |   |   |   |   |   |   |   |   |-- query
+|   |   |   |   |   |   |   |   |   |   |   |-- client-agp
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cache-v2
+|   |   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1
+|   |   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2
+|   |   |   |   |   |   |   |   |   |   |-- reply
+|   |   |   |   |   |   |   |   |   |   |   |-- cache-v2-3b3c24fbb7b332b6015d.json
+|   |   |   |   |   |   |   |   |   |   |   |-- cmakeFiles-v1-9d95a69103ff4a2adc10.json
+|   |   |   |   |   |   |   |   |   |   |   |-- codemodel-v2-fbadc1ed7745cc835cd9.json
+|   |   |   |   |   |   |   |   |   |   |   |-- directory-.-debug-d0094a50bb2071803777.json
+|   |   |   |   |   |   |   |   |   |   |   |-- index-2026-05-31T16-03-21-0093.json
+|   |   |   |   |   |   |   |-- CMakeFiles
+|   |   |   |   |   |   |   |   |-- 3.22.1-g37088a8-dirty
+|   |   |   |   |   |   |   |   |   |-- CompilerIdC
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.c
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CompilerIdCXX
+|   |   |   |   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.cpp
+|   |   |   |   |   |   |   |   |   |   |-- CMakeCXXCompilerId.o
+|   |   |   |   |   |   |   |   |   |-- CMakeCCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeCXXCompiler.cmake
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_C.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
+|   |   |   |   |   |   |   |   |   |-- CMakeSystem.cmake
+|   |   |   |   |   |   |   |   |-- CMakeTmp
+|   |   |   |   |   |   |   |   |-- cmake.check_cache
+|   |   |   |   |   |   |   |   |-- rules.ninja
+|   |   |   |   |   |   |   |   |-- TargetDirectories.txt
+|   |   |   |   |   |   |   |-- additional_project_files.txt
+|   |   |   |   |   |   |   |-- android_gradle_build.json
+|   |   |   |   |   |   |   |-- android_gradle_build_mini.json
+|   |   |   |   |   |   |   |-- build.ninja
+|   |   |   |   |   |   |   |-- build_file_index.txt
+|   |   |   |   |   |   |   |-- cmake_install.cmake
+|   |   |   |   |   |   |   |-- CMakeCache.txt
+|   |   |   |   |   |   |   |-- configure_fingerprint.bin
+|   |   |   |   |   |   |   |-- metadata_generation_command.txt
+|   |   |   |   |   |   |   |-- prefab_config.json
+|   |   |   |   |   |   |   |-- symbol_folder_index.txt
+|   |   |   |   |   |   |-- hash_key.txt
+|   |   |   |-- app
+|   |   |   |   |-- generated
+|   |   |   |   |   |-- ap_generated_sources
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- res
+|   |   |   |   |   |   |-- pngs
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |-- resValues
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |-- intermediates
+|   |   |   |   |   |-- aar_metadata_check
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- checkDebugAarMetadata
+|   |   |   |   |   |-- annotation_processor_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- javaPreCompileDebug
+|   |   |   |   |   |   |   |   |-- annotationProcessors.json
+|   |   |   |   |   |-- apk_ide_redirect_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- createDebugApkListingFileRedirect
+|   |   |   |   |   |   |   |   |-- redirect.txt
+|   |   |   |   |   |-- app_metadata
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- writeDebugAppMetadata
+|   |   |   |   |   |   |   |   |-- app-metadata.properties
+|   |   |   |   |   |-- assets
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |   |   |   |-- flutter_assets
+|   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |-- audio
+|   |   |   |   |   |   |   |   |   |   |   |-- distressed_test.mp3
+|   |   |   |   |   |   |   |   |   |   |   |-- high_risk_test.mp3
+|   |   |   |   |   |   |   |   |   |   |   |-- safe_test.mp3
+|   |   |   |   |   |   |   |   |   |   |   |-- test_audio.mp3
+|   |   |   |   |   |   |   |   |   |   |   |-- unclear_test.mp3
+|   |   |   |   |   |   |   |   |   |-- fonts
+|   |   |   |   |   |   |   |   |   |   |-- MaterialIcons-Regular.otf
+|   |   |   |   |   |   |   |   |   |-- packages
+|   |   |   |   |   |   |   |   |   |   |-- record_web
+|   |   |   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |   |   |-- js
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- record.fixwebmduration.js
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- record.worklet.js
+|   |   |   |   |   |   |   |   |   |-- shaders
+|   |   |   |   |   |   |   |   |   |   |-- ink_sparkle.frag
+|   |   |   |   |   |   |   |   |   |-- AssetManifest.bin
+|   |   |   |   |   |   |   |   |   |-- AssetManifest.json
+|   |   |   |   |   |   |   |   |   |-- FontManifest.json
+|   |   |   |   |   |   |   |   |   |-- isolate_snapshot_data
+|   |   |   |   |   |   |   |   |   |-- kernel_blob.bin
+|   |   |   |   |   |   |   |   |   |-- NativeAssetsManifest.json
+|   |   |   |   |   |   |   |   |   |-- NOTICES.Z
+|   |   |   |   |   |   |   |   |   |-- vm_snapshot_data
+|   |   |   |   |   |-- compatible_screen_manifest
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- createDebugCompatibleScreenManifests
+|   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- compile_and_runtime_not_namespaced_r_class_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |   |   |   |-- R.jar
+|   |   |   |   |   |-- compressed_assets
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- compressDebugAssets
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |-- flutter_assets
+|   |   |   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |   |   |-- audio
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- distressed_test.mp3.jar
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- high_risk_test.mp3.jar
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- safe_test.mp3.jar
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- test_audio.mp3.jar
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- unclear_test.mp3.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- fonts
+|   |   |   |   |   |   |   |   |   |   |   |   |-- MaterialIcons-Regular.otf.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- packages
+|   |   |   |   |   |   |   |   |   |   |   |   |-- record_web
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |-- js
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |-- record.fixwebmduration.js.jar
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |-- record.worklet.js.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- shaders
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ink_sparkle.frag.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- AssetManifest.bin.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- AssetManifest.json.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- FontManifest.json.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- isolate_snapshot_data.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- kernel_blob.bin.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- NativeAssetsManifest.json.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- NOTICES.Z.jar
+|   |   |   |   |   |   |   |   |   |   |   |-- vm_snapshot_data.jar
+|   |   |   |   |   |-- cxx
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- 04k5z316
+|   |   |   |   |   |   |   |   |-- logs
+|   |   |   |   |   |   |   |   |   |-- arm64-v8a
+|   |   |   |   |   |   |   |   |   |   |-- build_model.json
+|   |   |   |   |   |   |   |   |   |   |-- configure_command.bat
+|   |   |   |   |   |   |   |   |   |   |-- configure_stderr.txt
+|   |   |   |   |   |   |   |   |   |   |-- configure_stdout.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_243_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_419_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_552_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_680_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_78_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_805_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_83_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_85_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- metadata_generation_record.json
+|   |   |   |   |   |   |   |   |   |-- armeabi-v7a
+|   |   |   |   |   |   |   |   |   |   |-- build_model.json
+|   |   |   |   |   |   |   |   |   |   |-- configure_command.bat
+|   |   |   |   |   |   |   |   |   |   |-- configure_stderr.txt
+|   |   |   |   |   |   |   |   |   |   |-- configure_stdout.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_241_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_419_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_552_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_679_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_78_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_805_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_83_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- metadata_generation_record.json
+|   |   |   |   |   |   |   |   |   |-- x86_64
+|   |   |   |   |   |   |   |   |   |   |-- build_model.json
+|   |   |   |   |   |   |   |   |   |   |-- configure_command.bat
+|   |   |   |   |   |   |   |   |   |   |-- configure_stderr.txt
+|   |   |   |   |   |   |   |   |   |   |-- configure_stdout.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_241_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_419_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_552_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_680_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_78_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_805_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- generate_cxx_metadata_83_timing.txt
+|   |   |   |   |   |   |   |   |   |   |-- metadata_generation_record.json
+|   |   |   |   |   |   |   |   |-- obj
+|   |   |   |   |   |   |   |   |   |-- arm64-v8a
+|   |   |   |   |   |   |   |   |   |-- armeabi-v7a
+|   |   |   |   |   |   |   |   |   |-- x86_64
+|   |   |   |   |   |-- data_binding_layout_info_type_merge
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- data_binding_layout_info_type_package
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- desugar_graph
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- currentProject
+|   |   |   |   |   |   |   |   |   |   |-- dirs_bucket_0
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- dirs_bucket_1
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- dirs_bucket_2
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- dirs_bucket_3
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- jar_8c35a9dfee8de5f426a87e934ee17142f41f349ad2cba0313ddae491bb557ffa_bucket_0
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- jar_8c35a9dfee8de5f426a87e934ee17142f41f349ad2cba0313ddae491bb557ffa_bucket_1
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- jar_8c35a9dfee8de5f426a87e934ee17142f41f349ad2cba0313ddae491bb557ffa_bucket_2
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |   |-- jar_8c35a9dfee8de5f426a87e934ee17142f41f349ad2cba0313ddae491bb557ffa_bucket_3
+|   |   |   |   |   |   |   |   |   |   |   |-- graph.bin
+|   |   |   |   |   |   |   |   |   |-- externalLibs
+|   |   |   |   |   |   |   |   |   |-- mixedScopes
+|   |   |   |   |   |   |   |   |   |-- otherProjects
+|   |   |   |   |   |-- dex
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeExtDexDebug
+|   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |-- mergeLibDexDebug
+|   |   |   |   |   |   |   |   |-- 0
+|   |   |   |   |   |   |   |   |-- 1
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 10
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 11
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 12
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 13
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 14
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 15
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 2
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 3
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 4
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 5
+|   |   |   |   |   |   |   |   |-- 6
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 7
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 8
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 9
+|   |   |   |   |   |   |   |-- mergeProjectDexDebug
+|   |   |   |   |   |   |   |   |-- 0
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 1
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 10
+|   |   |   |   |   |   |   |   |-- 11
+|   |   |   |   |   |   |   |   |   |-- classes.dex
+|   |   |   |   |   |   |   |   |-- 12
+|   |   |   |   |   |   |   |   |-- 13
+|   |   |   |   |   |   |   |   |-- 14
+|   |   |   |   |   |   |   |   |-- 15
+|   |   |   |   |   |   |   |   |-- 2
+|   |   |   |   |   |   |   |   |-- 3
+|   |   |   |   |   |   |   |   |-- 4
+|   |   |   |   |   |   |   |   |-- 5
+|   |   |   |   |   |   |   |   |-- 6
+|   |   |   |   |   |   |   |   |-- 7
+|   |   |   |   |   |   |   |   |-- 8
+|   |   |   |   |   |   |   |   |-- 9
+|   |   |   |   |   |-- dex_archive_input_jar_hashes
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- dex_number_of_buckets_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- duplicate_classes_check
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- checkDebugDuplicateClasses
+|   |   |   |   |   |-- external_file_lib_dex_archives
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- desugarDebugFileDependencies
+|   |   |   |   |   |-- external_libs_dex_archive
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- external_libs_dex_archive_with_artifact_transforms
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- flutter_assets
+|   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |-- audio
+|   |   |   |   |   |   |   |   |   |   |-- distressed_test.mp3
+|   |   |   |   |   |   |   |   |   |   |-- high_risk_test.mp3
+|   |   |   |   |   |   |   |   |   |   |-- safe_test.mp3
+|   |   |   |   |   |   |   |   |   |   |-- test_audio.mp3
+|   |   |   |   |   |   |   |   |   |   |-- unclear_test.mp3
+|   |   |   |   |   |   |   |   |-- fonts
+|   |   |   |   |   |   |   |   |   |-- MaterialIcons-Regular.otf
+|   |   |   |   |   |   |   |   |-- packages
+|   |   |   |   |   |   |   |   |   |-- record_web
+|   |   |   |   |   |   |   |   |   |   |-- assets
+|   |   |   |   |   |   |   |   |   |   |   |-- js
+|   |   |   |   |   |   |   |   |   |   |   |   |-- record.fixwebmduration.js
+|   |   |   |   |   |   |   |   |   |   |   |   |-- record.worklet.js
+|   |   |   |   |   |   |   |   |-- shaders
+|   |   |   |   |   |   |   |   |   |-- ink_sparkle.frag
+|   |   |   |   |   |   |   |   |-- AssetManifest.bin
+|   |   |   |   |   |   |   |   |-- AssetManifest.json
+|   |   |   |   |   |   |   |   |-- FontManifest.json
+|   |   |   |   |   |   |   |   |-- isolate_snapshot_data
+|   |   |   |   |   |   |   |   |-- kernel_blob.bin
+|   |   |   |   |   |   |   |   |-- NativeAssetsManifest.json
+|   |   |   |   |   |   |   |   |-- NOTICES.Z
+|   |   |   |   |   |   |   |   |-- vm_snapshot_data
+|   |   |   |   |   |   |   |-- .last_build_id
+|   |   |   |   |   |   |   |-- flutter_build.d
+|   |   |   |   |   |   |   |-- libs.jar
+|   |   |   |   |   |-- incremental
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugResources
+|   |   |   |   |   |   |   |   |-- merged.dir
+|   |   |   |   |   |   |   |   |   |-- values
+|   |   |   |   |   |   |   |   |   |   |-- values.xml
+|   |   |   |   |   |   |   |   |   |-- values-af
+|   |   |   |   |   |   |   |   |   |   |-- values-af.xml
+|   |   |   |   |   |   |   |   |   |-- values-am
+|   |   |   |   |   |   |   |   |   |   |-- values-am.xml
+|   |   |   |   |   |   |   |   |   |-- values-ar
+|   |   |   |   |   |   |   |   |   |   |-- values-ar.xml
+|   |   |   |   |   |   |   |   |   |-- values-as
+|   |   |   |   |   |   |   |   |   |   |-- values-as.xml
+|   |   |   |   |   |   |   |   |   |-- values-az
+|   |   |   |   |   |   |   |   |   |   |-- values-az.xml
+|   |   |   |   |   |   |   |   |   |-- values-b+sr+Latn
+|   |   |   |   |   |   |   |   |   |   |-- values-b+sr+Latn.xml
+|   |   |   |   |   |   |   |   |   |-- values-be
+|   |   |   |   |   |   |   |   |   |   |-- values-be.xml
+|   |   |   |   |   |   |   |   |   |-- values-bg
+|   |   |   |   |   |   |   |   |   |   |-- values-bg.xml
+|   |   |   |   |   |   |   |   |   |-- values-bn
+|   |   |   |   |   |   |   |   |   |   |-- values-bn.xml
+|   |   |   |   |   |   |   |   |   |-- values-bs
+|   |   |   |   |   |   |   |   |   |   |-- values-bs.xml
+|   |   |   |   |   |   |   |   |   |-- values-ca
+|   |   |   |   |   |   |   |   |   |   |-- values-ca.xml
+|   |   |   |   |   |   |   |   |   |-- values-cs
+|   |   |   |   |   |   |   |   |   |   |-- values-cs.xml
+|   |   |   |   |   |   |   |   |   |-- values-da
+|   |   |   |   |   |   |   |   |   |   |-- values-da.xml
+|   |   |   |   |   |   |   |   |   |-- values-de
+|   |   |   |   |   |   |   |   |   |   |-- values-de.xml
+|   |   |   |   |   |   |   |   |   |-- values-el
+|   |   |   |   |   |   |   |   |   |   |-- values-el.xml
+|   |   |   |   |   |   |   |   |   |-- values-en-rAU
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rAU.xml
+|   |   |   |   |   |   |   |   |   |-- values-en-rCA
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rCA.xml
+|   |   |   |   |   |   |   |   |   |-- values-en-rGB
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rGB.xml
+|   |   |   |   |   |   |   |   |   |-- values-en-rIN
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rIN.xml
+|   |   |   |   |   |   |   |   |   |-- values-en-rXC
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rXC.xml
+|   |   |   |   |   |   |   |   |   |-- values-es
+|   |   |   |   |   |   |   |   |   |   |-- values-es.xml
+|   |   |   |   |   |   |   |   |   |-- values-es-rUS
+|   |   |   |   |   |   |   |   |   |   |-- values-es-rUS.xml
+|   |   |   |   |   |   |   |   |   |-- values-et
+|   |   |   |   |   |   |   |   |   |   |-- values-et.xml
+|   |   |   |   |   |   |   |   |   |-- values-eu
+|   |   |   |   |   |   |   |   |   |   |-- values-eu.xml
+|   |   |   |   |   |   |   |   |   |-- values-fa
+|   |   |   |   |   |   |   |   |   |   |-- values-fa.xml
+|   |   |   |   |   |   |   |   |   |-- values-fi
+|   |   |   |   |   |   |   |   |   |   |-- values-fi.xml
+|   |   |   |   |   |   |   |   |   |-- values-fr
+|   |   |   |   |   |   |   |   |   |   |-- values-fr.xml
+|   |   |   |   |   |   |   |   |   |-- values-fr-rCA
+|   |   |   |   |   |   |   |   |   |   |-- values-fr-rCA.xml
+|   |   |   |   |   |   |   |   |   |-- values-gl
+|   |   |   |   |   |   |   |   |   |   |-- values-gl.xml
+|   |   |   |   |   |   |   |   |   |-- values-gu
+|   |   |   |   |   |   |   |   |   |   |-- values-gu.xml
+|   |   |   |   |   |   |   |   |   |-- values-hi
+|   |   |   |   |   |   |   |   |   |   |-- values-hi.xml
+|   |   |   |   |   |   |   |   |   |-- values-hr
+|   |   |   |   |   |   |   |   |   |   |-- values-hr.xml
+|   |   |   |   |   |   |   |   |   |-- values-hu
+|   |   |   |   |   |   |   |   |   |   |-- values-hu.xml
+|   |   |   |   |   |   |   |   |   |-- values-hy
+|   |   |   |   |   |   |   |   |   |   |-- values-hy.xml
+|   |   |   |   |   |   |   |   |   |-- values-in
+|   |   |   |   |   |   |   |   |   |   |-- values-in.xml
+|   |   |   |   |   |   |   |   |   |-- values-is
+|   |   |   |   |   |   |   |   |   |   |-- values-is.xml
+|   |   |   |   |   |   |   |   |   |-- values-it
+|   |   |   |   |   |   |   |   |   |   |-- values-it.xml
+|   |   |   |   |   |   |   |   |   |-- values-iw
+|   |   |   |   |   |   |   |   |   |   |-- values-iw.xml
+|   |   |   |   |   |   |   |   |   |-- values-ja
+|   |   |   |   |   |   |   |   |   |   |-- values-ja.xml
+|   |   |   |   |   |   |   |   |   |-- values-ka
+|   |   |   |   |   |   |   |   |   |   |-- values-ka.xml
+|   |   |   |   |   |   |   |   |   |-- values-kk
+|   |   |   |   |   |   |   |   |   |   |-- values-kk.xml
+|   |   |   |   |   |   |   |   |   |-- values-km
+|   |   |   |   |   |   |   |   |   |   |-- values-km.xml
+|   |   |   |   |   |   |   |   |   |-- values-kn
+|   |   |   |   |   |   |   |   |   |   |-- values-kn.xml
+|   |   |   |   |   |   |   |   |   |-- values-ko
+|   |   |   |   |   |   |   |   |   |   |-- values-ko.xml
+|   |   |   |   |   |   |   |   |   |-- values-ky
+|   |   |   |   |   |   |   |   |   |   |-- values-ky.xml
+|   |   |   |   |   |   |   |   |   |-- values-lo
+|   |   |   |   |   |   |   |   |   |   |-- values-lo.xml
+|   |   |   |   |   |   |   |   |   |-- values-lt
+|   |   |   |   |   |   |   |   |   |   |-- values-lt.xml
+|   |   |   |   |   |   |   |   |   |-- values-lv
+|   |   |   |   |   |   |   |   |   |   |-- values-lv.xml
+|   |   |   |   |   |   |   |   |   |-- values-mk
+|   |   |   |   |   |   |   |   |   |   |-- values-mk.xml
+|   |   |   |   |   |   |   |   |   |-- values-ml
+|   |   |   |   |   |   |   |   |   |   |-- values-ml.xml
+|   |   |   |   |   |   |   |   |   |-- values-mn
+|   |   |   |   |   |   |   |   |   |   |-- values-mn.xml
+|   |   |   |   |   |   |   |   |   |-- values-mr
+|   |   |   |   |   |   |   |   |   |   |-- values-mr.xml
+|   |   |   |   |   |   |   |   |   |-- values-ms
+|   |   |   |   |   |   |   |   |   |   |-- values-ms.xml
+|   |   |   |   |   |   |   |   |   |-- values-my
+|   |   |   |   |   |   |   |   |   |   |-- values-my.xml
+|   |   |   |   |   |   |   |   |   |-- values-nb
+|   |   |   |   |   |   |   |   |   |   |-- values-nb.xml
+|   |   |   |   |   |   |   |   |   |-- values-ne
+|   |   |   |   |   |   |   |   |   |   |-- values-ne.xml
+|   |   |   |   |   |   |   |   |   |-- values-night-v8
+|   |   |   |   |   |   |   |   |   |   |-- values-night-v8.xml
+|   |   |   |   |   |   |   |   |   |-- values-nl
+|   |   |   |   |   |   |   |   |   |   |-- values-nl.xml
+|   |   |   |   |   |   |   |   |   |-- values-or
+|   |   |   |   |   |   |   |   |   |   |-- values-or.xml
+|   |   |   |   |   |   |   |   |   |-- values-pa
+|   |   |   |   |   |   |   |   |   |   |-- values-pa.xml
+|   |   |   |   |   |   |   |   |   |-- values-pl
+|   |   |   |   |   |   |   |   |   |   |-- values-pl.xml
+|   |   |   |   |   |   |   |   |   |-- values-pt
+|   |   |   |   |   |   |   |   |   |   |-- values-pt.xml
+|   |   |   |   |   |   |   |   |   |-- values-pt-rBR
+|   |   |   |   |   |   |   |   |   |   |-- values-pt-rBR.xml
+|   |   |   |   |   |   |   |   |   |-- values-pt-rPT
+|   |   |   |   |   |   |   |   |   |   |-- values-pt-rPT.xml
+|   |   |   |   |   |   |   |   |   |-- values-ro
+|   |   |   |   |   |   |   |   |   |   |-- values-ro.xml
+|   |   |   |   |   |   |   |   |   |-- values-ru
+|   |   |   |   |   |   |   |   |   |   |-- values-ru.xml
+|   |   |   |   |   |   |   |   |   |-- values-si
+|   |   |   |   |   |   |   |   |   |   |-- values-si.xml
+|   |   |   |   |   |   |   |   |   |-- values-sk
+|   |   |   |   |   |   |   |   |   |   |-- values-sk.xml
+|   |   |   |   |   |   |   |   |   |-- values-sl
+|   |   |   |   |   |   |   |   |   |   |-- values-sl.xml
+|   |   |   |   |   |   |   |   |   |-- values-sq
+|   |   |   |   |   |   |   |   |   |   |-- values-sq.xml
+|   |   |   |   |   |   |   |   |   |-- values-sr
+|   |   |   |   |   |   |   |   |   |   |-- values-sr.xml
+|   |   |   |   |   |   |   |   |   |-- values-sv
+|   |   |   |   |   |   |   |   |   |   |-- values-sv.xml
+|   |   |   |   |   |   |   |   |   |-- values-sw
+|   |   |   |   |   |   |   |   |   |   |-- values-sw.xml
+|   |   |   |   |   |   |   |   |   |-- values-ta
+|   |   |   |   |   |   |   |   |   |   |-- values-ta.xml
+|   |   |   |   |   |   |   |   |   |-- values-te
+|   |   |   |   |   |   |   |   |   |   |-- values-te.xml
+|   |   |   |   |   |   |   |   |   |-- values-th
+|   |   |   |   |   |   |   |   |   |   |-- values-th.xml
+|   |   |   |   |   |   |   |   |   |-- values-tl
+|   |   |   |   |   |   |   |   |   |   |-- values-tl.xml
+|   |   |   |   |   |   |   |   |   |-- values-tr
+|   |   |   |   |   |   |   |   |   |   |-- values-tr.xml
+|   |   |   |   |   |   |   |   |   |-- values-uk
+|   |   |   |   |   |   |   |   |   |   |-- values-uk.xml
+|   |   |   |   |   |   |   |   |   |-- values-ur
+|   |   |   |   |   |   |   |   |   |   |-- values-ur.xml
+|   |   |   |   |   |   |   |   |   |-- values-uz
+|   |   |   |   |   |   |   |   |   |   |-- values-uz.xml
+|   |   |   |   |   |   |   |   |   |-- values-v21
+|   |   |   |   |   |   |   |   |   |   |-- values-v21.xml
+|   |   |   |   |   |   |   |   |   |-- values-vi
+|   |   |   |   |   |   |   |   |   |   |-- values-vi.xml
+|   |   |   |   |   |   |   |   |   |-- values-zh-rCN
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rCN.xml
+|   |   |   |   |   |   |   |   |   |-- values-zh-rHK
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rHK.xml
+|   |   |   |   |   |   |   |   |   |-- values-zh-rTW
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rTW.xml
+|   |   |   |   |   |   |   |   |   |-- values-zu
+|   |   |   |   |   |   |   |   |   |   |-- values-zu.xml
+|   |   |   |   |   |   |   |   |-- stripped.dir
+|   |   |   |   |   |   |   |   |-- compile-file-map.properties
+|   |   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- merged.dir
+|   |   |   |   |   |   |   |   |   |-- values
+|   |   |   |   |   |   |   |   |   |   |-- values.xml
+|   |   |   |   |   |   |   |   |   |-- values-night-v8
+|   |   |   |   |   |   |   |   |   |   |-- values-night-v8.xml
+|   |   |   |   |   |   |   |   |-- stripped.dir
+|   |   |   |   |   |   |   |   |-- compile-file-map.properties
+|   |   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- debug-mergeJavaRes
+|   |   |   |   |   |   |   |-- zip-cache
+|   |   |   |   |   |   |   |   |-- +PqRT96ZdVOMtKR7SlJfhyB0ezI=
+|   |   |   |   |   |   |   |   |-- 1vat5uaompOsq2rwnHE8y5gNda0=
+|   |   |   |   |   |   |   |   |-- 4DT6qC3fh_arizoQZ0k1l9SFncs=
+|   |   |   |   |   |   |   |   |-- 527WAdy1PfYKln_j45xee_UJF9Y=
+|   |   |   |   |   |   |   |   |-- 6QuirlWt3TwskMtfGKeybCp7XWo=
+|   |   |   |   |   |   |   |   |-- 7z39zfpOHSPt8b3vZ0oEGlueSlM=
+|   |   |   |   |   |   |   |   |-- 9Hh7cEQ_YTR3+Co4vppgZLNTmi0=
+|   |   |   |   |   |   |   |   |-- A1TrqPhhJGDYopAiPN7ZDMWkgDo=
+|   |   |   |   |   |   |   |   |-- AqNckg8MWHg_exlbhtpMWotxE8E=
+|   |   |   |   |   |   |   |   |-- bdKj+p6KPZC6f+LcvO3tu+M0VlU=
+|   |   |   |   |   |   |   |   |-- EjW3bvDYl6j3cBH+BLJgxzQg_Ss=
+|   |   |   |   |   |   |   |   |-- fLbffy5KqShgBeug6ob+_RGjGOo=
+|   |   |   |   |   |   |   |   |-- g5s2AOZLBoCXIoQ74l_oSf3WrkY=
+|   |   |   |   |   |   |   |   |-- gj2PiNEembCTgj+_s1HaPwcfn30=
+|   |   |   |   |   |   |   |   |-- GuS54AdR_9AkrXlkwCiqG2qjLl4=
+|   |   |   |   |   |   |   |   |-- gXroLWux40Avr7Imd0na1OSCVd8=
+|   |   |   |   |   |   |   |   |-- HXNeGaeJ5vvYWuYU9Ejfu4rPDCo=
+|   |   |   |   |   |   |   |   |-- jx5N3ImxA9u0TFJu7dNDLREf8bk=
+|   |   |   |   |   |   |   |   |-- KHKHIx2EL60Z50FMLeFDSTKuXI0=
+|   |   |   |   |   |   |   |   |-- kKK1Er7EGxX_XCcqsC4ttxiiN8k=
+|   |   |   |   |   |   |   |   |-- MxDkZOyjOKhhnf2REUwOqsnl+ls=
+|   |   |   |   |   |   |   |   |-- n9hVQJNpYdi_KT4PjfNINKN3cKQ=
+|   |   |   |   |   |   |   |   |-- njXHGIR0cROdtbD+xgMNR2etK5U=
+|   |   |   |   |   |   |   |   |-- nVmQakrzE+iVAF8xN8a4QiQYQ_8=
+|   |   |   |   |   |   |   |   |-- OEY_tzJ3kspqXtdNmo4WlgbKCpc=
+|   |   |   |   |   |   |   |   |-- P2Qvjn7VAyHrKtWo74RHBoSeRHQ=
+|   |   |   |   |   |   |   |   |-- PS_JiJxK0U6YNAZXYSIaaoa1El4=
+|   |   |   |   |   |   |   |   |-- q_4WyqAVgT6yXhQFLezNWOQMNY4=
+|   |   |   |   |   |   |   |   |-- qPGfFvfkKDrTbPyNZoLeBvpd1Cg=
+|   |   |   |   |   |   |   |   |-- rPq1KDmZ2ic0LiuCxiKmHUZ_eRQ=
+|   |   |   |   |   |   |   |   |-- SbEMA34Kj_g1bhVIMcYOAg9aoII=
+|   |   |   |   |   |   |   |   |-- t1WyjciizKFx3i+iqkqOa+6txX4=
+|   |   |   |   |   |   |   |   |-- tbbh81TPvnjn3fXuHGmdAFhk+Gk=
+|   |   |   |   |   |   |   |   |-- TgNP8UIDAv3Ia+QHmE39kxfWBcU=
+|   |   |   |   |   |   |   |   |-- TkXvfogKbkZkG01DQEpg8XlRWNA=
+|   |   |   |   |   |   |   |   |-- UMvq9TESb0g9iAVfyZuO2mVL59o=
+|   |   |   |   |   |   |   |   |-- WdqzyFK_Y2bQMkzbj6_ncggdB5M=
+|   |   |   |   |   |   |   |   |-- x55ccIXAI4tXbJwQmCozFZN4Tac=
+|   |   |   |   |   |   |   |   |-- x57jvAi2fLSY68VSygkF5R1nWS0=
+|   |   |   |   |   |   |   |   |-- xfl5Uz76udGKP3kGJYz89Z6i5Dw=
+|   |   |   |   |   |   |   |   |-- Y7gr_EC3pzr9oTcrpjAEiKyOnQw=
+|   |   |   |   |   |   |   |   |-- YH35JQwbo79Q3wNftmVbH20XisQ=
+|   |   |   |   |   |   |   |   |-- zO5HV3hUPcZQn_CV66Qtz4Db3yI=
+|   |   |   |   |   |   |   |-- merge-state
+|   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- packageDebug
+|   |   |   |   |   |   |   |-- tmp
+|   |   |   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |   |   |-- zip-cache
+|   |   |   |   |   |   |   |   |   |   |-- androidResources
+|   |   |   |   |   |   |   |   |   |   |-- javaResources0
+|   |   |   |   |   |   |   |   |   |-- dex-renamer-state.txt
+|   |   |   |   |   |-- java_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugJavaRes
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- com
+|   |   |   |   |   |   |   |   |   |   |-- example
+|   |   |   |   |   |   |   |   |   |   |   |-- sense_app
+|   |   |   |   |   |   |   |   |   |-- META-INF
+|   |   |   |   |   |   |   |   |   |   |-- app_debug.kotlin_module
+|   |   |   |   |   |-- javac
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- compileDebugJavaWithJavac
+|   |   |   |   |   |   |   |   |-- classes
+|   |   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |   |-- GeneratedPluginRegistrant.class
+|   |   |   |   |   |-- linked_resources_binary_format
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |   |   |   |-- linked-resources-binary-format-debug.ap_
+|   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- local_only_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- parseDebugLocalResources
+|   |   |   |   |   |   |   |   |-- R-def.txt
+|   |   |   |   |   |-- manifest_merge_blame_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugMainManifest
+|   |   |   |   |   |   |   |   |-- manifest-merger-blame-debug-report.txt
+|   |   |   |   |   |-- merged_java_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJavaResource
+|   |   |   |   |   |   |   |   |-- base.jar
+|   |   |   |   |   |-- merged_jni_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- merged_manifest
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugMainManifest
+|   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |-- merged_manifests
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- merged_native_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugNativeLibs
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- lib
+|   |   |   |   |   |   |   |   |   |   |-- x86_64
+|   |   |   |   |   |   |   |   |   |   |   |-- libflutter.so
+|   |   |   |   |   |-- merged_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugResources
+|   |   |   |   |   |   |   |   |-- drawable-v21_launch_background.xml.flat
+|   |   |   |   |   |   |   |   |-- mipmap-hdpi_ic_launcher.png.flat
+|   |   |   |   |   |   |   |   |-- mipmap-mdpi_ic_launcher.png.flat
+|   |   |   |   |   |   |   |   |-- mipmap-xhdpi_ic_launcher.png.flat
+|   |   |   |   |   |   |   |   |-- mipmap-xxhdpi_ic_launcher.png.flat
+|   |   |   |   |   |   |   |   |-- mipmap-xxxhdpi_ic_launcher.png.flat
+|   |   |   |   |   |   |   |   |-- values_values.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-af_values-af.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-am_values-am.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ar_values-ar.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-as_values-as.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-az_values-az.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-b+sr+Latn_values-b+sr+Latn.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-be_values-be.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-bg_values-bg.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-bn_values-bn.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-bs_values-bs.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ca_values-ca.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-cs_values-cs.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-da_values-da.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-de_values-de.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-el_values-el.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-en-rAU_values-en-rAU.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-en-rCA_values-en-rCA.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-en-rGB_values-en-rGB.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-en-rIN_values-en-rIN.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-en-rXC_values-en-rXC.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-es_values-es.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-es-rUS_values-es-rUS.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-et_values-et.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-eu_values-eu.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-fa_values-fa.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-fi_values-fi.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-fr_values-fr.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-fr-rCA_values-fr-rCA.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-gl_values-gl.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-gu_values-gu.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-hi_values-hi.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-hr_values-hr.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-hu_values-hu.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-hy_values-hy.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-in_values-in.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-is_values-is.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-it_values-it.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-iw_values-iw.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ja_values-ja.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ka_values-ka.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-kk_values-kk.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-km_values-km.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-kn_values-kn.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ko_values-ko.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ky_values-ky.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-lo_values-lo.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-lt_values-lt.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-lv_values-lv.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-mk_values-mk.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ml_values-ml.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-mn_values-mn.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-mr_values-mr.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ms_values-ms.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-my_values-my.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-nb_values-nb.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ne_values-ne.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-night-v8_values-night-v8.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-nl_values-nl.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-or_values-or.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-pa_values-pa.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-pl_values-pl.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-pt_values-pt.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-pt-rBR_values-pt-rBR.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-pt-rPT_values-pt-rPT.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ro_values-ro.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ru_values-ru.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-si_values-si.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sk_values-sk.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sl_values-sl.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sq_values-sq.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sr_values-sr.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sv_values-sv.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-sw_values-sw.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ta_values-ta.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-te_values-te.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-th_values-th.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-tl_values-tl.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-tr_values-tr.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-uk_values-uk.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-ur_values-ur.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-uz_values-uz.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-v21_values-v21.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-vi_values-vi.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-zh-rCN_values-zh-rCN.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-zh-rHK_values-zh-rHK.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-zh-rTW_values-zh-rTW.arsc.flat
+|   |   |   |   |   |   |   |   |-- values-zu_values-zu.arsc.flat
+|   |   |   |   |   |-- merged_res_blame_folder
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- multi-v2
+|   |   |   |   |   |   |   |   |   |   |-- mergeDebugResources.json
+|   |   |   |   |   |   |   |   |   |   |-- values.json
+|   |   |   |   |   |   |   |   |   |   |-- values-af.json
+|   |   |   |   |   |   |   |   |   |   |-- values-am.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ar.json
+|   |   |   |   |   |   |   |   |   |   |-- values-as.json
+|   |   |   |   |   |   |   |   |   |   |-- values-az.json
+|   |   |   |   |   |   |   |   |   |   |-- values-b+sr+Latn.json
+|   |   |   |   |   |   |   |   |   |   |-- values-be.json
+|   |   |   |   |   |   |   |   |   |   |-- values-bg.json
+|   |   |   |   |   |   |   |   |   |   |-- values-bn.json
+|   |   |   |   |   |   |   |   |   |   |-- values-bs.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ca.json
+|   |   |   |   |   |   |   |   |   |   |-- values-cs.json
+|   |   |   |   |   |   |   |   |   |   |-- values-da.json
+|   |   |   |   |   |   |   |   |   |   |-- values-de.json
+|   |   |   |   |   |   |   |   |   |   |-- values-el.json
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rAU.json
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rCA.json
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rGB.json
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rIN.json
+|   |   |   |   |   |   |   |   |   |   |-- values-en-rXC.json
+|   |   |   |   |   |   |   |   |   |   |-- values-es.json
+|   |   |   |   |   |   |   |   |   |   |-- values-es-rUS.json
+|   |   |   |   |   |   |   |   |   |   |-- values-et.json
+|   |   |   |   |   |   |   |   |   |   |-- values-eu.json
+|   |   |   |   |   |   |   |   |   |   |-- values-fa.json
+|   |   |   |   |   |   |   |   |   |   |-- values-fi.json
+|   |   |   |   |   |   |   |   |   |   |-- values-fr.json
+|   |   |   |   |   |   |   |   |   |   |-- values-fr-rCA.json
+|   |   |   |   |   |   |   |   |   |   |-- values-gl.json
+|   |   |   |   |   |   |   |   |   |   |-- values-gu.json
+|   |   |   |   |   |   |   |   |   |   |-- values-hi.json
+|   |   |   |   |   |   |   |   |   |   |-- values-hr.json
+|   |   |   |   |   |   |   |   |   |   |-- values-hu.json
+|   |   |   |   |   |   |   |   |   |   |-- values-hy.json
+|   |   |   |   |   |   |   |   |   |   |-- values-in.json
+|   |   |   |   |   |   |   |   |   |   |-- values-is.json
+|   |   |   |   |   |   |   |   |   |   |-- values-it.json
+|   |   |   |   |   |   |   |   |   |   |-- values-iw.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ja.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ka.json
+|   |   |   |   |   |   |   |   |   |   |-- values-kk.json
+|   |   |   |   |   |   |   |   |   |   |-- values-km.json
+|   |   |   |   |   |   |   |   |   |   |-- values-kn.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ko.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ky.json
+|   |   |   |   |   |   |   |   |   |   |-- values-lo.json
+|   |   |   |   |   |   |   |   |   |   |-- values-lt.json
+|   |   |   |   |   |   |   |   |   |   |-- values-lv.json
+|   |   |   |   |   |   |   |   |   |   |-- values-mk.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ml.json
+|   |   |   |   |   |   |   |   |   |   |-- values-mn.json
+|   |   |   |   |   |   |   |   |   |   |-- values-mr.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ms.json
+|   |   |   |   |   |   |   |   |   |   |-- values-my.json
+|   |   |   |   |   |   |   |   |   |   |-- values-nb.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ne.json
+|   |   |   |   |   |   |   |   |   |   |-- values-night-v8.json
+|   |   |   |   |   |   |   |   |   |   |-- values-nl.json
+|   |   |   |   |   |   |   |   |   |   |-- values-or.json
+|   |   |   |   |   |   |   |   |   |   |-- values-pa.json
+|   |   |   |   |   |   |   |   |   |   |-- values-pl.json
+|   |   |   |   |   |   |   |   |   |   |-- values-pt.json
+|   |   |   |   |   |   |   |   |   |   |-- values-pt-rBR.json
+|   |   |   |   |   |   |   |   |   |   |-- values-pt-rPT.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ro.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ru.json
+|   |   |   |   |   |   |   |   |   |   |-- values-si.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sk.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sl.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sq.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sr.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sv.json
+|   |   |   |   |   |   |   |   |   |   |-- values-sw.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ta.json
+|   |   |   |   |   |   |   |   |   |   |-- values-te.json
+|   |   |   |   |   |   |   |   |   |   |-- values-th.json
+|   |   |   |   |   |   |   |   |   |   |-- values-tl.json
+|   |   |   |   |   |   |   |   |   |   |-- values-tr.json
+|   |   |   |   |   |   |   |   |   |   |-- values-uk.json
+|   |   |   |   |   |   |   |   |   |   |-- values-ur.json
+|   |   |   |   |   |   |   |   |   |   |-- values-uz.json
+|   |   |   |   |   |   |   |   |   |   |-- values-v21.json
+|   |   |   |   |   |   |   |   |   |   |-- values-vi.json
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rCN.json
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rHK.json
+|   |   |   |   |   |   |   |   |   |   |-- values-zh-rTW.json
+|   |   |   |   |   |   |   |   |   |   |-- values-zu.json
+|   |   |   |   |   |   |   |   |   |-- single
+|   |   |   |   |   |   |   |   |   |   |-- mergeDebugResources.json
+|   |   |   |   |   |-- merged_shaders
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- merged_test_only_native_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugNativeLibs
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- mixed_scope_dex_archive
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- navigation_json
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDeepLinksDebug
+|   |   |   |   |   |   |   |   |-- navigation.json
+|   |   |   |   |   |-- nested_resources_validation_report
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugResources
+|   |   |   |   |   |   |   |   |-- nestedResourcesValidationReport.txt
+|   |   |   |   |   |-- packaged_manifests
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifestForPackage
+|   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- packaged_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- drawable-v21
+|   |   |   |   |   |   |   |   |   |-- launch_background.xml
+|   |   |   |   |   |   |   |   |-- mipmap-hdpi-v4
+|   |   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |   |-- mipmap-mdpi-v4
+|   |   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |   |-- mipmap-xhdpi-v4
+|   |   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |   |-- mipmap-xxhdpi-v4
+|   |   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |   |-- mipmap-xxxhdpi-v4
+|   |   |   |   |   |   |   |   |   |-- ic_launcher.png
+|   |   |   |   |   |   |   |   |-- values
+|   |   |   |   |   |   |   |   |   |-- values.xml
+|   |   |   |   |   |   |   |   |-- values-night-v8
+|   |   |   |   |   |   |   |   |   |-- values-night-v8.xml
+|   |   |   |   |   |-- project_dex_archive
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- com
+|   |   |   |   |   |   |   |   |   |   |-- example
+|   |   |   |   |   |   |   |   |   |   |   |-- sense_app
+|   |   |   |   |   |   |   |   |   |   |   |   |-- MainActivity.dex
+|   |   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |   |-- GeneratedPluginRegistrant.dex
+|   |   |   |   |   |   |   |   |   |-- fea3ccfdf459a8face02303d1f3635f17ed6006fd217c410df4598ab8e6f5606_0.jar
+|   |   |   |   |   |   |   |   |   |-- fea3ccfdf459a8face02303d1f3635f17ed6006fd217c410df4598ab8e6f5606_1.jar
+|   |   |   |   |   |   |   |   |   |-- fea3ccfdf459a8face02303d1f3635f17ed6006fd217c410df4598ab8e6f5606_2.jar
+|   |   |   |   |   |   |   |   |   |-- fea3ccfdf459a8face02303d1f3635f17ed6006fd217c410df4598ab8e6f5606_3.jar
+|   |   |   |   |   |-- runtime_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |   |   |   |-- R.txt
+|   |   |   |   |   |-- signing_config_versions
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- writeDebugSigningConfigVersions
+|   |   |   |   |   |   |   |   |-- signing-config-versions.json
+|   |   |   |   |   |-- source_set_path_map
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mapDebugSourceSetPaths
+|   |   |   |   |   |   |   |   |-- file-map.txt
+|   |   |   |   |   |-- stable_resource_ids_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |   |   |   |-- stableIds.txt
+|   |   |   |   |   |-- stripped_native_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- stripDebugDebugSymbols
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- lib
+|   |   |   |   |   |   |   |   |   |   |-- arm64-v8a
+|   |   |   |   |   |   |   |   |   |   |-- x86_64
+|   |   |   |   |   |   |   |   |   |   |   |-- libflutter.so
+|   |   |   |   |   |-- sub_project_dex_archive
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- symbol_list_with_package_name
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |   |   |   |-- package-aware-r.txt
+|   |   |   |   |   |-- validate_signing_config
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- validateSigningDebug
+|   |   |   |   |-- kotlin
+|   |   |   |   |   |-- compileDebugKotlin
+|   |   |   |   |   |   |-- cacheable
+|   |   |   |   |   |   |   |-- caches-jvm
+|   |   |   |   |   |   |   |   |-- inputs
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.len
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab_i
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab_i.len
+|   |   |   |   |   |   |   |   |-- jvm
+|   |   |   |   |   |   |   |   |   |-- kotlin
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab_i.len
+|   |   |   |   |   |   |   |   |-- lookups
+|   |   |   |   |   |   |   |   |   |-- counters.tab
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.len
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab_i
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab_i.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab_i.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- lookups.tab_i
+|   |   |   |   |   |   |   |   |   |-- lookups.tab_i.len
+|   |   |   |   |   |   |   |-- last-build.bin
+|   |   |   |   |   |   |-- classpath-snapshot
+|   |   |   |   |   |   |   |-- shrunk-classpath-snapshot.bin
+|   |   |   |   |   |   |-- local-state
+|   |   |   |   |   |   |   |-- build-history.bin
+|   |   |   |   |-- outputs
+|   |   |   |   |   |-- apk
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- app-debug.apk
+|   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- flutter-apk
+|   |   |   |   |   |   |-- app-debug.apk
+|   |   |   |   |   |   |-- app-debug.apk.sha1
+|   |   |   |   |   |-- logs
+|   |   |   |   |   |   |-- manifest-merger-debug-report.txt
+|   |   |   |   |-- tmp
+|   |   |   |   |   |-- allTests
+|   |   |   |   |   |-- analyzeDebugAndroidTestDependencies
+|   |   |   |   |   |-- analyzeDebugDependencies
+|   |   |   |   |   |-- analyzeDebugUnitTestDependencies
+|   |   |   |   |   |-- analyzeProfileDependencies
+|   |   |   |   |   |-- analyzeProfileUnitTestDependencies
+|   |   |   |   |   |-- analyzeReleaseDependencies
+|   |   |   |   |   |-- analyzeReleaseUnitTestDependencies
+|   |   |   |   |   |-- androidDependencies
+|   |   |   |   |   |-- asarToCompatSplitsForDebug
+|   |   |   |   |   |-- asarToCompatSplitsForProfile
+|   |   |   |   |   |-- asarToCompatSplitsForRelease
+|   |   |   |   |   |-- assemble
+|   |   |   |   |   |-- assembleAndroidTest
+|   |   |   |   |   |-- assembleDebug
+|   |   |   |   |   |-- assembleDebugAndroidTest
+|   |   |   |   |   |-- assembleDebugUnitTest
+|   |   |   |   |   |-- assembleProfile
+|   |   |   |   |   |-- assembleProfileUnitTest
+|   |   |   |   |   |-- assembleRelease
+|   |   |   |   |   |-- assembleReleaseUnitTest
+|   |   |   |   |   |-- assembleUnitTest
+|   |   |   |   |   |-- build
+|   |   |   |   |   |-- buildCMakeDebug
+|   |   |   |   |   |-- buildCMakeDebug[arm64-v8a]
+|   |   |   |   |   |-- buildCMakeDebug[armeabi-v7a]
+|   |   |   |   |   |-- buildCMakeDebug[x86_64]
+|   |   |   |   |   |-- buildCMakeProfile
+|   |   |   |   |   |-- buildCMakeProfile[arm64-v8a]
+|   |   |   |   |   |-- buildCMakeProfile[armeabi-v7a]
+|   |   |   |   |   |-- buildCMakeProfile[x86_64]
+|   |   |   |   |   |-- buildCMakeRelease
+|   |   |   |   |   |-- buildCMakeRelease[arm64-v8a]
+|   |   |   |   |   |-- buildCMakeRelease[armeabi-v7a]
+|   |   |   |   |   |-- buildCMakeRelease[x86_64]
+|   |   |   |   |   |-- buildDebugPreBundle
+|   |   |   |   |   |-- buildDependents
+|   |   |   |   |   |-- buildEnvironment
+|   |   |   |   |   |-- buildKotlinToolingMetadata
+|   |   |   |   |   |-- buildNeeded
+|   |   |   |   |   |-- buildProfilePreBundle
+|   |   |   |   |   |-- buildReleasePreBundle
+|   |   |   |   |   |-- bundle
+|   |   |   |   |   |-- bundleDebug
+|   |   |   |   |   |-- bundleDebugClassesToCompileJar
+|   |   |   |   |   |-- bundleDebugClassesToRuntimeJar
+|   |   |   |   |   |-- bundleDebugResources
+|   |   |   |   |   |-- bundleProfile
+|   |   |   |   |   |-- bundleProfileClassesToCompileJar
+|   |   |   |   |   |-- bundleProfileClassesToRuntimeJar
+|   |   |   |   |   |-- bundleProfileResources
+|   |   |   |   |   |-- bundleRelease
+|   |   |   |   |   |-- bundleReleaseClassesToCompileJar
+|   |   |   |   |   |-- bundleReleaseClassesToRuntimeJar
+|   |   |   |   |   |-- bundleReleaseResources
+|   |   |   |   |   |-- check
+|   |   |   |   |   |-- checkDebugAarMetadata
+|   |   |   |   |   |-- checkDebugAndroidTestAarMetadata
+|   |   |   |   |   |-- checkDebugAndroidTestDuplicateClasses
+|   |   |   |   |   |-- checkDebugDuplicateClasses
+|   |   |   |   |   |-- checkDebugManifest
+|   |   |   |   |   |-- checkJetifier
+|   |   |   |   |   |-- checkKotlinGradlePluginConfigurationErrors
+|   |   |   |   |   |-- checkProfileAarMetadata
+|   |   |   |   |   |-- checkProfileDuplicateClasses
+|   |   |   |   |   |-- checkProfileManifest
+|   |   |   |   |   |-- checkReleaseAarMetadata
+|   |   |   |   |   |-- checkReleaseDuplicateClasses
+|   |   |   |   |   |-- checkReleaseManifest
+|   |   |   |   |   |-- clean
+|   |   |   |   |   |-- cleanMergeDebugAssets
+|   |   |   |   |   |-- cleanMergeProfileAssets
+|   |   |   |   |   |-- cleanMergeReleaseAssets
+|   |   |   |   |   |-- collectReleaseDependencies
+|   |   |   |   |   |-- compileDebugAndroidTestJavaWithJavac
+|   |   |   |   |   |-- compileDebugAndroidTestKotlin
+|   |   |   |   |   |-- compileDebugAndroidTestShaders
+|   |   |   |   |   |-- compileDebugAndroidTestSources
+|   |   |   |   |   |-- compileDebugArtProfile
+|   |   |   |   |   |-- compileDebugJavaWithJavac
+|   |   |   |   |   |   |-- previous-compilation-data.bin
+|   |   |   |   |   |-- compileDebugKotlin
+|   |   |   |   |   |-- compileDebugShaders
+|   |   |   |   |   |-- compileDebugSources
+|   |   |   |   |   |-- compileDebugUnitTestJavaWithJavac
+|   |   |   |   |   |-- compileDebugUnitTestKotlin
+|   |   |   |   |   |-- compileDebugUnitTestSources
+|   |   |   |   |   |-- compileFlutterBuildDebug
+|   |   |   |   |   |-- compileFlutterBuildProfile
+|   |   |   |   |   |-- compileFlutterBuildRelease
+|   |   |   |   |   |-- compileLint
+|   |   |   |   |   |-- compileLintChecks
+|   |   |   |   |   |-- compileProfileArtProfile
+|   |   |   |   |   |-- compileProfileJavaWithJavac
+|   |   |   |   |   |-- compileProfileKotlin
+|   |   |   |   |   |-- compileProfileShaders
+|   |   |   |   |   |-- compileProfileSources
+|   |   |   |   |   |-- compileProfileUnitTestJavaWithJavac
+|   |   |   |   |   |-- compileProfileUnitTestKotlin
+|   |   |   |   |   |-- compileProfileUnitTestSources
+|   |   |   |   |   |-- compileReleaseArtProfile
+|   |   |   |   |   |-- compileReleaseJavaWithJavac
+|   |   |   |   |   |-- compileReleaseKotlin
+|   |   |   |   |   |-- compileReleaseShaders
+|   |   |   |   |   |-- compileReleaseSources
+|   |   |   |   |   |-- compileReleaseUnitTestJavaWithJavac
+|   |   |   |   |   |-- compileReleaseUnitTestKotlin
+|   |   |   |   |   |-- compileReleaseUnitTestSources
+|   |   |   |   |   |-- components
+|   |   |   |   |   |-- compressDebugAndroidTestAssets
+|   |   |   |   |   |-- compressDebugAssets
+|   |   |   |   |   |-- compressProfileAssets
+|   |   |   |   |   |-- compressReleaseAssets
+|   |   |   |   |   |-- configureCMakeDebug
+|   |   |   |   |   |-- configureCMakeDebug[arm64-v8a]
+|   |   |   |   |   |-- configureCMakeDebug[armeabi-v7a]
+|   |   |   |   |   |-- configureCMakeDebug[x86_64]
+|   |   |   |   |   |-- configureCMakeProfile
+|   |   |   |   |   |-- configureCMakeProfile[arm64-v8a]
+|   |   |   |   |   |-- configureCMakeProfile[armeabi-v7a]
+|   |   |   |   |   |-- configureCMakeProfile[x86_64]
+|   |   |   |   |   |-- configureCMakeRelease
+|   |   |   |   |   |-- configureCMakeRelease[arm64-v8a]
+|   |   |   |   |   |-- configureCMakeRelease[armeabi-v7a]
+|   |   |   |   |   |-- configureCMakeRelease[x86_64]
+|   |   |   |   |   |-- configureReleaseDependencies
+|   |   |   |   |   |-- connectedAndroidTest
+|   |   |   |   |   |-- connectedCheck
+|   |   |   |   |   |-- connectedDebugAndroidTest
+|   |   |   |   |   |-- consumeConfigAttr
+|   |   |   |   |   |-- convertLinkedResourcesToBinaryRelease
+|   |   |   |   |   |-- convertShrunkResourcesToBinaryRelease
+|   |   |   |   |   |-- copyFlutterAssetsDebug
+|   |   |   |   |   |-- copyFlutterAssetsProfile
+|   |   |   |   |   |-- copyFlutterAssetsRelease
+|   |   |   |   |   |-- createDebugAndroidTestApkListingFileRedirect
+|   |   |   |   |   |-- createDebugApkListingFileRedirect
+|   |   |   |   |   |-- createDebugApksFromBundleListingFileRedirect
+|   |   |   |   |   |-- createDebugBundleListingFileRedirect
+|   |   |   |   |   |-- createDebugCompatibleScreenManifests
+|   |   |   |   |   |-- createMockableJar
+|   |   |   |   |   |-- createProfileApkListingFileRedirect
+|   |   |   |   |   |-- createProfileApksFromBundleListingFileRedirect
+|   |   |   |   |   |-- createProfileBundleListingFileRedirect
+|   |   |   |   |   |-- createProfileCompatibleScreenManifests
+|   |   |   |   |   |-- createReleaseApkListingFileRedirect
+|   |   |   |   |   |-- createReleaseApksFromBundleListingFileRedirect
+|   |   |   |   |   |-- createReleaseBundleListingFileRedirect
+|   |   |   |   |   |-- createReleaseCompatibleScreenManifests
+|   |   |   |   |   |-- DebugMinSdkCheck
+|   |   |   |   |   |-- dependencies
+|   |   |   |   |   |-- dependencyInsight
+|   |   |   |   |   |-- dependentComponents
+|   |   |   |   |   |-- desugarDebugAndroidTestFileDependencies
+|   |   |   |   |   |-- desugarDebugFileDependencies
+|   |   |   |   |   |-- desugarProfileFileDependencies
+|   |   |   |   |   |-- deviceAndroidTest
+|   |   |   |   |   |-- deviceCheck
+|   |   |   |   |   |-- dexBuilderDebug
+|   |   |   |   |   |-- dexBuilderDebugAndroidTest
+|   |   |   |   |   |-- dexBuilderProfile
+|   |   |   |   |   |-- expandReleaseArtProfileWildcards
+|   |   |   |   |   |-- externalNativeBuildCleanDebug
+|   |   |   |   |   |-- externalNativeBuildCleanProfile
+|   |   |   |   |   |-- externalNativeBuildCleanRelease
+|   |   |   |   |   |-- externalNativeBuildDebug
+|   |   |   |   |   |-- externalNativeBuildProfile
+|   |   |   |   |   |-- externalNativeBuildRelease
+|   |   |   |   |   |-- extractApksForDebug
+|   |   |   |   |   |-- extractApksForProfile
+|   |   |   |   |   |-- extractApksForRelease
+|   |   |   |   |   |-- extractApksFromBundleForDebug
+|   |   |   |   |   |-- extractApksFromBundleForProfile
+|   |   |   |   |   |-- extractApksFromBundleForRelease
+|   |   |   |   |   |-- extractDebugNativeDebugMetadata
+|   |   |   |   |   |-- extractDebugNativeSymbolTables
+|   |   |   |   |   |-- extractDeepLinksDebug
+|   |   |   |   |   |-- extractDeepLinksProfile
+|   |   |   |   |   |-- extractDeepLinksRelease
+|   |   |   |   |   |-- extractProfileNativeDebugMetadata
+|   |   |   |   |   |-- extractProfileNativeSymbolTables
+|   |   |   |   |   |-- extractProguardFiles
+|   |   |   |   |   |-- extractReleaseNativeDebugMetadata
+|   |   |   |   |   |-- extractReleaseNativeSymbolTables
+|   |   |   |   |   |-- extractReleaseVersionControlInfo
+|   |   |   |   |   |-- generateDebugAndroidTestAssets
+|   |   |   |   |   |-- generateDebugAndroidTestLintModel
+|   |   |   |   |   |-- generateDebugAndroidTestResources
+|   |   |   |   |   |-- generateDebugAndroidTestResValues
+|   |   |   |   |   |-- generateDebugAndroidTestSources
+|   |   |   |   |   |-- generateDebugAssets
+|   |   |   |   |   |-- generateDebugFeatureMetadata
+|   |   |   |   |   |-- generateDebugFeatureTransitiveDeps
+|   |   |   |   |   |-- generateDebugLintModel
+|   |   |   |   |   |-- generateDebugLintReportModel
+|   |   |   |   |   |-- generateDebugManifestClass
+|   |   |   |   |   |-- generateDebugResources
+|   |   |   |   |   |-- generateDebugResValues
+|   |   |   |   |   |-- generateDebugSources
+|   |   |   |   |   |-- generateDebugUnitTestAssets
+|   |   |   |   |   |-- generateDebugUnitTestLintModel
+|   |   |   |   |   |-- generateDebugUnitTestResources
+|   |   |   |   |   |-- generateDebugUnitTestSources
+|   |   |   |   |   |-- generateJsonModelDebug
+|   |   |   |   |   |-- generateJsonModelProfile
+|   |   |   |   |   |-- generateJsonModelRelease
+|   |   |   |   |   |-- generateProfileAssets
+|   |   |   |   |   |-- generateProfileFeatureMetadata
+|   |   |   |   |   |-- generateProfileFeatureTransitiveDeps
+|   |   |   |   |   |-- generateProfileLintModel
+|   |   |   |   |   |-- generateProfileLintReportModel
+|   |   |   |   |   |-- generateProfileManifestClass
+|   |   |   |   |   |-- generateProfileResources
+|   |   |   |   |   |-- generateProfileResValues
+|   |   |   |   |   |-- generateProfileSources
+|   |   |   |   |   |-- generateProfileUnitTestAssets
+|   |   |   |   |   |-- generateProfileUnitTestLintModel
+|   |   |   |   |   |-- generateProfileUnitTestResources
+|   |   |   |   |   |-- generateProfileUnitTestSources
+|   |   |   |   |   |-- generateReleaseAssets
+|   |   |   |   |   |-- generateReleaseFeatureMetadata
+|   |   |   |   |   |-- generateReleaseFeatureTransitiveDeps
+|   |   |   |   |   |-- generateReleaseLintModel
+|   |   |   |   |   |-- generateReleaseLintReportModel
+|   |   |   |   |   |-- generateReleaseLintVitalReportModel
+|   |   |   |   |   |-- generateReleaseManifestClass
+|   |   |   |   |   |-- generateReleaseResources
+|   |   |   |   |   |-- generateReleaseResValues
+|   |   |   |   |   |-- generateReleaseSources
+|   |   |   |   |   |-- generateReleaseUnitTestAssets
+|   |   |   |   |   |-- generateReleaseUnitTestLintModel
+|   |   |   |   |   |-- generateReleaseUnitTestResources
+|   |   |   |   |   |-- generateReleaseUnitTestSources
+|   |   |   |   |   |-- help
+|   |   |   |   |   |-- installDebug
+|   |   |   |   |   |-- installDebugAndroidTest
+|   |   |   |   |   |-- installProfile
+|   |   |   |   |   |-- installRelease
+|   |   |   |   |   |-- javaPreCompileDebug
+|   |   |   |   |   |-- javaPreCompileDebugAndroidTest
+|   |   |   |   |   |-- javaPreCompileDebugUnitTest
+|   |   |   |   |   |-- javaPreCompileProfile
+|   |   |   |   |   |-- javaPreCompileProfileUnitTest
+|   |   |   |   |   |-- javaPreCompileRelease
+|   |   |   |   |   |-- javaPreCompileReleaseUnitTest
+|   |   |   |   |   |-- javaToolchains
+|   |   |   |   |   |-- javaVersion
+|   |   |   |   |   |-- kgpVersion
+|   |   |   |   |   |-- kotlin-classes
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- com
+|   |   |   |   |   |   |   |   |-- example
+|   |   |   |   |   |   |   |   |   |-- sense_app
+|   |   |   |   |   |   |   |   |   |   |-- MainActivity.class
+|   |   |   |   |   |   |   |-- META-INF
+|   |   |   |   |   |   |   |   |-- app_debug.kotlin_module
+|   |   |   |   |   |-- kotlinDslAccessorsReport
+|   |   |   |   |   |-- lint
+|   |   |   |   |   |-- lintAnalyzeDebug
+|   |   |   |   |   |-- lintAnalyzeDebugAndroidTest
+|   |   |   |   |   |-- lintAnalyzeDebugUnitTest
+|   |   |   |   |   |-- lintAnalyzeProfile
+|   |   |   |   |   |-- lintAnalyzeProfileUnitTest
+|   |   |   |   |   |-- lintAnalyzeRelease
+|   |   |   |   |   |-- lintAnalyzeReleaseUnitTest
+|   |   |   |   |   |-- lintDebug
+|   |   |   |   |   |-- lintFix
+|   |   |   |   |   |-- lintFixDebug
+|   |   |   |   |   |-- lintFixProfile
+|   |   |   |   |   |-- lintFixRelease
+|   |   |   |   |   |-- lintProfile
+|   |   |   |   |   |-- lintRelease
+|   |   |   |   |   |-- lintReportDebug
+|   |   |   |   |   |-- lintReportProfile
+|   |   |   |   |   |-- lintReportRelease
+|   |   |   |   |   |-- lintVitalAnalyzeRelease
+|   |   |   |   |   |-- lintVitalRelease
+|   |   |   |   |   |-- lintVitalReportRelease
+|   |   |   |   |   |-- makeApkFromBundleForDebug
+|   |   |   |   |   |-- makeApkFromBundleForProfile
+|   |   |   |   |   |-- makeApkFromBundleForRelease
+|   |   |   |   |   |-- mapDebugAndroidTestSourceSetPaths
+|   |   |   |   |   |-- mapDebugSourceSetPaths
+|   |   |   |   |   |-- mapProfileSourceSetPaths
+|   |   |   |   |   |-- mapReleaseSourceSetPaths
+|   |   |   |   |   |-- mergeDebugAndroidTestAssets
+|   |   |   |   |   |-- mergeDebugAndroidTestGeneratedProguardFiles
+|   |   |   |   |   |-- mergeDebugAndroidTestJavaResource
+|   |   |   |   |   |-- mergeDebugAndroidTestJniLibFolders
+|   |   |   |   |   |-- mergeDebugAndroidTestNativeLibs
+|   |   |   |   |   |-- mergeDebugAndroidTestResources
+|   |   |   |   |   |-- mergeDebugAndroidTestShaders
+|   |   |   |   |   |-- mergeDebugArtProfile
+|   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |-- mergeDebugGeneratedProguardFiles
+|   |   |   |   |   |-- mergeDebugJavaResource
+|   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |-- mergeDebugNativeDebugMetadata
+|   |   |   |   |   |-- mergeDebugNativeLibs
+|   |   |   |   |   |-- mergeDebugResources
+|   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |-- mergeDebugStartupProfile
+|   |   |   |   |   |-- mergeExtDexDebug
+|   |   |   |   |   |-- mergeExtDexDebugAndroidTest
+|   |   |   |   |   |-- mergeExtDexProfile
+|   |   |   |   |   |-- mergeLibDexDebug
+|   |   |   |   |   |-- mergeLibDexDebugAndroidTest
+|   |   |   |   |   |-- mergeLibDexProfile
+|   |   |   |   |   |-- mergeProfileArtProfile
+|   |   |   |   |   |-- mergeProfileAssets
+|   |   |   |   |   |-- mergeProfileGeneratedProguardFiles
+|   |   |   |   |   |-- mergeProfileJavaResource
+|   |   |   |   |   |-- mergeProfileJniLibFolders
+|   |   |   |   |   |-- mergeProfileNativeDebugMetadata
+|   |   |   |   |   |-- mergeProfileNativeLibs
+|   |   |   |   |   |-- mergeProfileResources
+|   |   |   |   |   |-- mergeProfileShaders
+|   |   |   |   |   |-- mergeProfileStartupProfile
+|   |   |   |   |   |-- mergeProjectDexDebug
+|   |   |   |   |   |-- mergeProjectDexDebugAndroidTest
+|   |   |   |   |   |-- mergeProjectDexProfile
+|   |   |   |   |   |-- mergeReleaseArtProfile
+|   |   |   |   |   |-- mergeReleaseAssets
+|   |   |   |   |   |-- mergeReleaseGeneratedProguardFiles
+|   |   |   |   |   |-- mergeReleaseJavaResource
+|   |   |   |   |   |-- mergeReleaseJniLibFolders
+|   |   |   |   |   |-- mergeReleaseNativeDebugMetadata
+|   |   |   |   |   |-- mergeReleaseNativeLibs
+|   |   |   |   |   |-- mergeReleaseResources
+|   |   |   |   |   |-- mergeReleaseShaders
+|   |   |   |   |   |-- mergeReleaseStartupProfile
+|   |   |   |   |   |-- minifyReleaseWithR8
+|   |   |   |   |   |-- model
+|   |   |   |   |   |-- optimizeReleaseResources
+|   |   |   |   |   |-- outgoingVariants
+|   |   |   |   |   |-- outputDebugAppLinkSettings
+|   |   |   |   |   |-- outputProfileAppLinkSettings
+|   |   |   |   |   |-- outputReleaseAppLinkSettings
+|   |   |   |   |   |-- packageDebug
+|   |   |   |   |   |-- packageDebugAndroidTest
+|   |   |   |   |   |-- packageDebugBundle
+|   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |-- packageDebugUniversalApk
+|   |   |   |   |   |-- packageProfile
+|   |   |   |   |   |-- packageProfileBundle
+|   |   |   |   |   |-- packageProfileResources
+|   |   |   |   |   |-- packageProfileUniversalApk
+|   |   |   |   |   |-- packageRelease
+|   |   |   |   |   |-- packageReleaseBundle
+|   |   |   |   |   |-- packageReleaseResources
+|   |   |   |   |   |-- packageReleaseUniversalApk
+|   |   |   |   |   |-- packJniLibsflutterBuildDebug
+|   |   |   |   |   |   |-- MANIFEST.MF
+|   |   |   |   |   |-- packJniLibsflutterBuildProfile
+|   |   |   |   |   |   |-- MANIFEST.MF
+|   |   |   |   |   |-- packJniLibsflutterBuildRelease
+|   |   |   |   |   |   |-- MANIFEST.MF
+|   |   |   |   |   |-- parseDebugIntegrityConfig
+|   |   |   |   |   |-- parseDebugLocalResources
+|   |   |   |   |   |-- parseProfileIntegrityConfig
+|   |   |   |   |   |-- parseProfileLocalResources
+|   |   |   |   |   |-- parseReleaseIntegrityConfig
+|   |   |   |   |   |-- parseReleaseLocalResources
+|   |   |   |   |   |-- preBuild
+|   |   |   |   |   |-- preDebugAndroidTestBuild
+|   |   |   |   |   |-- preDebugBuild
+|   |   |   |   |   |-- preDebugUnitTestBuild
+|   |   |   |   |   |-- prepareLintJarForPublish
+|   |   |   |   |   |-- preProfileBuild
+|   |   |   |   |   |-- preProfileUnitTestBuild
+|   |   |   |   |   |-- preReleaseBuild
+|   |   |   |   |   |-- preReleaseUnitTestBuild
+|   |   |   |   |   |-- printBuildVariants
+|   |   |   |   |   |-- processApplicationManifestDebugForBundle
+|   |   |   |   |   |-- processApplicationManifestProfileForBundle
+|   |   |   |   |   |-- processApplicationManifestReleaseForBundle
+|   |   |   |   |   |-- processDebugAndroidTestJavaRes
+|   |   |   |   |   |-- processDebugAndroidTestManifest
+|   |   |   |   |   |-- processDebugAndroidTestResources
+|   |   |   |   |   |-- processDebugJavaRes
+|   |   |   |   |   |-- processDebugMainManifest
+|   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |-- processDebugManifestForInstantApp
+|   |   |   |   |   |-- processDebugManifestForPackage
+|   |   |   |   |   |-- processDebugResources
+|   |   |   |   |   |-- processDebugUnitTestJavaRes
+|   |   |   |   |   |-- processManifestDebugForFeature
+|   |   |   |   |   |-- processManifestProfileForFeature
+|   |   |   |   |   |-- processManifestReleaseForFeature
+|   |   |   |   |   |-- processProfileJavaRes
+|   |   |   |   |   |-- processProfileMainManifest
+|   |   |   |   |   |-- processProfileManifest
+|   |   |   |   |   |-- processProfileManifestForInstantApp
+|   |   |   |   |   |-- processProfileManifestForPackage
+|   |   |   |   |   |-- processProfileResources
+|   |   |   |   |   |-- processProfileUnitTestJavaRes
+|   |   |   |   |   |-- processReleaseJavaRes
+|   |   |   |   |   |-- processReleaseMainManifest
+|   |   |   |   |   |-- processReleaseManifest
+|   |   |   |   |   |-- processReleaseManifestForInstantApp
+|   |   |   |   |   |-- processReleaseManifestForPackage
+|   |   |   |   |   |-- processReleaseResources
+|   |   |   |   |   |-- processReleaseUnitTestJavaRes
+|   |   |   |   |   |-- produceDebugBundleIdeListingFile
+|   |   |   |   |   |-- produceProfileBundleIdeListingFile
+|   |   |   |   |   |-- produceReleaseBundleIdeListingFile
+|   |   |   |   |   |-- ProfileMinSdkCheck
+|   |   |   |   |   |-- projects
+|   |   |   |   |   |-- properties
+|   |   |   |   |   |-- ReleaseMinSdkCheck
+|   |   |   |   |   |-- resolvableConfigurations
+|   |   |   |   |   |-- resolveConfigAttr
+|   |   |   |   |   |-- sdkReleaseDependencyData
+|   |   |   |   |   |-- signDebugBundle
+|   |   |   |   |   |-- signingConfigWriterDebug
+|   |   |   |   |   |-- signingConfigWriterDebugAndroidTest
+|   |   |   |   |   |-- signingConfigWriterProfile
+|   |   |   |   |   |-- signingConfigWriterRelease
+|   |   |   |   |   |-- signingReport
+|   |   |   |   |   |-- signProfileBundle
+|   |   |   |   |   |-- signReleaseBundle
+|   |   |   |   |   |-- sourceSets
+|   |   |   |   |   |-- stripDebugAndroidTestDebugSymbols
+|   |   |   |   |   |-- stripDebugDebugSymbols
+|   |   |   |   |   |-- stripProfileDebugSymbols
+|   |   |   |   |   |-- stripReleaseDebugSymbols
+|   |   |   |   |   |-- tasks
+|   |   |   |   |   |-- test
+|   |   |   |   |   |-- testDebugUnitTest
+|   |   |   |   |   |-- testProfileUnitTest
+|   |   |   |   |   |-- testReleaseUnitTest
+|   |   |   |   |   |-- uninstallAll
+|   |   |   |   |   |-- uninstallDebug
+|   |   |   |   |   |-- uninstallDebugAndroidTest
+|   |   |   |   |   |-- uninstallProfile
+|   |   |   |   |   |-- uninstallRelease
+|   |   |   |   |   |-- updateLintBaseline
+|   |   |   |   |   |-- updateLintBaselineDebug
+|   |   |   |   |   |-- updateLintBaselineProfile
+|   |   |   |   |   |-- updateLintBaselineRelease
+|   |   |   |   |   |-- validateSigningDebug
+|   |   |   |   |   |-- validateSigningDebugAndroidTest
+|   |   |   |   |   |-- validateSigningProfile
+|   |   |   |   |   |-- validateSigningRelease
+|   |   |   |   |   |-- writeDebugAndroidTestSigningConfigVersions
+|   |   |   |   |   |-- writeDebugApplicationId
+|   |   |   |   |   |-- writeDebugAppMetadata
+|   |   |   |   |   |-- writeDebugModuleMetadata
+|   |   |   |   |   |-- writeDebugSigningConfigVersions
+|   |   |   |   |   |-- writeProfileApplicationId
+|   |   |   |   |   |-- writeProfileAppMetadata
+|   |   |   |   |   |-- writeProfileModuleMetadata
+|   |   |   |   |   |-- writeProfileSigningConfigVersions
+|   |   |   |   |   |-- writeReleaseApplicationId
+|   |   |   |   |   |-- writeReleaseAppMetadata
+|   |   |   |   |   |-- writeReleaseModuleMetadata
+|   |   |   |   |   |-- writeReleaseSigningConfigVersions
+|   |   |   |   |   |-- zipApksForDebug
+|   |   |   |   |   |-- zipApksForProfile
+|   |   |   |   |   |-- zipApksForRelease
+|   |   |   |-- audioplayers_android
+|   |   |   |   |-- .transforms
+|   |   |   |   |   |-- 029007e0b84dc9d03645c21eb007e97b
+|   |   |   |   |   |   |-- transformed
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- xyz
+|   |   |   |   |   |   |   |   |   |-- luan
+|   |   |   |   |   |   |   |   |   |   |-- audioplayers
+|   |   |   |   |   |   |   |   |   |   |   |-- player
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager$Companion.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- LegacyFocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- MediaPlayerWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ModernFocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PlayerWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayerKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer$WhenMappings.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayerKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- source
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ByteDataSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- BytesSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Source.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- UrlSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioContextAndroid.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$2$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPluginKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- EventHandler.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- PlayerMode.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- ReleaseMode.dex
+|   |   |   |   |   |   |   |   |-- desugar_graph.bin
+|   |   |   |   |   |   |-- results.bin
+|   |   |   |   |   |-- cb6af1de9bb988613ec42eb34ad3a728
+|   |   |   |   |   |   |-- transformed
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- xyz
+|   |   |   |   |   |   |   |   |   |-- luan
+|   |   |   |   |   |   |   |   |   |   |-- audioplayers
+|   |   |   |   |   |   |   |   |   |   |   |-- player
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager$Companion.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- LegacyFocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- MediaPlayerWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ModernFocusManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PlayerWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayerKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolWrapper.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer$WhenMappings.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayerKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- source
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ByteDataSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- BytesSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Source.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- UrlSource.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioContextAndroid.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$1$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$2$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPluginKt.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- EventHandler.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- PlayerMode.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- ReleaseMode.dex
+|   |   |   |   |   |   |   |   |-- desugar_graph.bin
+|   |   |   |   |   |   |-- results.bin
+|   |   |   |   |-- generated
+|   |   |   |   |   |-- res
+|   |   |   |   |   |   |-- pngs
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |-- resValues
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |-- intermediates
+|   |   |   |   |   |-- aapt_friendly_merged_manifests
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- aapt
+|   |   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- aar_libs_directory
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- syncDebugLibJars
+|   |   |   |   |   |   |   |   |-- libs
+|   |   |   |   |   |-- aar_main_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- syncDebugLibJars
+|   |   |   |   |   |   |   |   |-- classes.jar
+|   |   |   |   |   |-- aar_metadata
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- writeDebugAarMetadata
+|   |   |   |   |   |   |   |   |-- aar-metadata.properties
+|   |   |   |   |   |-- annotation_processor_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- javaPreCompileDebug
+|   |   |   |   |   |   |   |   |-- annotationProcessors.json
+|   |   |   |   |   |-- annotations_typedef_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDebugAnnotations
+|   |   |   |   |   |   |   |   |-- typedefs.txt
+|   |   |   |   |   |-- annotations_zip
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDebugAnnotations
+|   |   |   |   |   |-- assets
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |-- compile_library_classes_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- bundleLibCompileToJarDebug
+|   |   |   |   |   |   |   |   |-- classes.jar
+|   |   |   |   |   |-- compile_r_class_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- R.jar
+|   |   |   |   |   |-- compile_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- R.txt
+|   |   |   |   |   |-- compiled_local_resources
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- compileDebugLibraryResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- data_binding_layout_info_type_package
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- generated_proguard_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugGeneratedProguardFiles
+|   |   |   |   |   |-- incremental
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- merged.dir
+|   |   |   |   |   |   |   |   |-- stripped.dir
+|   |   |   |   |   |   |   |   |-- compile-file-map.properties
+|   |   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- debug-mergeJavaRes
+|   |   |   |   |   |   |   |-- zip-cache
+|   |   |   |   |   |   |   |-- merge-state
+|   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |-- java_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugJavaRes
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |   |   |   |   |-- META-INF
+|   |   |   |   |   |   |   |   |   |   |-- audioplayers_android_debug.kotlin_module
+|   |   |   |   |   |   |   |   |   |-- xyz
+|   |   |   |   |   |   |   |   |   |   |-- luan
+|   |   |   |   |   |   |   |   |   |   |   |-- audioplayers
+|   |   |   |   |   |   |   |   |   |   |   |   |-- player
+|   |   |   |   |   |   |   |   |   |   |   |   |-- source
+|   |   |   |   |   |-- library_and_local_jars_jni
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- copyDebugJniLibsProjectAndLocalJars
+|   |   |   |   |   |   |   |   |-- jni
+|   |   |   |   |   |-- library_art_profile
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- prepareDebugArtProfile
+|   |   |   |   |   |-- library_jni
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- copyDebugJniLibsProjectOnly
+|   |   |   |   |   |   |   |   |-- jni
+|   |   |   |   |   |-- lint_publish_jar
+|   |   |   |   |   |   |-- global
+|   |   |   |   |   |   |   |-- prepareLintJarForPublish
+|   |   |   |   |   |-- local_only_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- parseDebugLocalResources
+|   |   |   |   |   |   |   |   |-- R-def.txt
+|   |   |   |   |   |-- manifest_merge_blame_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- manifest-merger-blame-debug-report.txt
+|   |   |   |   |   |-- merged_consumer_proguard_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugConsumerProguardFiles
+|   |   |   |   |   |-- merged_java_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJavaResource
+|   |   |   |   |   |   |   |   |-- feature-audioplayers_android.jar
+|   |   |   |   |   |-- merged_jni_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- merged_manifest
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |-- merged_shaders
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- navigation_json
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDeepLinksDebug
+|   |   |   |   |   |   |   |   |-- navigation.json
+|   |   |   |   |   |-- navigation_json_for_aar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDeepLinksForAarDebug
+|   |   |   |   |   |-- nested_resources_validation_report
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugResources
+|   |   |   |   |   |   |   |   |-- nestedResourcesValidationReport.txt
+|   |   |   |   |   |-- packaged_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |-- public_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |-- runtime_library_classes_dir
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- META-INF
+|   |   |   |   |   |   |   |   |   |-- audioplayers_android_debug.kotlin_module
+|   |   |   |   |   |   |   |   |-- xyz
+|   |   |   |   |   |   |   |   |   |-- luan
+|   |   |   |   |   |   |   |   |   |   |-- audioplayers
+|   |   |   |   |   |   |   |   |   |   |   |-- player
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager$Companion.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- FocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- LegacyFocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- MediaPlayerWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ModernFocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PlayerWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolManager.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1$1.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayerKt.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer$WhenMappings.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayerKt.class
+|   |   |   |   |   |   |   |   |   |   |   |-- source
+|   |   |   |   |   |   |   |   |   |   |   |   |-- ByteDataSource.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- BytesSource.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Source.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- UrlSource.class
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioContextAndroid.class
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$1$1.class
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$2$1.class
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin.class
+|   |   |   |   |   |   |   |   |   |   |   |-- AudioplayersPluginKt.class
+|   |   |   |   |   |   |   |   |   |   |   |-- EventHandler.class
+|   |   |   |   |   |   |   |   |   |   |   |-- PlayerMode.class
+|   |   |   |   |   |   |   |   |   |   |   |-- ReleaseMode.class
+|   |   |   |   |   |-- symbol_list_with_package_name
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- package-aware-r.txt
+|   |   |   |   |-- kotlin
+|   |   |   |   |   |-- compileDebugKotlin
+|   |   |   |   |   |   |-- cacheable
+|   |   |   |   |   |   |   |-- caches-jvm
+|   |   |   |   |   |   |   |   |-- inputs
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.len
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab_i
+|   |   |   |   |   |   |   |   |   |-- source-to-output.tab_i.len
+|   |   |   |   |   |   |   |   |-- jvm
+|   |   |   |   |   |   |   |   |   |-- kotlin
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- class-attributes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- class-fq-name-to-source.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- internal-name-to-source.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- package-parts.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- proto.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- source-to-classes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- subtypes.tab_i.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.keystream
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.len
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab.values.at
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab_i
+|   |   |   |   |   |   |   |   |   |   |-- supertypes.tab_i.len
+|   |   |   |   |   |   |   |   |-- lookups
+|   |   |   |   |   |   |   |   |   |-- counters.tab
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.len
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab_i
+|   |   |   |   |   |   |   |   |   |-- file-to-id.tab_i.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.len
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab_i
+|   |   |   |   |   |   |   |   |   |-- id-to-file.tab_i.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.keystream
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.keystream.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.len
+|   |   |   |   |   |   |   |   |   |-- lookups.tab.values.at
+|   |   |   |   |   |   |   |   |   |-- lookups.tab_i
+|   |   |   |   |   |   |   |   |   |-- lookups.tab_i.len
+|   |   |   |   |   |   |   |-- last-build.bin
+|   |   |   |   |   |   |-- classpath-snapshot
+|   |   |   |   |   |   |   |-- shrunk-classpath-snapshot.bin
+|   |   |   |   |   |   |-- local-state
+|   |   |   |   |   |   |   |-- build-history.bin
+|   |   |   |   |-- outputs
+|   |   |   |   |   |-- aar
+|   |   |   |   |   |   |-- audioplayers_android-debug.aar
+|   |   |   |   |   |-- logs
+|   |   |   |   |   |   |-- manifest-merger-debug-report.txt
+|   |   |   |   |-- tmp
+|   |   |   |   |   |-- kotlin-classes
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- META-INF
+|   |   |   |   |   |   |   |   |-- audioplayers_android_debug.kotlin_module
+|   |   |   |   |   |   |   |-- xyz
+|   |   |   |   |   |   |   |   |-- luan
+|   |   |   |   |   |   |   |   |   |-- audioplayers
+|   |   |   |   |   |   |   |   |   |   |-- player
+|   |   |   |   |   |   |   |   |   |   |   |-- FocusManager$Companion.class
+|   |   |   |   |   |   |   |   |   |   |   |-- FocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |-- LegacyFocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |-- MediaPlayerWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |-- ModernFocusManager.class
+|   |   |   |   |   |   |   |   |   |   |   |-- PlayerWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolManager.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1$1.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer$urlSource$1$1.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayer.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolPlayerKt.class
+|   |   |   |   |   |   |   |   |   |   |   |-- SoundPoolWrapper.class
+|   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer$WhenMappings.class
+|   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayer.class
+|   |   |   |   |   |   |   |   |   |   |   |-- WrappedPlayerKt.class
+|   |   |   |   |   |   |   |   |   |   |-- source
+|   |   |   |   |   |   |   |   |   |   |   |-- ByteDataSource.class
+|   |   |   |   |   |   |   |   |   |   |   |-- BytesSource.class
+|   |   |   |   |   |   |   |   |   |   |   |-- Source.class
+|   |   |   |   |   |   |   |   |   |   |   |-- UrlSource.class
+|   |   |   |   |   |   |   |   |   |   |-- AudioContextAndroid.class
+|   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$1$1.class
+|   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin$onAttachedToEngine$2$1.class
+|   |   |   |   |   |   |   |   |   |   |-- AudioplayersPlugin.class
+|   |   |   |   |   |   |   |   |   |   |-- AudioplayersPluginKt.class
+|   |   |   |   |   |   |   |   |   |   |-- EventHandler.class
+|   |   |   |   |   |   |   |   |   |   |-- PlayerMode.class
+|   |   |   |   |   |   |   |   |   |   |-- ReleaseMode.class
+|   |   |   |-- ef72599d8f2107393fa00037db3bd088
+|   |   |   |   |-- _composite.stamp
+|   |   |   |   |-- gen_dart_plugin_registrant.stamp
+|   |   |   |   |-- gen_localizations.stamp
+|   |   |   |-- native_assets
+|   |   |   |   |-- android
+|   |   |   |-- path_provider_android
+|   |   |   |   |-- .transforms
+|   |   |   |   |   |-- 6de03290d38982e1984e7ce67f44f1c8
+|   |   |   |   |   |   |-- transformed
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |-- pathprovider
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$FlutterError.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PathProviderApi.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PigeonCodec.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$StorageDirectory.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin.dex
+|   |   |   |   |   |   |   |   |-- desugar_graph.bin
+|   |   |   |   |   |   |-- results.bin
+|   |   |   |   |   |-- f396b5aadb9cf7660da4bafeb3ce7db9
+|   |   |   |   |   |   |-- transformed
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |-- pathprovider
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$FlutterError.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PathProviderApi.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PigeonCodec.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$StorageDirectory.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin$1.dex
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin.dex
+|   |   |   |   |   |   |   |   |-- desugar_graph.bin
+|   |   |   |   |   |   |-- results.bin
+|   |   |   |   |-- generated
+|   |   |   |   |   |-- ap_generated_sources
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- res
+|   |   |   |   |   |   |-- pngs
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |-- resValues
+|   |   |   |   |   |   |   |-- debug
+|   |   |   |   |-- intermediates
+|   |   |   |   |   |-- aapt_friendly_merged_manifests
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- aapt
+|   |   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |   |   |   |   |-- output-metadata.json
+|   |   |   |   |   |-- aar_libs_directory
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- syncDebugLibJars
+|   |   |   |   |   |   |   |   |-- libs
+|   |   |   |   |   |-- aar_main_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- syncDebugLibJars
+|   |   |   |   |   |   |   |   |-- classes.jar
+|   |   |   |   |   |-- aar_metadata
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- writeDebugAarMetadata
+|   |   |   |   |   |   |   |   |-- aar-metadata.properties
+|   |   |   |   |   |-- annotation_processor_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- javaPreCompileDebug
+|   |   |   |   |   |   |   |   |-- annotationProcessors.json
+|   |   |   |   |   |-- annotations_typedef_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDebugAnnotations
+|   |   |   |   |   |   |   |   |-- typedefs.txt
+|   |   |   |   |   |-- annotations_zip
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDebugAnnotations
+|   |   |   |   |   |-- assets
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |-- compile_library_classes_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- bundleLibCompileToJarDebug
+|   |   |   |   |   |   |   |   |-- classes.jar
+|   |   |   |   |   |-- compile_r_class_jar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- R.jar
+|   |   |   |   |   |-- compile_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- R.txt
+|   |   |   |   |   |-- compiled_local_resources
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- compileDebugLibraryResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- data_binding_layout_info_type_package
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- generated_proguard_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugGeneratedProguardFiles
+|   |   |   |   |   |-- incremental
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |   |   |   |-- merged.dir
+|   |   |   |   |   |   |   |   |-- stripped.dir
+|   |   |   |   |   |   |   |   |-- compile-file-map.properties
+|   |   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- debug-mergeJavaRes
+|   |   |   |   |   |   |   |-- zip-cache
+|   |   |   |   |   |   |   |-- merge-state
+|   |   |   |   |   |   |-- mergeDebugAssets
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |-- merger.xml
+|   |   |   |   |   |-- javac
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- compileDebugJavaWithJavac
+|   |   |   |   |   |   |   |   |-- classes
+|   |   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |   |-- pathprovider
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$FlutterError.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PathProviderApi.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PigeonCodec.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$StorageDirectory.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- Messages.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin$1.class
+|   |   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin.class
+|   |   |   |   |   |-- library_and_local_jars_jni
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- copyDebugJniLibsProjectAndLocalJars
+|   |   |   |   |   |   |   |   |-- jni
+|   |   |   |   |   |-- library_art_profile
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- prepareDebugArtProfile
+|   |   |   |   |   |-- library_jni
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- copyDebugJniLibsProjectOnly
+|   |   |   |   |   |   |   |   |-- jni
+|   |   |   |   |   |-- lint_publish_jar
+|   |   |   |   |   |   |-- global
+|   |   |   |   |   |   |   |-- prepareLintJarForPublish
+|   |   |   |   |   |-- local_only_symbol_list
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- parseDebugLocalResources
+|   |   |   |   |   |   |   |   |-- R-def.txt
+|   |   |   |   |   |-- manifest_merge_blame_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- manifest-merger-blame-debug-report.txt
+|   |   |   |   |   |-- merged_consumer_proguard_file
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugConsumerProguardFiles
+|   |   |   |   |   |-- merged_java_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJavaResource
+|   |   |   |   |   |   |   |   |-- feature-path_provider_android.jar
+|   |   |   |   |   |-- merged_jni_libs
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugJniLibFolders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- merged_manifest
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- processDebugManifest
+|   |   |   |   |   |   |   |   |-- AndroidManifest.xml
+|   |   |   |   |   |-- merged_shaders
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- mergeDebugShaders
+|   |   |   |   |   |   |   |   |-- out
+|   |   |   |   |   |-- navigation_json
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDeepLinksDebug
+|   |   |   |   |   |   |   |   |-- navigation.json
+|   |   |   |   |   |-- navigation_json_for_aar
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- extractDeepLinksForAarDebug
+|   |   |   |   |   |-- nested_resources_validation_report
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugResources
+|   |   |   |   |   |   |   |   |-- nestedResourcesValidationReport.txt
+|   |   |   |   |   |-- packaged_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |-- public_res
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- packageDebugResources
+|   |   |   |   |   |-- runtime_library_classes_dir
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- io
+|   |   |   |   |   |   |   |   |   |-- flutter
+|   |   |   |   |   |   |   |   |   |   |-- plugins
+|   |   |   |   |   |   |   |   |   |   |   |-- pathprovider
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$FlutterError.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PathProviderApi.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$PigeonCodec.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages$StorageDirectory.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- Messages.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin$1.class
+|   |   |   |   |   |   |   |   |   |   |   |   |-- PathProviderPlugin.class
+|   |   |   |   |   |-- symbol_list_with_package_name
+|   |   |   |   |   |   |-- debug
+|   |   |   |   |   |   |   |-- generateDebugRFile
+|   |   |   |   |   |   |   |   |-- package-aware-r.txt
+|   |   |   |   |-- outputs
+|   |   |   |   |   |-- aar
+|   |   |   |   |   |   |-- path_provider_android-debug.aar
+|   |   |   |   |   |-- logs
+|   |   |   |   |   |   |-- manifest-merger-debug-report.txt
+|   |   |   |   |-- tmp
+|   |   |   |   |   |-- compileDebugJavaWithJavac
+|   |   |   |   |   |   |-- previous-compilation-data.bin
+|   |   |   |-- permission_handler_android
+|   |   |   |   |-- .transforms
+|   |   |   |   |   |-- 857a32045a34daf7ebcdf11aecad61c0
+|   |   |   |   |   |   |-- transformed
+|   |   |   |   |   |   |   |-- bundleLibRuntimeToDirDebug
+|   |   |   |   |   |   |   |   |-- com
+|   |   |   |   |   |   |   |   |   |-- baseflow
+|   |   |   |   |   |   |   |   |   |   |-- permissionhandler
+|   |   |   |   |   |   |   |   |   |   |   |-- AppSettingsManager.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- ErrorCallback.dex
+|   |   |   |   |   |   |   |   |   |   |   |-- MethodCallHandlerImpl.dex
+|   |   |   |   |   |   |   |   |-- desugar_graph.bin
+|   |   |   |   |   |   |-- results.bin
+|   |   |   |-- reports
+|   |   |   |   |-- problems
+|   |   |   |   |   |-- problems-report.html
+|   |   |   |-- tmp
+|   |   |   |   |-- buildEnvironment
+|   |   |   |   |-- clean
+|   |   |   |   |-- components
+|   |   |   |   |-- dependencies
+|   |   |   |   |-- dependencyInsight
+|   |   |   |   |-- dependentComponents
+|   |   |   |   |-- generateLockfiles
+|   |   |   |   |-- help
+|   |   |   |   |-- init
+|   |   |   |   |-- javaToolchains
+|   |   |   |   |-- kotlinDslAccessorsReport
+|   |   |   |   |-- model
+|   |   |   |   |-- outgoingVariants
+|   |   |   |   |-- prepareKotlinBuildScriptModel
+|   |   |   |   |-- projects
+|   |   |   |   |-- properties
+|   |   |   |   |-- resolvableConfigurations
+|   |   |   |   |-- tasks
+|   |   |   |   |-- updateDaemonJvm
+|   |   |   |   |-- wrapper
+|   |   |   |-- 7b274049f380fd19360a9716927098ae.cache.dill.track.dill
+|   |   |-- .flutter-plugins-dependencies
+|   |   |-- .gitignore
+|   |   |-- .metadata
+|   |   |-- analysis_options.yaml
+|   |   |-- pubspec.lock
+|   |   |-- pubspec.yaml
+|   |   |-- README.md
+|   |   |-- sense_app.iml
+|-- prompts
+|   |-- final_analysis_prompt.txt
+|   |-- strategy_distressed.txt
+|   |-- strategy_safe.txt
+|   |-- strategy_unclear.txt
+|   |-- teta_system_prompt.txt
+|   |-- transcription_prompt.txt
+|-- resources
+|   |-- backups
+|   |-- annotation_guide.md
+|   |-- high_risk_safe_responses.json
+|   |-- psychologist_notes.md
+|   |-- safety_rules.md
+|   |-- system_scope.md
+|   |-- triage_labels.md
+|   |-- triage_lexicons.json
+|-- sense_backend
+|   |-- deployment
+|   |   |-- cloud
+|   |   |   |-- README.md
+|   |   |-- docker
+|   |   |   |-- .dockerignore
+|   |   |   |-- docker-compose.yml
+|   |   |   |-- Dockerfile
+|   |   |-- local
+|   |   |   |-- .env.example
+|   |   |   |-- run_local.sh
+|   |-- docs
+|   |   |-- api
+|   |   |   |-- API_CONTRACT.md
+|   |-- tests
+|   |   |-- backend
+|   |   |   |-- test_backend_flow.py
+|   |-- conftest.py
+|   |-- pytest.ini
+|-- tests
+|   |-- test.py
+|   |-- test_ai_orchestrator.py
+|   |-- test_audio_openai.py
+|   |-- test_emotion.py
+|   |-- test_response_strategy.py
+|   |-- test_triage_classifier.py
+|   |-- test_whisper_nlp.py
+|-- .env
+|-- .gitignore
+|-- diagnose_emotion.py
+|-- quick_test.py
+|-- README.md
+|-- requirements.txt
+|-- sense_web.html
+|-- test_ar-AE-FatimaNeural.mp3
+|-- test_ar-JO-SanaNeural.mp3
+|-- test_ar-SA-ZariyahNeural.mp3
+|-- test_new.mp3
