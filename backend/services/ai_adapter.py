@@ -16,6 +16,7 @@ IMPORTANT (architecture rule):
 from __future__ import annotations
 
 import json
+from collections.abc import Iterator
 from typing import Any
 
 from backend.utils.config import get_settings
@@ -49,6 +50,7 @@ class AIPipelineAdapter:
 
     Public methods (the contract the orchestrator relies on):
         process_turn(audio_path, history)   -> dict   (full audio turn)
+        process_turn_stream(audio_path, history) -> iterator (streaming audio)
         generate_reply(text, history)       -> str    (text-only turn, WS)
         analyze_session(history)            -> dict
     """
@@ -98,6 +100,24 @@ class AIPipelineAdapter:
             return self._api.process_turn(audio_path, history)
         except Exception as exc:  # noqa: BLE001
             raise PipelineError("Pipeline turn failed", detail=str(exc)) from exc
+
+    def process_turn_stream(
+        self,
+        audio_path: str,
+        history: list[dict],
+    ) -> Iterator[dict]:
+        """Run one turn and yield transcript, audio chunks, then completion."""
+        if self._api is None:
+            yield from self._mock_turn_stream(audio_path, history)
+            return
+
+        try:
+            yield from self._api.process_turn_stream(audio_path, history)
+        except Exception as exc:  # noqa: BLE001
+            raise PipelineError(
+                "Streaming pipeline turn failed",
+                detail=str(exc),
+            ) from exc
 
     def generate_reply(self, text: str, history: list[dict]) -> str:
         """
@@ -176,6 +196,65 @@ class AIPipelineAdapter:
             "emotion": "calm_or_neutral",
             "weighting_agreement": "mock",
             "conversation_history": history,
+        }
+
+    @staticmethod
+    def _mock_turn_stream(
+        audio_path: str,
+        history: list[dict],
+    ) -> Iterator[dict]:
+        logger.info("[MOCK] process_turn_stream(%s)", audio_path)
+        raw_text = "مرحبا انا حاسس بخوف شوي اليوم"
+        processed_text = "مرحبا، أنا حاسس بخوف شوي اليوم."
+        sentences = [
+            "أنا سامعك 🌸 منيح إنك حكيت اللي جواك.",
+            "أنا هون معك.",
+        ]
+        reply_text = " ".join(sentences)
+        silent_mp3 = "//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA"
+
+        yield {
+            "type": "transcript",
+            "raw_text": raw_text,
+            "processed_text": processed_text,
+            "transcribed_text": processed_text,
+            "triage_label": "Distressed / Needs Support",
+        }
+        for sentence in sentences:
+            yield {
+                "type": "audio_chunk",
+                "text": sentence,
+                "audio_base64": silent_mp3,
+            }
+
+        conversation_history = [
+            *history,
+            {
+                "turn": len(history) + 1,
+                "raw_transcription": raw_text,
+                "child_text": processed_text,
+                "assistant_reply": reply_text,
+                "response_source": "mock",
+                "triage_result": {
+                    "predicted_label": "Distressed / Needs Support",
+                    "risk_signal": "mock_signal",
+                },
+            },
+        ]
+        yield {
+            "type": "turn_complete",
+            "transcribed_text": processed_text,
+            "raw_text": raw_text,
+            "reply_text": reply_text,
+            "audio_response": "",
+            "response_source": "mock",
+            "triage_label": "Distressed / Needs Support",
+            "triage_signal": "mock_signal",
+            "triage_confidence": 0.7,
+            "needs_review": True,
+            "emotion": "calm_or_neutral",
+            "weighting_agreement": "mock",
+            "conversation_history": conversation_history,
         }
 
     @staticmethod
