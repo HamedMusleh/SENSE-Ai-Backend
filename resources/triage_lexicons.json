@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "1.0",
+    "version": "1.1",
     "schema": "SENSE rule-based triage lexicons",
     "language": "Palestinian Arabic (primary), Modern Standard Arabic (fallback)",
     "authority": "Aligned with resources/annotation_guide.md §8.2 risk_signal vocabulary",
@@ -9,7 +9,8 @@
       "Each pattern is a substring/word-boundary match — NOT a regex by default.",
       "Order within a category does not imply priority; priority is enforced in the classifier.",
       "Patterns marked with leading 'EXACT:' must match the full token, not substring.",
-      "Patterns marked with leading 'PHRASE:' must match as a contiguous phrase."
+      "Patterns marked with leading 'PHRASE:' must match as a contiguous phrase.",
+      "v1.1 (2026-07-17): added explicit_suicide_or_self_harm and msa_death_wish_variants after two live-demo misses. Pending expert review."
     ]
   },
 
@@ -67,6 +68,52 @@
         "PHRASE:اتخلص منو",
         "PHRASE:بضربها بالحيط",
         "PHRASE:وما بوجعني"
+      ],
+      "weight": 0.95
+    },
+
+    "explicit_suicide_or_self_harm": {
+      "description": "Explicit suicide vocabulary or stated intent to harm/kill self. Most direct tier — added after live-demo miss (2026-07-17): 'بحس حالي بدي انتحر واذي حالي' matched zero signals.",
+      "patterns": [
+        "انتحر",
+        "انتحار",
+        "PHRASE:بدي انتحر",
+        "PHRASE:نفسي انتحر",
+        "PHRASE:اقتل حالي",
+        "PHRASE:اقتل نفسي",
+        "PHRASE:بدي اقتل حالي",
+        "PHRASE:اذي حالي",
+        "PHRASE:اؤذي حالي",
+        "PHRASE:اوذي حالي",
+        "PHRASE:بدي اذي حالي",
+        "PHRASE:اجرح حالي",
+        "PHRASE:بدي اجرح حالي",
+        "PHRASE:اقطع حالي"
+      ],
+      "weight": 0.98
+    },
+
+    "msa_death_wish_variants": {
+      "description": "MSA (fusha) phrasings of death wish / suicide intent. Added after second live-demo miss (2026-07-17): STT may render child speech in MSA-like phrasing ('اشعر انني سوف اريد ان اموت'), so dialect-only patterns are insufficient.",
+      "patterns": [
+        "PHRASE:اريد ان اموت",
+        "PHRASE:اريد الموت",
+        "PHRASE:اريد ان انتحر",
+        "PHRASE:اريد ان اقتل نفسي",
+        "PHRASE:اريد ايذاء نفسي",
+        "PHRASE:اريد ان اؤذي نفسي",
+        "PHRASE:اريد ان اوذي نفسي",
+        "PHRASE:اتمنى ان اموت",
+        "PHRASE:اتمنى الموت",
+        "PHRASE:اتمنى ان انتحر",
+        "PHRASE:ارغب في الموت",
+        "PHRASE:ارغب بالموت",
+        "PHRASE:سوف اقتل نفسي",
+        "PHRASE:ساقتل نفسي",
+        "PHRASE:سوف انتحر",
+        "PHRASE:ساؤذي نفسي",
+        "PHRASE:لا اريد ان اعيش",
+        "PHRASE:لا اريد العيش"
       ],
       "weight": 0.95
     },

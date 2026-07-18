@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request, WebSocket
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -56,6 +56,15 @@ app.add_middleware(
 )
 
 app.include_router(api_router)
+
+# Register the WebSocket endpoint explicitly at the path used by
+# sense_web.html (ws://<backend-host>/ws).
+app.add_api_websocket_route(
+    "/ws",
+    websocket_endpoint,
+    name="sense-websocket",
+)
+
 #===================================
 from fastapi.staticfiles import StaticFiles
 import os
@@ -64,11 +73,6 @@ import os
 _web_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app.mount("/web", StaticFiles(directory=_web_dir, html=True), name="web")
 #===================================
-
-
-@app.websocket("/ws")
-async def ws_route(ws: WebSocket):
-    await websocket_endpoint(ws)
 
 
 # --------------------------------------------------------------------- #

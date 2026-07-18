@@ -138,6 +138,21 @@ class TestHighRiskLabel:
         assert result["needs_review"] is True
         assert result["confidence"] == 0.90  # explicit ceiling
 
+    @pytest.mark.parametrize(
+        ("text", "expected_signal"),
+        [
+            ("بحس حالي بدي انتحر واذي حالي", "explicit_suicide_or_self_harm"),
+            ("اشعر انني سوف اريد ان اموت", "msa_death_wish_variants"),
+        ],
+    )
+    def test_live_demo_high_risk_lexicon_regressions(self, text, expected_signal):
+        result = classify(text)
+
+        _assert_schema(result)
+        assert result["predicted_label"] == "High Risk / Urgent"
+        assert result["risk_signal"] == expected_signal
+        assert result["needs_review"] is True
+
     def test_passive_death_wish(self):
         # gold_039 — "لو نمت وما صحيت كان أحسن"
         result = classify("لو نمت وما صحيت كان احسن")
