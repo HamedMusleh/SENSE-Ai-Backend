@@ -26,6 +26,8 @@ prevent LLM improvisation in the most sensitive cases).
 from __future__ import annotations
 
 import json
+import re
+from collections.abc import Iterator
 from typing import Any
 
 from ai_pipeline.llm.prompt_loader import load_prompt
@@ -110,6 +112,47 @@ def ask_teta_reply_text(
     return ask_teta_reply(child_text, conversation_history, triage_result)["reply_text"]
 
 
+def ask_teta_reply_stream(
+    child_text: str,
+    conversation_history: list[dict],
+    triage_result: dict[str, Any] | None = None,
+) -> Iterator[dict[str, Any]]:
+    """Yield Teta's reply as sentence events without weakening safety routing.
+
+    High Risk strategies still bypass the LLM completely and yield the vetted
+    response as exactly one sentence event. Safe, Distressed, and Unclear
+    strategies stream GPT-5 text deltas and flush complete sentences as soon
+    as a supported Arabic/Latin boundary arrives.
+    """
+    if triage_result is None:
+        triage_result = {
+            "predicted_label": "Unclear / Need More Context",
+            "risk_signal": "minimal_response",
+            "review_notes": "No triage_result supplied — defaulting to Unclear.",
+        }
+
+    strategy = build_strategy(triage_result)
+    yield {
+        "type": "meta",
+        "source": strategy.source,
+        "strategy_label": strategy.label,
+        "strategy_risk_signal": strategy.risk_signal,
+        "follow_up_type": strategy.follow_up_type,
+    }
+
+    if not strategy.use_llm:
+        reply_text = strategy.hard_coded_response
+        yield {"type": "sentence", "text": reply_text}
+        yield {"type": "done", "full_text": reply_text}
+        return
+
+    yield from _call_teta_llm_stream(
+        child_text=child_text,
+        conversation_history=conversation_history,
+        strategy=strategy,
+    )
+
+
 # ---------------------------------------------------------------------------
 # LLM call
 # ---------------------------------------------------------------------------
@@ -136,6 +179,7 @@ def _call_teta_llm(
         f"{strategy.strategy_prompt}"
     )
 
+    recent_history = conversation_history[-6:]
     user_message = (
         f"Use the SENSE resources for mental-health triage, safety rules, "
         f"risk classification, and supportive response behavior.\n"
@@ -143,7 +187,7 @@ def _call_teta_llm(
         f"using general knowledge.\n"
         f"If any risk signal appears, prioritize SENSE safety rules.\n\n"
         f"Conversation so far:\n"
-        f"{json.dumps(conversation_history, ensure_ascii=False)}\n\n"
+        f"{json.dumps(recent_history, ensure_ascii=False)}\n\n"
         f"Latest child message:\n"
         f"{child_text}"
     )
@@ -164,3 +208,75 @@ def _call_teta_llm(
     )
 
     return response.output_text.strip()
+
+
+_SENTENCE_END_RE = re.compile(r"[.!?؟۔…\n]+")
+
+
+def _call_teta_llm_stream(
+    child_text: str,
+    conversation_history: list[dict],
+    strategy: Strategy,
+) -> Iterator[dict[str, str]]:
+    """Stream GPT-5 output and yield complete sentences plus the final text."""
+    base_system_prompt = load_prompt("prompts/teta_system_prompt.txt")
+    combined_system_prompt = (
+        f"{base_system_prompt}\n\n"
+        f"---\n"
+        f"{strategy.strategy_prompt}"
+    )
+
+    recent_history = conversation_history[-6:]
+    user_message = (
+        f"Use the SENSE resources for mental-health triage, safety rules, "
+        f"risk classification, and supportive response behavior.\n"
+        f"For harmless general questions outside the resources, answer briefly "
+        f"using general knowledge.\n"
+        f"If any risk signal appears, prioritize SENSE safety rules.\n\n"
+        f"Conversation so far:\n"
+        f"{json.dumps(recent_history, ensure_ascii=False)}\n\n"
+        f"Latest child message:\n"
+        f"{child_text}"
+    )
+
+    stream = client.responses.create(
+        model="gpt-5",
+        tools=[
+            {
+                "type": "file_search",
+                "vector_store_ids": [SENSE_VECTOR_STORE_ID],
+                "max_num_results": 3,
+            }
+        ],
+        input=[
+            {"role": "system", "content": combined_system_prompt},
+            {"role": "user", "content": user_message},
+        ],
+        stream=True,
+    )
+
+    full_text_parts: list[str] = []
+    sentence_buffer = ""
+
+    for event in stream:
+        if getattr(event, "type", None) != "response.output_text.delta":
+            continue
+
+        delta = getattr(event, "delta", "") or ""
+        if not delta:
+            continue
+
+        full_text_parts.append(delta)
+        sentence_buffer += delta
+
+        while match := _SENTENCE_END_RE.search(sentence_buffer):
+            sentence = sentence_buffer[:match.end()].strip()
+            sentence_buffer = sentence_buffer[match.end():].lstrip()
+            if sentence:
+                yield {"type": "sentence", "text": sentence}
+
+    remainder = sentence_buffer.strip()
+    if remainder:
+        yield {"type": "sentence", "text": remainder}
+
+    yield {"type": "done", "full_text": "".join(full_text_parts).strip()}

@@ -480,6 +480,7 @@
 //  CONFIG
 // ══════════════════════════════════════════════════════
 const BASE_URL = 'http://127.0.0.1:8000';   // Change to LAN IP for other devices
+const WS_URL   = BASE_URL.replace(/^http/, 'ws') + '/ws';
 //const BASE_URL = ' https://impolite-unfitting-dandelion.ngrok-free.dev';   // Change to LAN IP for other devices
 // ══════════════════════════════════════════════════════
 //  STATE
@@ -489,6 +490,8 @@ let mediaRecorder = null;
 let audioChunks = [];
 let isRecording = false;
 let isSending   = false;
+let ws          = null;
+let pendingStreamTurn = null;
 
 // ══════════════════════════════════════════════════════
 //  DOM REFS
@@ -549,8 +552,92 @@ async function startSession() {
     addBubble('teta', 'مرحبا حبيبي! 🌸 أنا تيتا، كيفك اليوم؟ بدّي أسمع منك شو بتحس.');
     micBtn.disabled = false;
     endBtn.disabled = false;
+    connectWebSocket();
   } catch(e) {
     showError('فشل بدء الجلسة: ' + e.message);
+  }
+}
+
+function connectWebSocket() {
+  if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+    return;
+  }
+
+  const socket = new WebSocket(WS_URL);
+  ws = socket;
+
+  socket.onopen = () => console.info('Streaming WebSocket connected.');
+  socket.onmessage = event => {
+    try {
+      handleStreamMessage(JSON.parse(event.data));
+    } catch (e) {
+      console.warn('Invalid WebSocket message:', e);
+    }
+  };
+  socket.onerror = () => console.warn('Streaming WebSocket unavailable; REST fallback remains active.');
+  socket.onclose = () => {
+    if (ws === socket) ws = null;
+    if (pendingStreamTurn) {
+      const pending = pendingStreamTurn;
+      pendingStreamTurn = null;
+      pending.reject(new Error('انقطع اتصال البث قبل اكتمال الرد.'));
+    }
+  };
+}
+
+function isWebSocketReady() {
+  return ws && ws.readyState === WebSocket.OPEN;
+}
+
+function handleStreamMessage(data) {
+  const pending = pendingStreamTurn;
+  if (!pending || (data.session_id && data.session_id !== sessionId)) return;
+
+  if (data.type === 'error') {
+    pendingStreamTurn = null;
+    pending.reject(new Error(data.message || 'فشل البث من السيرفر.'));
+    return;
+  }
+
+  if (data.type === 'transcript') {
+    if (pending.loadId) {
+      removeBubble(pending.loadId);
+      pending.loadId = null;
+    }
+    const transcript = data.processed_text || data.transcribed_text || data.raw_text;
+    if (transcript && !pending.transcriptShown) {
+      addBubble('child', transcript);
+      pending.transcriptShown = true;
+    }
+    return;
+  }
+
+  if (data.type === 'audio_chunk') {
+    if (pending.loadId) {
+      removeBubble(pending.loadId);
+      pending.loadId = null;
+    }
+    if (!pending.replyBubbleId) {
+      pending.replyBubbleId = addBubble('teta', '');
+    }
+    const chunkText = (data.text || '').trim();
+    if (chunkText) {
+      pending.replyText = [pending.replyText, chunkText].filter(Boolean).join(' ');
+      setBubbleText(pending.replyBubbleId, pending.replyText);
+    }
+    if (data.audio_base64) playBase64Audio(data.audio_base64);
+    return;
+  }
+
+  if (data.type === 'turn_complete') {
+    if (pending.loadId) removeBubble(pending.loadId);
+    if (!pending.replyBubbleId && data.reply_text) {
+      pending.replyBubbleId = addBubble('teta', data.reply_text);
+    } else if (pending.replyBubbleId && data.reply_text) {
+      setBubbleText(pending.replyBubbleId, data.reply_text);
+    }
+    pendingStreamTurn = null;
+    pending.resolve(data);
   }
 }
 
@@ -577,13 +664,16 @@ async function startRecording() {
     audioChunks  = [];
 
     // Pick the best supported format
-    const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-      ? 'audio/webm;codecs=opus'
-      : MediaRecorder.isTypeSupported('audio/webm')
-        ? 'audio/webm'
-        : 'audio/mp4';
-
-    mediaRecorder = new MediaRecorder(stream, { mimeType });
+  const candidates = [
+      'audio/ogg;codecs=opus',
+      'audio/webm;codecs=opus',
+      'audio/webm',
+      'audio/mp4',
+    ];
+    const mimeType = candidates.find(t => MediaRecorder.isTypeSupported(t)) || '';
+    mediaRecorder = mimeType
+      ? new MediaRecorder(stream, { mimeType })
+      : new MediaRecorder(stream);
     mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
     mediaRecorder.start(100);
 
@@ -620,37 +710,16 @@ async function stopAndSend() {
   const loadId = addBubble('loading', '● ● ●');
 
   try {
-    const blob     = new Blob(audioChunks, { type: mediaRecorder.mimeType });
-    const formData = new FormData();
-    formData.append('session_id',  sessionId);
-    formData.append('audio_file',  blob, 'recording.webm');
+    const mimeType = mediaRecorder.mimeType || audioChunks[0]?.type || 'audio/webm';
+    const blob = new Blob(audioChunks, { type: mimeType });
+    const filename = recordingFilename(mimeType);
 
-    const res  = await fetch(`${BASE_URL}/api/upload_audio`, {
-      method: 'POST',
-      body:   formData,
-      signal: AbortSignal.timeout(180000),   // 3 minutes (CPU is slow)
-    });
-
-    if (!res.ok) throw new Error(`Server error ${res.status}`);
-
-    const data = await res.json();
-
-    // Remove loading bubble
-    removeBubble(loadId);
-
-    // Show child text
-    if (data.transcribed_text) {
-      addBubble('child', data.transcribed_text);
+    let usedWebSocket = false;
+    if (isWebSocketReady()) {
+      usedWebSocket = await sendAudioTurnOverWebSocket(blob, filename, loadId);
     }
-
-    // Show Teta reply
-    if (data.reply_text) {
-      addBubble('teta', data.reply_text);
-    }
-
-    // ── Play audio if present ──
-    if (data.audio_response) {
-      playBase64Audio(data.audio_response);
+    if (!usedWebSocket) {
+      await sendAudioTurnOverRest(blob, filename, loadId);
     }
 
   } catch(e) {
@@ -663,6 +732,70 @@ async function stopAndSend() {
     micBtn.textContent = '🎤';
     hint.textContent   = 'اضغط على الميكروفون للتحدث';
   }
+}
+
+function recordingFilename(mimeType) {
+  if (mimeType.includes('ogg')) return 'recording.ogg';
+  if (mimeType.includes('mp4')) return 'recording.m4a';
+  if (mimeType.includes('mpeg')) return 'recording.mp3';
+  return 'recording.webm';
+}
+
+async function sendAudioTurnOverRest(blob, filename, loadId) {
+  const formData = new FormData();
+  formData.append('session_id', sessionId);
+  formData.append('audio_file', blob, filename);
+
+  const res = await fetch(`${BASE_URL}/api/upload_audio`, {
+    method: 'POST',
+    body: formData,
+    signal: AbortSignal.timeout(180000),
+  });
+  if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+  const data = await res.json();
+  removeBubble(loadId);
+  if (data.transcribed_text) addBubble('child', data.transcribed_text);
+  if (data.reply_text) addBubble('teta', data.reply_text);
+  if (data.audio_response) playBase64Audio(data.audio_response);
+}
+
+async function sendAudioTurnOverWebSocket(blob, filename, loadId) {
+  const audioBase64 = await blobToBase64(blob);
+  if (!isWebSocketReady()) return false;
+
+  await new Promise((resolve, reject) => {
+    pendingStreamTurn = {
+      loadId,
+      replyBubbleId: null,
+      replyText: '',
+      transcriptShown: false,
+      resolve,
+      reject,
+    };
+
+    try {
+      ws.send(JSON.stringify({
+        type: 'audio_turn',
+        session_id: sessionId,
+        audio_base64: audioBase64,
+        filename,
+      }));
+    } catch (e) {
+      pendingStreamTurn = null;
+      reject(e);
+    }
+  });
+  return true;
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',', 2)[1] || '');
+    reader.onerror = () => reject(reader.error || new Error('تعذّر قراءة التسجيل.'));
+    reader.readAsDataURL(blob);
+  });
 }
 
 // ══════════════════════════════════════════════════════
@@ -685,6 +818,8 @@ const ttaAudio       = new Audio();
 ttaAudio.playsInline = true;
 let audioUnlocked    = false;
 let mediaSourceNode  = null;   // created once; re-creating per element is illegal
+let audioQueue       = [];
+let audioQueuePlaying = false;
 
 // Called synchronously from the mic-button tap to satisfy iOS autoplay rules.
 function unlockAudioOnGesture() {
@@ -809,6 +944,31 @@ function stopVisualizer() {
 }
 
 function playBase64Audio(base64) {
+  if (!base64) return;
+  audioQueue.push(base64);
+  if (!audioQueuePlaying) playNextAudioChunk();
+}
+
+function playNextAudioChunk() {
+  const base64 = audioQueue.shift();
+  if (!base64) {
+    audioQueuePlaying = false;
+    setSpeaking(false);
+    stopVisualizer();
+    return;
+  }
+
+  audioQueuePlaying = true;
+  let finished = false;
+  const finishChunk = () => {
+    if (finished) return;
+    finished = true;
+    setSpeaking(false);
+    stopVisualizer();
+    audioQueuePlaying = false;
+    playNextAudioChunk();
+  };
+
   try {
     // Reuse the same element that was unlocked by the mic-button tap.
     ttaAudio.pause();
@@ -816,9 +976,9 @@ function playBase64Audio(base64) {
     ttaAudio.src = `data:audio/mp3;base64,${base64}`;
 
     ttaAudio.onplay  = () => setSpeaking(true);
-    ttaAudio.onended = () => { setSpeaking(false); stopVisualizer(); };
+    ttaAudio.onended = finishChunk;
     ttaAudio.onpause = () => { setSpeaking(false); stopVisualizer(); };
-    ttaAudio.onerror = () => { setSpeaking(false); stopVisualizer(); };
+    ttaAudio.onerror = finishChunk;
 
     const p = ttaAudio.play();
     if (p && p.then) {
@@ -826,6 +986,7 @@ function playBase64Audio(base64) {
        .catch(e => {
          console.warn('Audio play failed:', e);
          showError('تعذّر تشغيل الصوت: ' + (e && e.message ? e.message : e));
+         finishChunk();
        });
     } else {
       startVisualizer(ttaAudio);
@@ -833,6 +994,7 @@ function playBase64Audio(base64) {
   } catch(e) {
     console.warn('Audio init failed:', e);
     showError('خطأ بالصوت: ' + (e && e.message ? e.message : e));
+    finishChunk();
   }
 }
 
@@ -922,6 +1084,14 @@ function addBubble(type, text) {
 function removeBubble(id) {
   const el = document.getElementById(id);
   if (el && el.parentNode) el.parentNode.remove();
+}
+
+function setBubbleText(id, text) {
+  const bubble = document.getElementById(id);
+  if (bubble) {
+    bubble.textContent = text;
+    chat.scrollTop = chat.scrollHeight;
+  }
 }
 
 function setStatus(state) {

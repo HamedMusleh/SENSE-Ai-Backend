@@ -48,3 +48,5 @@ mobile_app/flutter_client/android/.kotlin/
 mobile_app/flutter_client/android/local.properties
 *.iml
 .env
+
+.venv-cohere-arabic/

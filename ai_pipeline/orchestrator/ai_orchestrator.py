@@ -126,7 +126,7 @@ from __future__ import annotations
 
 import time
 
-from ai_pipeline.stt.openai_audio_engine import transcribe_with_openai
+from ai_pipeline.stt.cohere_stt_engine import transcribe as transcribe_stt
 from ai_pipeline.triage.triage_classifier import classify_triage
 from ai_pipeline.llm.teta_engine import ask_teta_reply
 from ai_pipeline.llm.session_analysis import generate_session_report, print_specialist_report
@@ -147,7 +147,7 @@ def process_child_audio(audio_path, conversation_history=None):
     # OpenAI STT
     # =========================
     stt_start = time.perf_counter()
-    raw_text, processed_text = transcribe_with_openai(audio_path)
+    raw_text, processed_text = transcribe_stt(audio_path)
     _print_time("STT", stt_start)
 
     # =========================

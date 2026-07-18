@@ -1,4 +1,4 @@
-import csv
+﻿import csv
 import json
 import os
 import re
@@ -9,642 +9,286 @@ from datetime import datetime
 from pathlib import Path
 
 import cohere
+import requests
 from dotenv import load_dotenv
 from openai import OpenAI
 
-
-# =========================================================
-# Configuration
-# =========================================================
-
-PROJECT_ROOT = Path(__file__).resolve().parent
+# ========================= Configuration =========================
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 AUDIO_DIR = PROJECT_ROOT / "datasets" / "raw_audio"
-OUTPUT_DIR = (
-    PROJECT_ROOT
-    / "evaluation"
-    / "results"
-    / "stt_comparison"
-)
-
-# Optional reference transcripts:
-REFERENCES_FILE = (
-    PROJECT_ROOT
-    / "evaluation"
-    / "stt_references.json"
-)
+OUTPUT_DIR = PROJECT_ROOT / "evaluation" / "results" / "stt_comparison"
+REFERENCES_FILE = AUDIO_DIR / "references.json"
 
 OPENAI_MODEL = "gpt-4o-transcribe"
 COHERE_MODEL = "cohere-transcribe-03-2026"
+COHERE_LOCAL_MODEL = "cohere-transcribe-arabic-07-2026"
+COHERE_LOCAL_URL = "http://127.0.0.1:8001/v1/audio/transcriptions"
 
 LANGUAGE = "ar"
+N_RUNS = 3
+SUPPORTED_AUDIO = {".mp3", ".wav", ".flac", ".mpeg", ".mpga", ".ogg"}
 
-SUPPORTED_AUDIO = {
-    ".mp3",
-    ".wav",
-    ".flac",
-    ".mpeg",
-    ".mpga",
-    ".ogg",
+PROVIDER_MODEL = {
+    "OpenAI": OPENAI_MODEL,
+    "Cohere": COHERE_MODEL,
+    "CohereArabicLocal": COHERE_LOCAL_MODEL,
 }
 
-
-# =========================================================
-# Load API keys
-# =========================================================
-
+# ========================= API keys =========================
 load_dotenv(PROJECT_ROOT / ".env")
-
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-
 if not OPENAI_API_KEY:
-    raise RuntimeError(
-        "OPENAI_API_KEY is missing from .env"
-    )
-
+    raise RuntimeError("OPENAI_API_KEY is missing from .env")
 if not COHERE_API_KEY:
-    raise RuntimeError(
-        "COHERE_API_KEY is missing from .env"
-    )
+    raise RuntimeError("COHERE_API_KEY is missing from .env")
 
+openai_client = OpenAI(api_key=OPENAI_API_KEY, timeout=120.0)
+cohere_client = cohere.ClientV2(api_key=COHERE_API_KEY)
 
-openai_client = OpenAI(
-    api_key=OPENAI_API_KEY,
-    timeout=120.0,
-)
-
-cohere_client = cohere.ClientV2(
-    api_key=COHERE_API_KEY,
-)
-
-
-# =========================================================
-# Arabic text normalization
-# =========================================================
-
+# ========================= Arabic normalization =========================
+# Unicode escapes only (never literal Arabic) to stay encoding-safe.
 ARABIC_DIACRITICS = re.compile(
-    r"[\u0610-\u061A\u064B-\u065F"
-    r"\u0670\u06D6-\u06ED]"
+    "[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]"
 )
+ALEF_VARIANTS = re.compile("[\u0623\u0625\u0622\u0671]")  # أ إ آ ٱ
+TATWEEL = "\u0640"
+ALEF_MAQSURA = "\u0649"  # ى
+YEH = "\u064A"           # ي
+TEH_MARBUTA = "\u0629"   # ة
+HEH = "\u0647"           # ه
+ARABIC_RANGE = "\u0600-\u06FF"
 
 
 def normalize_arabic(text):
     text = unicodedata.normalize("NFKC", text)
     text = text.lower()
-
-    # Remove Arabic diacritics
     text = ARABIC_DIACRITICS.sub("", text)
-
-    # Remove Tatweel
-    text = text.replace("ـ", "")
-
-    # Normalize Alef variants
-    text = re.sub(r"[أإآٱ]", "ا", text)
-
-    # Normalize Alef Maqsura
-    text = text.replace("ى", "ي")
-
-    # Remove punctuation
-    text = re.sub(
-        r"[^\w\s\u0600-\u06FF]",
-        " ",
-        text,
-    )
-
-    # Remove repeated spaces
+    text = text.replace(TATWEEL, "")
+    text = ALEF_VARIANTS.sub("\u0627", text)       # -> ا
+    text = text.replace(ALEF_MAQSURA, YEH)         # ى -> ي
+    text = text.replace(TEH_MARBUTA, HEH)          # ة -> ه
+    text = re.sub("[^\\w\\s" + ARABIC_RANGE + "]", " ", text)
     return " ".join(text.split())
 
 
-# =========================================================
-# WER and CER calculation
-# =========================================================
-
+# ========================= WER / CER =========================
 def edit_distance(reference, hypothesis):
-    previous_row = list(
-        range(len(hypothesis) + 1)
-    )
-
-    for i, reference_item in enumerate(
-        reference,
-        start=1,
-    ):
+    previous_row = list(range(len(hypothesis) + 1))
+    for i, r in enumerate(reference, start=1):
         current_row = [i]
-
-        for j, hypothesis_item in enumerate(
-            hypothesis,
-            start=1,
-        ):
-            substitution_cost = (
-                0
-                if reference_item == hypothesis_item
-                else 1
-            )
-
+        for j, h in enumerate(hypothesis, start=1):
+            cost = 0 if r == h else 1
             current_row.append(
-                min(
-                    current_row[j - 1] + 1,
-                    previous_row[j] + 1,
-                    previous_row[j - 1]
-                    + substitution_cost,
-                )
+                min(current_row[j - 1] + 1, previous_row[j] + 1, previous_row[j - 1] + cost)
             )
-
         previous_row = current_row
-
     return previous_row[-1]
 
 
 def calculate_wer(reference, hypothesis):
-    reference = normalize_arabic(reference)
-    hypothesis = normalize_arabic(hypothesis)
-
-    reference_words = reference.split()
-    hypothesis_words = hypothesis.split()
-
-    errors = edit_distance(
-        reference_words,
-        hypothesis_words,
-    )
-
-    return errors / max(
-        1,
-        len(reference_words),
-    )
+    r = normalize_arabic(reference).split()
+    h = normalize_arabic(hypothesis).split()
+    return edit_distance(r, h) / max(1, len(r))
 
 
 def calculate_cer(reference, hypothesis):
-    reference = normalize_arabic(
-        reference
-    ).replace(" ", "")
-
-    hypothesis = normalize_arabic(
-        hypothesis
-    ).replace(" ", "")
-
-    errors = edit_distance(
-        list(reference),
-        list(hypothesis),
-    )
-
-    return errors / max(
-        1,
-        len(reference),
-    )
+    r = normalize_arabic(reference).replace(" ", "")
+    h = normalize_arabic(hypothesis).replace(" ", "")
+    return edit_distance(list(r), list(h)) / max(1, len(r))
 
 
-# =========================================================
-# Load reference transcripts
-# =========================================================
-
+# ========================= References =========================
 def load_references():
     if not REFERENCES_FILE.exists():
         return {}
-
-    with REFERENCES_FILE.open(
-        "r",
-        encoding="utf-8",
-    ) as file:
-        data = json.load(file)
-
+    with REFERENCES_FILE.open("r", encoding="utf-8-sig") as f:
+        data = json.load(f)
     if not isinstance(data, dict):
-        raise ValueError(
-            "stt_references.json must contain "
-            "a JSON object."
-        )
-
+        raise ValueError("references.json must contain a JSON object.")
     return data
 
 
-# =========================================================
-# OpenAI transcription
-# =========================================================
-
+# ========================= Providers =========================
 def transcribe_openai(audio_path):
-    start_time = time.perf_counter()
-
-    with audio_path.open("rb") as audio_file:
-        response = (
-            openai_client
-            .audio
-            .transcriptions
-            .create(
-                model=OPENAI_MODEL,
-                file=audio_file,
-                language=LANGUAGE,
-                temperature=0,
-            )
+    t0 = time.perf_counter()
+    with audio_path.open("rb") as f:
+        resp = openai_client.audio.transcriptions.create(
+            model=OPENAI_MODEL, file=f, language=LANGUAGE, temperature=0
         )
+    return resp.text.strip(), round(time.perf_counter() - t0, 4)
 
-    elapsed_time = (
-        time.perf_counter() - start_time
-    )
-
-    return {
-        "provider": "OpenAI",
-        "model": OPENAI_MODEL,
-        "transcript": response.text.strip(),
-        "latency_seconds": round(
-            elapsed_time,
-            4,
-        ),
-    }
-
-
-# =========================================================
-# Cohere transcription
-# =========================================================
 
 def transcribe_cohere(audio_path):
-    start_time = time.perf_counter()
-
-    with audio_path.open("rb") as audio_file:
-        response = (
-            cohere_client
-            .audio
-            .transcriptions
-            .create(
-                model=COHERE_MODEL,
-                file=audio_file,
-                language=LANGUAGE,
-                temperature=0,
-            )
+    t0 = time.perf_counter()
+    with audio_path.open("rb") as f:
+        resp = cohere_client.audio.transcriptions.create(
+            model=COHERE_MODEL, file=f, language=LANGUAGE, temperature=0
         )
-
-    elapsed_time = (
-        time.perf_counter() - start_time
-    )
-
-    return {
-        "provider": "Cohere",
-        "model": COHERE_MODEL,
-        "transcript": response.text.strip(),
-        "latency_seconds": round(
-            elapsed_time,
-            4,
-        ),
-    }
+    return resp.text.strip(), round(time.perf_counter() - t0, 4)
 
 
-# =========================================================
-# Run one provider safely
-# =========================================================
-
-def run_provider(
-    provider_name,
-    transcription_function,
-    audio_path,
-):
-    try:
-        return transcription_function(
-            audio_path
+def transcribe_cohere_local(audio_path):
+    t0 = time.perf_counter()
+    with audio_path.open("rb") as f:
+        resp = requests.post(
+            COHERE_LOCAL_URL,
+            files={"file": (audio_path.name, f)},
+            data={"language": LANGUAGE},
+            timeout=300,
         )
+    resp.raise_for_status()
+    return resp.json()["text"].strip(), round(time.perf_counter() - t0, 4)
 
-    except Exception as error:
+
+PROVIDERS = {
+    "OpenAI": transcribe_openai,
+    "Cohere": transcribe_cohere,
+    "CohereArabicLocal": transcribe_cohere_local,
+}
+
+
+def run_provider_n_times(provider_name, fn, audio_path, reference):
+    """Run a provider N_RUNS times; report per-run + averaged metrics."""
+    latencies, transcripts, errors = [], [], []
+    for _ in range(N_RUNS):
+        try:
+            transcript, latency = fn(audio_path)
+            transcripts.append(transcript)
+            latencies.append(latency)
+        except Exception as e:  # noqa: BLE001
+            errors.append(f"{type(e).__name__}: {e}")
+
+    if not transcripts:  # all runs failed
         return {
+            "file": audio_path.name,
             "provider": provider_name,
-            "model": (
-                OPENAI_MODEL
-                if provider_name == "OpenAI"
-                else COHERE_MODEL
-            ),
-            "transcript": "",
+            "model": PROVIDER_MODEL[provider_name],
+            "status": "error",
+            "runs": 0,
             "latency_seconds": None,
-            "error": (
-                f"{type(error).__name__}: "
-                f"{error}"
-            ),
+            "reference": reference,
+            "transcript": "",
+            "wer": None,
+            "cer": None,
+            "error": errors[0] if errors else "unknown",
         }
 
+    # Transcript is deterministic (temp=0); take the last successful one.
+    transcript = transcripts[-1]
+    wer = cer = None
+    if reference:
+        wer = round(calculate_wer(reference, transcript), 4)
+        cer = round(calculate_cer(reference, transcript), 4)
 
-# =========================================================
-# Save results
-# =========================================================
-
-def save_results(results, summary):
-    OUTPUT_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    timestamp = datetime.now().strftime(
-        "%Y%m%d_%H%M%S"
-    )
-
-    json_path = (
-        OUTPUT_DIR
-        / f"stt_comparison_{timestamp}.json"
-    )
-
-    csv_path = (
-        OUTPUT_DIR
-        / f"stt_comparison_{timestamp}.csv"
-    )
-
-    json_data = {
-        "created_at": datetime.now().isoformat(),
-        "models": {
-            "openai": OPENAI_MODEL,
-            "cohere": COHERE_MODEL,
-        },
-        "language": LANGUAGE,
-        "summary": summary,
-        "results": results,
+    return {
+        "file": audio_path.name,
+        "provider": provider_name,
+        "model": PROVIDER_MODEL[provider_name],
+        "status": "ok",
+        "runs": len(latencies),
+        "latency_seconds": round(statistics.mean(latencies), 4),
+        "latency_stdev": round(statistics.stdev(latencies), 4) if len(latencies) > 1 else 0.0,
+        "reference": reference,
+        "transcript": transcript,
+        "wer": wer,
+        "cer": cer,
+        "error": errors[0] if errors else None,
     }
 
-    with json_path.open(
-        "w",
-        encoding="utf-8",
-    ) as file:
+
+# ========================= Summary + save =========================
+def create_summary(results):
+    summary = {}
+    for provider in PROVIDERS:
+        rows = [r for r in results if r["provider"] == provider and r["status"] == "ok"]
+        lat = [r["latency_seconds"] for r in rows if r["latency_seconds"] is not None]
+        wers = [r["wer"] for r in rows if r["wer"] is not None]
+        cers = [r["cer"] for r in rows if r["cer"] is not None]
+        summary[provider] = {
+            "successful_files": len(rows),
+            "average_latency_seconds": round(statistics.mean(lat), 4) if lat else None,
+            "average_wer": round(statistics.mean(wers), 4) if wers else None,
+            "average_cer": round(statistics.mean(cers), 4) if cers else None,
+        }
+    return summary
+
+
+def save_results(results, summary):
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    json_path = OUTPUT_DIR / f"stt_comparison_{ts}.json"
+    csv_path = OUTPUT_DIR / f"stt_comparison_{ts}.csv"
+
+    with json_path.open("w", encoding="utf-8") as f:
         json.dump(
-            json_data,
-            file,
-            ensure_ascii=False,
-            indent=2,
+            {
+                "created_at": datetime.now().isoformat(),
+                "models": PROVIDER_MODEL,
+                "language": LANGUAGE,
+                "n_runs": N_RUNS,
+                "summary": summary,
+                "results": results,
+            },
+            f, ensure_ascii=False, indent=2,
         )
 
-    fieldnames = [
-        "file",
-        "provider",
-        "model",
-        "status",
-        "latency_seconds",
-        "reference",
-        "transcript",
-        "wer",
-        "cer",
-        "error",
-    ]
-
-    with csv_path.open(
-        "w",
-        encoding="utf-8-sig",
-        newline="",
-    ) as file:
-        writer = csv.DictWriter(
-            file,
-            fieldnames=fieldnames,
-        )
-
-        writer.writeheader()
-
-        for result in results:
-            writer.writerow(result)
+    fields = ["file", "provider", "model", "status", "runs", "latency_seconds",
+              "latency_stdev", "reference", "transcript", "wer", "cer", "error"]
+    with csv_path.open("w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
+        w.writeheader()
+        for r in results:
+            w.writerow(r)
 
     print("\nResults saved:")
     print(f"JSON: {json_path}")
     print(f"CSV:  {csv_path}")
 
 
-# =========================================================
-# Summary
-# =========================================================
-
-def create_summary(results):
-    summary = {}
-
-    for provider in ["OpenAI", "Cohere"]:
-        provider_results = [
-            result
-            for result in results
-            if result["provider"] == provider
-            and result["status"] == "ok"
-        ]
-
-        latencies = [
-            result["latency_seconds"]
-            for result in provider_results
-            if result["latency_seconds"]
-            is not None
-        ]
-
-        wers = [
-            result["wer"]
-            for result in provider_results
-            if result["wer"] is not None
-        ]
-
-        cers = [
-            result["cer"]
-            for result in provider_results
-            if result["cer"] is not None
-        ]
-
-        summary[provider] = {
-            "successful_files": len(
-                provider_results
-            ),
-            "average_latency_seconds": (
-                round(
-                    statistics.mean(
-                        latencies
-                    ),
-                    4,
-                )
-                if latencies
-                else None
-            ),
-            "average_wer": (
-                round(
-                    statistics.mean(wers),
-                    4,
-                )
-                if wers
-                else None
-            ),
-            "average_cer": (
-                round(
-                    statistics.mean(cers),
-                    4,
-                )
-                if cers
-                else None
-            ),
-        }
-
-    return summary
-
-
-# =========================================================
-# Main comparison
-# =========================================================
-
+# ========================= Main =========================
 def main():
     if not AUDIO_DIR.exists():
-        raise FileNotFoundError(
-            f"Audio directory not found: "
-            f"{AUDIO_DIR}"
-        )
+        raise FileNotFoundError(f"Audio directory not found: {AUDIO_DIR}")
 
     audio_files = sorted(
-        audio_path
-        for audio_path in AUDIO_DIR.iterdir()
-        if (
-            audio_path.is_file()
-            and audio_path.suffix.lower()
-            in SUPPORTED_AUDIO
-        )
+        p for p in AUDIO_DIR.iterdir()
+        if p.is_file() and p.suffix.lower() in SUPPORTED_AUDIO
     )
-
     if not audio_files:
-        raise RuntimeError(
-            f"No audio files found in "
-            f"{AUDIO_DIR}"
-        )
+        raise RuntimeError(f"No audio files in {AUDIO_DIR}")
 
     references = load_references()
     results = []
 
-    print(
-        f"Found {len(audio_files)} "
-        f"audio files."
-    )
-
+    print(f"Found {len(audio_files)} audio files. N_RUNS={N_RUNS}")
     if not references:
-        print(
-            "No reference transcripts found. "
-            "WER and CER will not be calculated."
-        )
+        print("WARNING: no references.json - WER/CER will be null.")
 
-    for index, audio_path in enumerate(
-        audio_files,
-        start=1,
-    ):
+    for idx, audio_path in enumerate(audio_files, start=1):
         print("\n" + "=" * 70)
-        print(
-            f"{index}/{len(audio_files)} "
-            f"{audio_path.name}"
-        )
+        print(f"{idx}/{len(audio_files)}  {audio_path.name}")
         print("=" * 70)
+        reference = references.get(audio_path.name)
 
-        reference = references.get(
-            audio_path.name
-        )
-
-        providers = [
-            (
-                "OpenAI",
-                transcribe_openai,
-            ),
-            (
-                "Cohere",
-                transcribe_cohere,
-            ),
-        ]
-
-        # Alternate request order to reduce
-        # systematic network-order bias.
-        if index % 2 == 0:
-            providers.reverse()
-
-        for (
-            provider_name,
-            transcription_function,
-        ) in providers:
-            response = run_provider(
-                provider_name,
-                transcription_function,
-                audio_path,
-            )
-
-            transcript = response.get(
-                "transcript",
-                "",
-            )
-
-            error = response.get("error")
-
-            wer = None
-            cer = None
-
-            if reference and not error:
-                wer = calculate_wer(
-                    reference,
-                    transcript,
-                )
-
-                cer = calculate_cer(
-                    reference,
-                    transcript,
-                )
-
-            result = {
-                "file": audio_path.name,
-                "provider": response[
-                    "provider"
-                ],
-                "model": response["model"],
-                "status": (
-                    "error"
-                    if error
-                    else "ok"
-                ),
-                "latency_seconds": response[
-                    "latency_seconds"
-                ],
-                "reference": reference,
-                "transcript": transcript,
-                "wer": (
-                    round(wer, 4)
-                    if wer is not None
-                    else None
-                ),
-                "cer": (
-                    round(cer, 4)
-                    if cer is not None
-                    else None
-                ),
-                "error": error,
-            }
-
-            results.append(result)
-
-            print(
-                f"\n[{result['provider']}]"
-            )
-
-            if error:
-                print(f"ERROR: {error}")
-
+        for provider_name, fn in PROVIDERS.items():
+            r = run_provider_n_times(provider_name, fn, audio_path, reference)
+            results.append(r)
+            print(f"\n[{provider_name}]")
+            if r["status"] == "error":
+                print(f"  ERROR: {r['error']}")
             else:
-                print(
-                    "Latency: "
-                    f"{result['latency_seconds']}"
-                    " seconds"
-                )
-
-                if result["wer"] is not None:
-                    print(
-                        f"WER: "
-                        f"{result['wer']:.2%}"
-                    )
-                    print(
-                        f"CER: "
-                        f"{result['cer']:.2%}"
-                    )
-
-                print(
-                    f"Transcript: "
-                    f"{result['transcript']}"
-                )
+                print(f"  Latency: {r['latency_seconds']}s (avg of {r['runs']})")
+                if r["wer"] is not None:
+                    print(f"  WER: {r['wer']:.2%}   CER: {r['cer']:.2%}")
+                print(f"  Transcript: {r['transcript']}")
 
     summary = create_summary(results)
-
     print("\n" + "=" * 70)
     print("FINAL SUMMARY")
     print("=" * 70)
-
-    print(
-        json.dumps(
-            summary,
-            ensure_ascii=False,
-            indent=2,
-        )
-    )
-
-    save_results(
-        results,
-        summary,
-    )
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    save_results(results, summary)
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ Run:
     SENSE_PIPELINE_MODE=mock pytest tests/backend -v
 """
 
+import base64
 import io
 import os
 
@@ -77,3 +78,39 @@ def test_websocket_text_flow():
         reply = ws.receive_json()
         assert reply["type"] == "reply"
         assert reply["reply_text"]
+
+
+def test_websocket_audio_turn_streaming_flow():
+    with client.websocket_connect("/ws") as ws:
+        ws.send_json({"type": "start"})
+        started = ws.receive_json()
+        sid = started["session_id"]
+
+        ws.send_json(
+            {
+                "type": "audio_turn",
+                "session_id": sid,
+                "filename": "recording.webm",
+                "audio_base64": base64.b64encode(b"fake audio").decode("ascii"),
+            }
+        )
+
+        events = []
+        while not events or events[-1]["type"] != "turn_complete":
+            events.append(ws.receive_json())
+
+        event_types = [event["type"] for event in events]
+        assert event_types[0] == "transcript"
+        assert event_types[-1] == "turn_complete"
+        assert event_types[1:-1]
+        assert set(event_types[1:-1]) == {"audio_chunk"}
+
+        chunks = events[1:-1]
+        assert [chunk["index"] for chunk in chunks] == list(range(len(chunks)))
+        assert all(chunk["text"] for chunk in chunks)
+        assert events[-1]["turn"] == 1
+        assert events[-1]["reply_text"]
+
+        session = client.get(f"/api/session/{sid}").json()
+        assert session["turn_count"] == 1
+        assert session["conversation"][0]["teta_reply"] == events[-1]["reply_text"]

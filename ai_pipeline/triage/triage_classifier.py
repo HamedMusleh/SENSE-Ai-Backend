@@ -61,7 +61,7 @@ Conversation handling (pre-alpha scope):
 """
 
 from __future__ import annotations
-
+import codecs
 import json
 import os
 import re
@@ -232,7 +232,7 @@ def _load_lexicons(path: str = _DEFAULT_LEXICON_PATH) -> dict[str, Any]:
     if _LEXICON_CACHE is not None:
         return _LEXICON_CACHE
     with open(path, "r", encoding="utf-8") as f:
-        _LEXICON_CACHE = json.load(f)
+        _LEXICON_CACHE = json.loads(f.read().lstrip('\ufeff'))
     return _LEXICON_CACHE
 
 
